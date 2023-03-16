@@ -253,8 +253,9 @@
     "limit": 10,
     "goals": [
         {
-            "score": 300,
-            "$type": "GameVanilla.Game.Common.ReachScoreGoal"
+            "candyType": "Blue",
+            "amount": 6,
+            "$type": "GameVanilla.Game.Common.CollectCandyGoal"
         }
     ],
     "availableColors": [

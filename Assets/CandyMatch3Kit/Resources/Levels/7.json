@@ -320,13 +320,14 @@
     "limit": 25,
     "goals": [
         {
-            "score": 300,
-            "$type": "GameVanilla.Game.Common.ReachScoreGoal"
-        },
-        {
             "elementType": "Syrup1",
             "amount": 16,
             "$type": "GameVanilla.Game.Common.CollectElementGoal"
+        },
+        {
+            "candyType": "Blue",
+            "amount": 9,
+            "$type": "GameVanilla.Game.Common.CollectCandyGoal"
         }
     ],
     "availableColors": [

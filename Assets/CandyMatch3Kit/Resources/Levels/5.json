@@ -325,27 +325,23 @@
     "goals": [
         {
             "candyType": "Blue",
-            "amount": 3,
+            "amount": 6,
             "$type": "GameVanilla.Game.Common.CollectCandyGoal"
         },
         {
             "candyType": "Yellow",
-            "amount": 3,
+            "amount": 6,
             "$type": "GameVanilla.Game.Common.CollectCandyGoal"
         },
         {
             "candyType": "Green",
-            "amount": 3,
+            "amount": 6,
             "$type": "GameVanilla.Game.Common.CollectCandyGoal"
         },
         {
             "candyType": "Red",
-            "amount": 3,
+            "amount": 6,
             "$type": "GameVanilla.Game.Common.CollectCandyGoal"
-        },
-        {
-            "score": 600,
-            "$type": "GameVanilla.Game.Common.ReachScoreGoal"
         }
     ],
     "availableColors": [

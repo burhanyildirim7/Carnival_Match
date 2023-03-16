@@ -333,8 +333,19 @@
             "$type": "GameVanilla.Game.Common.CollectElementGoal"
         },
         {
-            "score": 2100,
-            "$type": "GameVanilla.Game.Common.ReachScoreGoal"
+            "candyType": "Blue",
+            "amount": 15,
+            "$type": "GameVanilla.Game.Common.CollectCandyGoal"
+        },
+        {
+            "candyType": "Red",
+            "amount": 15,
+            "$type": "GameVanilla.Game.Common.CollectCandyGoal"
+        },
+        {
+            "candyType": "Green",
+            "amount": 15,
+            "$type": "GameVanilla.Game.Common.CollectCandyGoal"
         }
     ],
     "availableColors": [
