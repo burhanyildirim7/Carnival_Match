@@ -164,6 +164,7 @@ MonoBehaviour:
   Booster3: {fileID: 1810081462}
   Booster4: {fileID: 1840226885}
   _boosterAktif: 0
+  _boosterColorBombAktif: 0
 --- !u!4 &7324050
 Transform:
   m_ObjectHideFlags: 0
@@ -4184,6 +4185,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1730357924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6840,6 +6842,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!224 &3802425693263218780
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8973,6 +8976,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3802425694040366238
 GameObject:
   m_ObjectHideFlags: 0
@@ -14299,6 +14303,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!222 &3802425694323193520
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14660,6 +14665,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!199 &3802425694418451120
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -20106,6 +20112,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3802425694665997158
 GameObject:
   m_ObjectHideFlags: 0
@@ -21446,6 +21453,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!95 &3861787841590432356
 Animator:
   serializedVersion: 5
@@ -21466,6 +21474,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!199 &3891152016464191094
 ParticleSystemRenderer:
   serializedVersion: 6

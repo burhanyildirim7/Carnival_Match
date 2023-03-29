@@ -543,17 +543,17 @@ namespace GameVanilla.Game.Common
                 {
                     selectedTile.GetComponent<Animator>().SetTrigger("Unpressed");
 
-                    if (selectedTile.GetComponent<StripedCandy>() != null)
+                    if (selectedTile.GetComponent<StripedCandy>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
                         ExplodeTile(selectedTile);
                         //ApplyGravity();   
                     }
-                    else if (selectedTile.GetComponent<WrappedCandy>() != null)
+                    else if (selectedTile.GetComponent<WrappedCandy>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
                         ExplodeTile(selectedTile);
                         ApplyGravity();
                     }
-                    else if (selectedTile.GetComponent<ColorBomb>() != null && gameScene._boosterAktif == false)
+                    else if (selectedTile.GetComponent<ColorBomb>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
                         ColorBombPatlat(selectedTile);
                     }
@@ -857,7 +857,7 @@ namespace GameVanilla.Game.Common
             if (Input.GetMouseButtonDown(0))
             {
                 var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                if (hit.collider != null && hit.collider.gameObject.CompareTag("Tile"))
+                if (hit.collider != null && hit.collider.gameObject.CompareTag("Tile") && gameScene._boosterAktif == false)
                 {
                     if (hit.collider.GetComponent<Unbreakable>() != null ||
                         hit.collider.GetComponent<Collectable>() != null)
@@ -875,11 +875,11 @@ namespace GameVanilla.Game.Common
                             break;
 
                         case BoosterType.Bomb:
-                            booster = new BombBooster();
+                            //bombbooster = new BombBooster();
                             break;
 
                         case BoosterType.Switch:
-                            booster = new SwitchBooster();
+                            //switchbooster = new SwitchBooster();
                             break;
 
                         case BoosterType.ColorBomb:
@@ -892,16 +892,21 @@ namespace GameVanilla.Game.Common
                         //Debug.Log(booster);
                         booster.Resolve(this, tile.gameObject);
                         ConsumeBooster(button);
-                        if (button.boosterType != BoosterType.Bomb && button.boosterType != BoosterType.Switch)
-                        {
-                            //ApplyGravity();
-                        }
-                        else
-                        {
-
-                        }
-
                     }
+                    else
+                    {
+                        if (button.boosterType == BoosterType.Bomb)
+                        {
+                            button.GetComponent<BombBooster>().Resolve(this, tile.gameObject);
+                            ConsumeBooster(button);
+                        }
+                        else if (button.boosterType == BoosterType.Switch)
+                        {
+                            button.GetComponent<SwitchBooster>().Resolve(this, tile.gameObject);
+                            ConsumeBooster(button);
+                        }
+                    }
+
 
                     gameScene.DisableBoosterMode();
 
@@ -917,6 +922,12 @@ namespace GameVanilla.Game.Common
         public void BoosterModdanCik()
         {
             gameScene._boosterAktif = false;
+            gameScene._boosterColorBombAktif = false;
+        }
+
+        public void BoosterModaGir()
+        {
+            gameScene._boosterAktif = true;
         }
 
         /// <summary>

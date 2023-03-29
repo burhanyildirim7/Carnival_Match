@@ -60,6 +60,8 @@ namespace GameVanilla.Game.Scenes
 
         public bool _boosterAktif;
 
+        public bool _boosterColorBombAktif;
+
         /// <summary>
         /// Unity's Awake method.
         /// </summary>
@@ -352,7 +354,8 @@ namespace GameVanilla.Game.Scenes
         public void EnableBoosterMode(BuyBoosterButton button)
         {
             boosterMode = true;
-            _boosterAktif = true;
+            _boosterColorBombAktif = true;
+            //_boosterAktif = true;
             currentBoosterButton = button;
             FadeInInGameBoosterOverlay();
             gameBoard.OnBoosterModeEnabled();

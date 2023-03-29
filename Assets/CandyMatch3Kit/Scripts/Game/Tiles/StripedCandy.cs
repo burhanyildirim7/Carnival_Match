@@ -260,7 +260,7 @@ namespace GameVanilla.Game.Common
                 if (cachedTiles[_sayi1].GetComponent<ColorBomb>() != null)
                 {
                     _board.ColorBombPatlat(cachedTiles[_sayi1]);
-                    _board.BoosterIlePatlat(cachedTiles[_sayi1]);
+                    //_board.BoosterIlePatlat(cachedTiles[_sayi1]);
                 }
                 else if (cachedTiles[_sayi1].GetComponent<StripedCandy>() != null && cachedTiles[_sayi1] != gameObject)
                 {

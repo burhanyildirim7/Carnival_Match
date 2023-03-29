@@ -12,16 +12,19 @@ namespace GameVanilla.Game.Common
     /// <summary>
     /// The class that represents the bomb booster.
     /// </summary>
-    public class BombBooster : Booster
+    public class BombBooster : MonoBehaviour
     {
 
         private List<GameObject> tiles = new List<GameObject>();
 
         private GameBoard _board;
 
-        MonoBehaviour monoScript;
+        //MonoBehaviour monoScript;
 
-        //private readonly List<GameObject> cachedTiles = new List<GameObject>();
+        private List<GameObject> cachedTiles = new List<GameObject>();
+
+        private int _sayi1;
+
         /// <summary>
         /// Resolves this booster.
         /// </summary>
@@ -62,9 +65,9 @@ namespace GameVanilla.Game.Common
             board.CreateVerticalStripedTileBooster(x, y, CandyColor.Blue);
         }
         */
-        public override void Resolve(GameBoard board, GameObject tile)
+        public void Resolve(GameBoard board, GameObject tile)
         {
-            monoScript = GameObject.FindObjectOfType<MonoBehaviour>();
+            //monoScript = GameObject.FindObjectOfType<MonoBehaviour>();
 
 
             //Debug.Log("CALISTI");
@@ -72,9 +75,13 @@ namespace GameVanilla.Game.Common
             var y = tile.GetComponent<Tile>().y;
             //board.ExplodeTile(tile);
 
-            Debug.Log(tile);
+            //Debug.Log(tile);
+
+
 
             _board = board;
+
+            _board.BoosterModaGir();
 
             tiles.Clear();
             for (var i = 0; i < board.level.width; i++)
@@ -101,7 +108,7 @@ namespace GameVanilla.Game.Common
 
             }
 
-            /*
+
             cachedTiles.Clear();
             foreach (var tiled in tiles)
             {
@@ -110,7 +117,7 @@ namespace GameVanilla.Game.Common
                     cachedTiles.Add(tiled);
                 }
             }
-            */
+
 
             //float degerx = ((cachedTiles.Count) * (-cachedTiles.Count) - 20);
             //float degerx = ((board.level.width) * (-board.level.width) - 20);
@@ -119,7 +126,10 @@ namespace GameVanilla.Game.Common
 
             ArrowScript.instance.ArrowYerineGec(degerx, degery);
 
-            monoScript.StartCoroutine(Patlat());
+            _sayi1 = 0;
+            Invoke("PatlatInvoke", 0.5f);
+
+            //StartCoroutine(Patlat());
 
         }
 
@@ -135,7 +145,7 @@ namespace GameVanilla.Game.Common
                     if (tiles[i].GetComponent<ColorBomb>() != null)
                     {
                         _board.ColorBombPatlat(tiles[i]);
-                        _board.BoosterIlePatlat(tiles[i]);
+                        //_board.BoosterIlePatlat(tiles[i]);
                     }
                     else
                     {
@@ -155,6 +165,48 @@ namespace GameVanilla.Game.Common
 
             //Debug.Log("BITTI");
 
+        }
+
+        private void PatlatInvoke()
+        {
+            //Debug.Log("DeniyozPatlatCalisiyo " + _sayi1);
+            if (cachedTiles[_sayi1] != null)
+            {
+                if (cachedTiles[_sayi1].GetComponent<ColorBomb>() != null)
+                {
+                    _board.ColorBombPatlat(cachedTiles[_sayi1]);
+                    _board.BoosterIlePatlat(cachedTiles[_sayi1]);
+                }
+                else if (cachedTiles[_sayi1].GetComponent<StripedCandy>() != null)
+                {
+                    _board.RoketlePatlat(cachedTiles[_sayi1]);
+                }
+                else
+                {
+                    _board.BoosterIlePatlat(cachedTiles[_sayi1]);
+
+                }
+
+                _sayi1++;
+            }
+
+
+
+            if (_sayi1 == cachedTiles.Count)
+            {
+                _board.ApplyGravity();
+                _board.BoosterModdanCik();
+            }
+            else
+            {
+                TekrarlaInvoke();
+            }
+        }
+
+        private void TekrarlaInvoke()
+        {
+            //Debug.Log("DeniyozTekrarlaCalisiyo");
+            Invoke("PatlatInvoke", 0.1f);
         }
 
     }
