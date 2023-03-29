@@ -10,14 +10,14 @@ namespace GameVanilla.Game.Common
     /// Match detector that detects horizontal matches.
     /// </summary>
 	public class HorizontalMatchDetector : MatchDetector
-	{
-		/// <summary>
-		/// Returns the list of detected matches.
-		/// </summary>
-		/// <param name="board">The game board.</param>
-		/// <returns>The list of detected matches.</returns>
-		public override List<Match> DetectMatches(GameBoard board)
-		{
+    {
+        /// <summary>
+        /// Returns the list of detected matches.
+        /// </summary>
+        /// <param name="board">The game board.</param>
+        /// <returns>The list of detected matches.</returns>
+        public override List<Match> DetectMatches(GameBoard board)
+        {
             var matches = new List<Match>();
 
             for (var j = 0; j < board.level.height; j++)
@@ -29,9 +29,9 @@ namespace GameVanilla.Game.Common
                     {
                         var color = tile.GetComponent<Candy>().color;
                         if (board.GetTile(i + 1, j) != null && board.GetTile(i + 1, j).GetComponent<Candy>() != null &&
-                            board.GetTile(i + 1, j).GetComponent<Candy>().color == color &&
+                            board.GetTile(i + 1, j).GetComponent<Candy>().color == color && board.GetTile(i + 1, j).GetComponent<StripedCandy>() == null && board.GetTile(i + 1, j).GetComponent<WrappedCandy>() == null &&
                             board.GetTile(i + 2, j) != null && board.GetTile(i + 2, j).GetComponent<Candy>() != null &&
-                            board.GetTile(i + 2, j).GetComponent<Candy>().color == color)
+                            board.GetTile(i + 2, j).GetComponent<Candy>().color == color && board.GetTile(i + 2, j).GetComponent<StripedCandy>() == null && board.GetTile(i + 2, j).GetComponent<WrappedCandy>() == null)
                         {
                             var match = new Match();
                             match.type = MatchType.Horizontal;
@@ -41,7 +41,7 @@ namespace GameVanilla.Game.Common
                                 i += 1;
                             } while (i < board.level.width && board.GetTile(i, j) != null &&
                                      board.GetTile(i, j).GetComponent<Candy>() != null &&
-                                     board.GetTile(i, j).GetComponent<Candy>().color == color);
+                                     board.GetTile(i, j).GetComponent<Candy>().color == color && board.GetTile(i, j).GetComponent<StripedCandy>() == null && board.GetTile(i, j).GetComponent<WrappedCandy>() == null);
 
                             matches.Add(match);
                             continue;
@@ -53,6 +53,6 @@ namespace GameVanilla.Game.Common
             }
 
             return matches;
-		}
-	}
+        }
+    }
 }
