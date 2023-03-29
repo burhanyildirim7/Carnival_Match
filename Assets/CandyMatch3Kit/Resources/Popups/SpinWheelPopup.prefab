@@ -3390,7 +3390,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 11}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 1442, y: 1381}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8386426230028324940
@@ -3414,7 +3414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.38431373}
+  m_Color: {r: 1, g: 0.7918137, b: 0.43867922, a: 0.38431373}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3729,7 +3729,7 @@ GameObject:
   - component: {fileID: 7733089120405870637}
   - component: {fileID: 4376400442047618603}
   - component: {fileID: 3400588832549773309}
-  - component: {fileID: 8350376393143654983}
+  - component: {fileID: 6508477868350763061}
   m_Layer: 5
   m_Name: Cost
   m_TagString: Untagged
@@ -3754,7 +3754,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 269.76855, y: -636.15}
+  m_AnchoredPosition: {x: 253.5, y: -634.3}
   m_SizeDelta: {x: 367.2721, y: 197.39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7733089120405870637
@@ -3786,7 +3786,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: cadab9c07fe8444129761506daadc571, type: 3}
+    m_Font: {fileID: 12800000, guid: 30776ca19dc66426ea4652d3e3eb5d08, type: 3}
     m_FontSize: 110
     m_FontStyle: 0
     m_BestFit: 1
@@ -3798,7 +3798,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 100
+  m_Text: Free
 --- !u!114 &3400588832549773309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3811,10 +3811,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0.48144865, b: 1, a: 1}
-  m_EffectDistance: {x: 7, y: 7}
+  m_EffectColor: {r: 0.003921569, g: 0.45490196, b: 0.7490196, a: 1}
+  m_EffectDistance: {x: 4, y: 4}
   m_UseGraphicAlpha: 1
---- !u!114 &8350376393143654983
+--- !u!114 &6508477868350763061
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3823,11 +3823,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6437407778407964706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0.48235294, b: 1, a: 1}
-  m_EffectDistance: {x: 7, y: 7}
+  m_EffectColor: {r: 0.003921569, g: 0.45490196, b: 0.7490196, a: 1}
+  m_EffectDistance: {x: 0, y: -8.15}
   m_UseGraphicAlpha: 1
 --- !u!1 &7047634492943696163
 GameObject:
@@ -4327,7 +4327,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 130, y: -635}
+  m_AnchoredPosition: {x: 110, y: -635}
   m_SizeDelta: {x: 101, y: 101}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5282396712028920205

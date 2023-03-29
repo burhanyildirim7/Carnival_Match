@@ -29,16 +29,8 @@ namespace GameVanilla.Game.Popups
         private GameObject goalPrefab;
 
         [SerializeField]
-        private GameObject scoreGoalGroup;
+        private Image background;
 
-        [SerializeField]
-        private Text scoreGoalAmountText;
-
-        [SerializeField]
-        private GameObject scoreGoalOnlyItem;
-
-        [SerializeField]
-        private Text scoreGoalOnlyItemText;
 #pragma warning restore 649
 
         /// <summary>
@@ -49,10 +41,6 @@ namespace GameVanilla.Game.Popups
             base.Awake();
             Assert.IsNotNull(goalGroup);
             Assert.IsNotNull(goalPrefab);
-            Assert.IsNotNull(scoreGoalGroup);
-            Assert.IsNotNull(scoreGoalAmountText);
-            Assert.IsNotNull(scoreGoalOnlyItem);
-            Assert.IsNotNull(scoreGoalOnlyItemText);
         }
 
         /// <summary>
@@ -62,6 +50,7 @@ namespace GameVanilla.Game.Popups
         {
             base.Start();
             StartCoroutine(AutoKill());
+            background.rectTransform.sizeDelta = new Vector2(background.rectTransform.sizeDelta.x,1285+Screen.width/1285);
         }
 
         /// <summary>
@@ -87,33 +76,11 @@ namespace GameVanilla.Game.Popups
         {
             foreach (var goal in goals)
             {
-                if (!(goal is ReachScoreGoal))
-                {
+
                     var goalObject = Instantiate(goalPrefab);
                     goalObject.transform.SetParent(goalGroup.transform, false);
                     goalObject.GetComponent<GoalUiElement>().Fill(goal);
-                }
-            }
-            var reachScoreGoal = goals.Find(x => x is ReachScoreGoal);
-            if (reachScoreGoal != null)
-            {
-                if (goals.Count == 1)
-                {
-                    scoreGoalGroup.SetActive(false);
-                    scoreGoalOnlyItem.SetActive(true);
-                    scoreGoalOnlyItemText.text = ((ReachScoreGoal)reachScoreGoal).score.ToString();
-                }
-                else
-                {
-                    scoreGoalGroup.SetActive(true);
-                    scoreGoalOnlyItem.SetActive(false);
-                    scoreGoalAmountText.text = ((ReachScoreGoal)reachScoreGoal).score.ToString();
-                }
-            }
-            else
-            {
-                scoreGoalGroup.SetActive(false);
-                scoreGoalOnlyItem.SetActive(false);
+
             }
         }
     }

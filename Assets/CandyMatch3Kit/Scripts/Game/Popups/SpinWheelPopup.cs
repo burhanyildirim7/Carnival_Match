@@ -129,8 +129,7 @@ namespace GameVanilla.Game.Popups
         private void SetFreeSpin()
         {
             isFreeSpin = true;
-            coinImage.enabled = false;
-            costText.enabled = false;
+            costText.text = "Free";
             PlayerPrefs.SetInt(numSpinsKey, 0);
         }
 
