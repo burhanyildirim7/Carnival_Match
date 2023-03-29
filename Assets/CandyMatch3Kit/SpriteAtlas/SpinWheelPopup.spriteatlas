@@ -37,6 +37,7 @@ SpriteAtlas:
     isAtlasV2: 0
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
+    - f36e22202e7404000b04cbc03cf92499: 21300000
     - 88135f308e25241be9afd8d25d25ca0b: 21300000
     - c6a8644098a134aebabcbcb81715ebd0: 21300000
     - ea6e5190bf8a8437bafcb6321a4d1820: 21300000
@@ -55,6 +56,7 @@ SpriteAtlas:
     - 00d82ac63231e4a96bfc5a3dd4a9ea60: 21300000
     - 5f7eb0d6210364fbfa246654bdfcf898: 21300000
     - 0bc6ffd65d00f4e80892a7133c2587a5: 21300000
+    - 48131f8778e074a0ebe8b6ccf5b37f94: 21300000
     - 04ab2ea7f8c4e4568a28b55f4ad2d183: 21300000
     - dd469fa747d144efe8cba0364d1db47d: 21300000
     - 7716e438084ae4172890a23fb4076119: 21300000
@@ -66,16 +68,21 @@ SpriteAtlas:
     - 0aff7e5a1513040ee9603d3313fc0563: 21300000
     - 9f4f047a9e5b546ee8d09bebcb41c290: 21300000
     - b3c29d8a79b494cccba897eea78a7fae: 21300000
+    - 7981eaabc361640bfbf8545f09087313: 21300000
     - dd9fdefbe1de5432895e08260d8ae6e9: 21300000
     - e89bd69c80b594c06ba4bfba1e2dd6ee: 21300000
     - 858c6abccccb44ce4ad71cd091c9716e: 21300000
     - d2628e4dd1fd442d8a8a06bdbb4687cb: 21300000
+    - 758fe4ad685ab4c669e88ede47355742: 21300000
+    - a9afc7bda0dce4045ab06fc9186a6720: 21300000
     - e6f2b1dd4558e41a5915be1cf22a7c3c: 21300000
     - a93b763ed8a464be9b9a5aeb1da162c3: 21300000
+    - b6c4d2ce616864b05bd08bbbf71e71b8: 21300000
     - 0737a6fe40f3740898c6e7b293f1251e: 21300000
     - d5705cdff13f54cbe817da8667ddb172: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: f36e22202e7404000b04cbc03cf92499, type: 3}
   - {fileID: 21300000, guid: 88135f308e25241be9afd8d25d25ca0b, type: 3}
   - {fileID: 21300000, guid: c6a8644098a134aebabcbcb81715ebd0, type: 3}
   - {fileID: 21300000, guid: ea6e5190bf8a8437bafcb6321a4d1820, type: 3}
@@ -94,6 +101,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 00d82ac63231e4a96bfc5a3dd4a9ea60, type: 3}
   - {fileID: 21300000, guid: 5f7eb0d6210364fbfa246654bdfcf898, type: 3}
   - {fileID: 21300000, guid: 0bc6ffd65d00f4e80892a7133c2587a5, type: 3}
+  - {fileID: 21300000, guid: 48131f8778e074a0ebe8b6ccf5b37f94, type: 3}
   - {fileID: 21300000, guid: 04ab2ea7f8c4e4568a28b55f4ad2d183, type: 3}
   - {fileID: 21300000, guid: dd469fa747d144efe8cba0364d1db47d, type: 3}
   - {fileID: 21300000, guid: 7716e438084ae4172890a23fb4076119, type: 3}
@@ -105,22 +113,27 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 0aff7e5a1513040ee9603d3313fc0563, type: 3}
   - {fileID: 21300000, guid: 9f4f047a9e5b546ee8d09bebcb41c290, type: 3}
   - {fileID: 21300000, guid: b3c29d8a79b494cccba897eea78a7fae, type: 3}
+  - {fileID: 21300000, guid: 7981eaabc361640bfbf8545f09087313, type: 3}
   - {fileID: 21300000, guid: dd9fdefbe1de5432895e08260d8ae6e9, type: 3}
   - {fileID: 21300000, guid: e89bd69c80b594c06ba4bfba1e2dd6ee, type: 3}
   - {fileID: 21300000, guid: 858c6abccccb44ce4ad71cd091c9716e, type: 3}
   - {fileID: 21300000, guid: d2628e4dd1fd442d8a8a06bdbb4687cb, type: 3}
+  - {fileID: 21300000, guid: 758fe4ad685ab4c669e88ede47355742, type: 3}
+  - {fileID: 21300000, guid: a9afc7bda0dce4045ab06fc9186a6720, type: 3}
   - {fileID: 21300000, guid: e6f2b1dd4558e41a5915be1cf22a7c3c, type: 3}
   - {fileID: 21300000, guid: a93b763ed8a464be9b9a5aeb1da162c3, type: 3}
+  - {fileID: 21300000, guid: b6c4d2ce616864b05bd08bbbf71e71b8, type: 3}
   - {fileID: 21300000, guid: 0737a6fe40f3740898c6e7b293f1251e, type: 3}
   - {fileID: 21300000, guid: d5705cdff13f54cbe817da8667ddb172, type: 3}
   m_PackedSpriteNamesToIndex:
-  - Coins5
+  - Coins1
+  - 1Coins5
   - Green2Bubble
   - YellowBubble
-  - Coins1
+  - 1Coins1
   - Handle
   - 1Life
-  - Coins6
+  - 1Coins6
   - Sparkle
   - 1Bomb
   - CloseButton
@@ -132,23 +145,28 @@ SpriteAtlas:
   - Wheellight
   - WheelShadow
   - CenterBubble
+  - Coins6
   - BlueBubble
-  - Coins3
+  - 1Coins3
   - Lines
   - 1Lollipop
-  - Coins4
+  - 1Coins4
   - GreenBubble
-  - Coins2
+  - 1Coins2
   - Lollipop
   - PinkBubble
   - Bomb
   - 1Switch
+  - Coins4
   - Switch
   - HandleBubble
   - Shadow
   - Life
+  - Coins5
+  - Coins3
   - PurpleBubble
   - TurningWheel
+  - Coins2
   - 1ColorBomb
   - CoinSmallIcon
   m_RenderDataMap: {}
