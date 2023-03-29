@@ -50,6 +50,7 @@ SpriteAtlas:
     - 07569d34c63d34833a00de3953058369: 21300000
     - 15a264a46041f48a182948c182d5149e: 21300000
     - 71bff116ac6e445e7a9746be735bd1f7: 21300000
+    - 2b3ab596e01284adea886ade181f3c5a: 21300000
     - 9e8f86b66e98e4886835c4fa8e0f294d: 21300000
     - 00d82ac63231e4a96bfc5a3dd4a9ea60: 21300000
     - 5f7eb0d6210364fbfa246654bdfcf898: 21300000
@@ -61,10 +62,14 @@ SpriteAtlas:
     - 2f93b7d9df3e04ff7b905436d920e288: 21300000
     - 8752f8d9c006c420480168b57abb1709: 21300000
     - 8ef87a3a942ef449e871cb091d21d83f: 21300000
+    - fd64545a2f91c4276b04117865b89f91: 21300000
     - 0aff7e5a1513040ee9603d3313fc0563: 21300000
+    - 9f4f047a9e5b546ee8d09bebcb41c290: 21300000
     - b3c29d8a79b494cccba897eea78a7fae: 21300000
+    - dd9fdefbe1de5432895e08260d8ae6e9: 21300000
     - e89bd69c80b594c06ba4bfba1e2dd6ee: 21300000
     - 858c6abccccb44ce4ad71cd091c9716e: 21300000
+    - d2628e4dd1fd442d8a8a06bdbb4687cb: 21300000
     - e6f2b1dd4558e41a5915be1cf22a7c3c: 21300000
     - a93b763ed8a464be9b9a5aeb1da162c3: 21300000
     - 0737a6fe40f3740898c6e7b293f1251e: 21300000
@@ -84,6 +89,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 07569d34c63d34833a00de3953058369, type: 3}
   - {fileID: 21300000, guid: 15a264a46041f48a182948c182d5149e, type: 3}
   - {fileID: 21300000, guid: 71bff116ac6e445e7a9746be735bd1f7, type: 3}
+  - {fileID: 21300000, guid: 2b3ab596e01284adea886ade181f3c5a, type: 3}
   - {fileID: 21300000, guid: 9e8f86b66e98e4886835c4fa8e0f294d, type: 3}
   - {fileID: 21300000, guid: 00d82ac63231e4a96bfc5a3dd4a9ea60, type: 3}
   - {fileID: 21300000, guid: 5f7eb0d6210364fbfa246654bdfcf898, type: 3}
@@ -95,10 +101,14 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 2f93b7d9df3e04ff7b905436d920e288, type: 3}
   - {fileID: 21300000, guid: 8752f8d9c006c420480168b57abb1709, type: 3}
   - {fileID: 21300000, guid: 8ef87a3a942ef449e871cb091d21d83f, type: 3}
+  - {fileID: 21300000, guid: fd64545a2f91c4276b04117865b89f91, type: 3}
   - {fileID: 21300000, guid: 0aff7e5a1513040ee9603d3313fc0563, type: 3}
+  - {fileID: 21300000, guid: 9f4f047a9e5b546ee8d09bebcb41c290, type: 3}
   - {fileID: 21300000, guid: b3c29d8a79b494cccba897eea78a7fae, type: 3}
+  - {fileID: 21300000, guid: dd9fdefbe1de5432895e08260d8ae6e9, type: 3}
   - {fileID: 21300000, guid: e89bd69c80b594c06ba4bfba1e2dd6ee, type: 3}
   - {fileID: 21300000, guid: 858c6abccccb44ce4ad71cd091c9716e, type: 3}
+  - {fileID: 21300000, guid: d2628e4dd1fd442d8a8a06bdbb4687cb, type: 3}
   - {fileID: 21300000, guid: e6f2b1dd4558e41a5915be1cf22a7c3c, type: 3}
   - {fileID: 21300000, guid: a93b763ed8a464be9b9a5aeb1da162c3, type: 3}
   - {fileID: 21300000, guid: 0737a6fe40f3740898c6e7b293f1251e, type: 3}
@@ -109,14 +119,15 @@ SpriteAtlas:
   - YellowBubble
   - Coins1
   - Handle
-  - Life
+  - 1Life
   - Coins6
   - Sparkle
-  - Bomb
+  - 1Bomb
   - CloseButton
   - QuitButton
   - OrangeBubble
   - WheelTop
+  - ColorBomb
   - SpinButton
   - Wheellight
   - WheelShadow
@@ -124,17 +135,21 @@ SpriteAtlas:
   - BlueBubble
   - Coins3
   - Lines
-  - Lollipop
+  - 1Lollipop
   - Coins4
   - GreenBubble
   - Coins2
+  - Lollipop
   - PinkBubble
+  - Bomb
+  - 1Switch
   - Switch
   - HandleBubble
   - Shadow
+  - Life
   - PurpleBubble
   - TurningWheel
-  - ColorBomb
+  - 1ColorBomb
   - CoinSmallIcon
   m_RenderDataMap: {}
   m_Tag: SpinWheelPopup
