@@ -25,7 +25,7 @@ namespace GameVanilla.Game.Common
     {
         public StripeDirection direction;
 
-        private readonly List<GameObject> cachedTiles = new List<GameObject>();
+        private List<GameObject> cachedTiles = new List<GameObject>();
 
         private List<GameObject> tiles = new List<GameObject>();
 
@@ -185,6 +185,7 @@ namespace GameVanilla.Game.Common
             float degery = tile.transform.position.y;
 
             //ArrowScript.instance.ArrowYerineGec(degerx, degery);
+            _sayi1 = 0;
             Invoke("PatlatInvoke", 0.05f);
             //monoScript.StartCoroutine(Patlat());
             //monoScript.StartCoroutine(Deneme());
@@ -253,7 +254,7 @@ namespace GameVanilla.Game.Common
 
         private void PatlatInvoke()
         {
-            //Debug.Log("DeniyozPatlatCalisiyo");
+            //Debug.Log("DeniyozPatlatCalisiyo " + _sayi1);
             if (cachedTiles[_sayi1] != null)
             {
                 if (cachedTiles[_sayi1].GetComponent<ColorBomb>() != null)
@@ -271,7 +272,10 @@ namespace GameVanilla.Game.Common
                 }
 
                 _sayi1++;
+
             }
+
+
 
             if (_sayi1 == cachedTiles.Count)
             {
