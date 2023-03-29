@@ -16,6 +16,7 @@ using GameVanilla.Core;
 using GameVanilla.Game.Popups;
 using GameVanilla.Game.Scenes;
 using GameVanilla.Game.UI;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace GameVanilla.Game.Common
 {
@@ -542,7 +543,12 @@ namespace GameVanilla.Game.Common
                 {
                     selectedTile.GetComponent<Animator>().SetTrigger("Unpressed");
 
-                    if (selectedTile.GetComponent<StripedCandy>() != null || selectedTile.GetComponent<WrappedCandy>() != null)
+                    if (selectedTile.GetComponent<StripedCandy>() != null)
+                    {
+                        ExplodeTile(selectedTile);
+                        //ApplyGravity();   
+                    }
+                    else if (selectedTile.GetComponent<WrappedCandy>() != null)
                     {
                         ExplodeTile(selectedTile);
                         ApplyGravity();
@@ -1072,10 +1078,24 @@ namespace GameVanilla.Game.Common
 
             ExplodeTile(tile);
 
+            if (tile.GetComponent<StripedCandy>() != null)
+            {
 
-            ApplyGravity();
+            }
+            else if (tile.GetComponent<WrappedCandy>() != null)
+            {
+                ApplyGravity();
+                //gameScene.CheckEndGame();
+            }
+            else
+            {
 
-            gameScene.CheckEndGame();
+            }
+
+
+            //ApplyGravity();
+
+            //gameScene.CheckEndGame();
         }
 
 
@@ -1418,9 +1438,81 @@ namespace GameVanilla.Game.Common
         /// <param name="didAnySpecialCandyExplode">True if any special candy exploded; false otherwise.</param>
         public void ExplodeTile(GameObject tile, bool didAnySpecialCandyExplode = false)
         {
+
+
+            //Debug.Log("Tiles ---- " + explodedTiles);
+            if (tile.GetComponent<StripedCandy>() != null)
+            {
+                //var explodedTiles = new List<GameObject>();
+                //ExplodeTileRecursive(tile, explodedTiles);
+                //int score = 0;
+
+                //StartCoroutine(ExplodeTileYeni(tile, didAnySpecialCandyExplode));
+                tile.GetComponent<StripedCandy>().Resolve(this, tile);
+                var explodedTiles = new List<GameObject>();
+                ExplodeTileRecursive(tile, explodedTiles);
+                var score = 0;
+                foreach (var explodedTile in explodedTiles)
+                {
+                    var idx = tiles.FindIndex(x => x == explodedTile);
+                    if (idx != -1)
+                    {
+                        explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
+                        explodedTile.GetComponent<Tile>().UpdateGameState(gameState);
+                        score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
+                        DestroyElements(explodedTile);
+                        //DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
+                        explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
+                        tiles[idx] = null;
+                    }
+
+                    SoundManager.instance.PlaySound("CandyMatch");
+                }
+
+                UpdateScore(score);
+                gameUi.UpdateGoals(gameState);
+            }
+            else
+            {
+                var explodedTiles = new List<GameObject>();
+                ExplodeTileRecursive(tile, explodedTiles);
+                var score = 0;
+
+                foreach (var explodedTile in explodedTiles)
+                {
+                    var idx = tiles.FindIndex(x => x == explodedTile);
+                    if (idx != -1)
+                    {
+                        explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
+                        explodedTile.GetComponent<Tile>().UpdateGameState(gameState);
+                        score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
+                        DestroyElements(explodedTile);
+                        DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
+                        explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
+                        tiles[idx] = null;
+                    }
+
+                    SoundManager.instance.PlaySound("CandyMatch");
+                }
+
+                UpdateScore(score);
+                gameUi.UpdateGoals(gameState);
+            }
+
+
+
+
+
+        }
+
+        private IEnumerator ExplodeTileYeni(GameObject tile, bool didAnySpecialCandyExplode = false)
+        {
             var explodedTiles = new List<GameObject>();
+
             ExplodeTileRecursive(tile, explodedTiles);
+
             var score = 0;
+
             foreach (var explodedTile in explodedTiles)
             {
                 var idx = tiles.FindIndex(x => x == explodedTile);
@@ -1436,7 +1528,11 @@ namespace GameVanilla.Game.Common
                 }
 
                 SoundManager.instance.PlaySound("CandyMatch");
+
+                yield return new WaitForSeconds(0.1f);
             }
+
+
 
             UpdateScore(score);
             gameUi.UpdateGoals(gameState);
@@ -1522,6 +1618,33 @@ namespace GameVanilla.Game.Common
             gameUi.UpdateGoals(gameState);
         }
 
+        public void RoketlePatlat(GameObject tile)
+        {
+            tile.GetComponent<StripedCandy>().Resolve(this, tile);
+            var explodedTiles = new List<GameObject>();
+            ExplodeTileRecursive(tile, explodedTiles);
+            var score = 0;
+            foreach (var explodedTile in explodedTiles)
+            {
+                var idx = tiles.FindIndex(x => x == explodedTile);
+                if (idx != -1)
+                {
+                    explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
+                    explodedTile.GetComponent<Tile>().UpdateGameState(gameState);
+                    score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
+                    DestroyElements(explodedTile);
+                    //DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
+                    explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
+                    tiles[idx] = null;
+                }
+
+                SoundManager.instance.PlaySound("CandyMatch");
+            }
+
+            UpdateScore(score);
+            gameUi.UpdateGoals(gameState);
+        }
+
         /// <summary>
         /// Explodes the specified tile non-recursively.
         /// </summary>
@@ -1573,6 +1696,7 @@ namespace GameVanilla.Game.Common
         {
             if (tile != null && tile.GetComponent<Tile>() != null)
             {
+
                 var newTilesToExplode = tile.GetComponent<Tile>().Explode();
 
                 explodedTiles.Add(tile);
@@ -1595,6 +1719,8 @@ namespace GameVanilla.Game.Common
                         }
 
                     }
+
+                    //yield return new WaitForSeconds(0.1f);
                 }
 
                 foreach (var t in newTilesToExplode)
@@ -1604,7 +1730,89 @@ namespace GameVanilla.Game.Common
                         newTilesToExplode.Add(t);
                     }
                 }
+
+
             }
+        }
+
+        private IEnumerator ExplodeTileRecursiveYeni(GameObject tile, List<GameObject> explodedTiles)
+        {
+            //var newTilesToExplode = tile.GetComponent<Tile>().Explode();
+
+            //explodedTiles.Add(tile);
+
+            for (int i = 0; i < explodedTiles.Count; i++)
+            {
+                if (explodedTiles[i] != null && explodedTiles[i].GetComponent<Tile>() != null && explodedTiles[i].GetComponent<Tile>().destructable && explodedTiles[i] != tile)
+                {
+                    if (explodedTiles[i].GetComponent<ColorBomb>() != null)
+                    {
+                        ColorBombPatlat(explodedTiles[i]);
+                        //explodedTiles.Add(t);
+                        //StartCoroutine(ExplodeTileRecursiveYeni(t, explodedTiles));
+                        //explodedTiles[i].GetComponent<Tile>().Explode();
+                    }
+                    else
+                    {
+                        //explodedTiles.Add(t);
+                        //StartCoroutine(ExplodeTileRecursiveYeni(t, explodedTiles));
+
+                        if (explodedTiles[i].GetComponent<WrappedCandy>() != null)
+                        {
+                            //ExplodeTile(explodedTiles[i]);
+                            explodedTiles[i].GetComponent<Tile>().Explode();
+                        }
+                        else
+                        {
+                            explodedTiles[i].GetComponent<Tile>().Explode();
+                        }
+
+                    }
+
+                }
+                if (i == explodedTiles.Count - 1)
+                {
+                    ApplyGravity();
+                    //gameScene.CheckEndGame();
+                }
+
+                yield return new WaitForSeconds(0.1f);
+            }
+
+
+            /*
+            foreach (var t in explodedTiles)
+            {
+                if (t != null && t.GetComponent<Tile>() != null && t.GetComponent<Tile>().destructable &&
+                    !explodedTiles.Contains(t) && t != tile)
+                {
+                    if (t.GetComponent<ColorBomb>() != null)
+                    {
+                        //ColorBombPatlat(t);
+                        //explodedTiles.Add(t);
+                        //StartCoroutine(ExplodeTileRecursiveYeni(t, explodedTiles));
+                        t.GetComponent<Tile>().Explode();
+                    }
+                    else
+                    {
+                        //explodedTiles.Add(t);
+                        //StartCoroutine(ExplodeTileRecursiveYeni(t, explodedTiles));
+
+                        t.GetComponent<Tile>().Explode();
+                    }
+
+                }
+
+                yield return new WaitForSeconds(0.2f);
+            }
+            */
+
+
+        }
+
+        private void PatlatCombo(GameObject tile)
+        {
+            tile.GetComponent<Tile>().Explode();
         }
 
         /// <summary>
