@@ -17,29 +17,17 @@ namespace GameVanilla.Game.Popups
     /// </summary>
     public class SettingsPopup : Popup
     {
+        [SerializeField] GameObject _soundOnImg, _soundOffImg,
+            _musicOnImg, _musicOffImg,
+            _vibrationOnImg,_vibrationOffImg;
 #pragma warning disable 649
-        [SerializeField]
-        private ToggleGroup avatarToggleGroup;
 
-        [SerializeField]
-        private Slider soundSlider;
-
-        [SerializeField]
-        private Slider musicSlider;
-
-        [SerializeField]
-        private AnimatedButton resetProgressButton;
-
-        [SerializeField]
-        private Image resetProgressImage;
-
-        [SerializeField]
-        private Sprite resetProgressDisabledSprite;
 #pragma warning restore 649
 
         private int currentAvatar;
         private int currentSound;
         private int currentMusic;
+        private int currentVibration;
         private int currentNotifications;
 
         /// <summary>
@@ -48,12 +36,6 @@ namespace GameVanilla.Game.Popups
         protected override void Awake()
         {
             base.Awake();
-            Assert.IsNotNull(avatarToggleGroup);
-            Assert.IsNotNull(soundSlider);
-            Assert.IsNotNull(musicSlider);
-            Assert.IsNotNull(resetProgressButton);
-            Assert.IsNotNull(resetProgressImage);
-            Assert.IsNotNull(resetProgressDisabledSprite);
         }
 
         /// <summary>
@@ -62,15 +44,41 @@ namespace GameVanilla.Game.Popups
         protected override void Start()
         {
             base.Start();
-            var avatarSelected = PlayerPrefs.GetInt("avatar_selected");
-            var toggles = avatarToggleGroup.GetComponentsInChildren<Toggle>();
-            for (var i = 0; i < toggles.Length; i++)
+            if (PlayerPrefs.GetInt("music_enabled") == 1)
             {
-                toggles[i].isOn = i == avatarSelected;
+                _musicOnImg.SetActive(true);
+                _musicOffImg.SetActive(false);
+            }
+            else
+            {
+                _musicOnImg.SetActive(false);
+                _musicOffImg.SetActive(true);
             }
 
-            soundSlider.value = PlayerPrefs.GetInt("sound_enabled");
-            musicSlider.value = PlayerPrefs.GetInt("music_enabled");
+
+            if (PlayerPrefs.GetInt("sound_enabled") == 1)
+            {
+                _soundOnImg.SetActive(true);
+                _soundOffImg.SetActive(false);
+            }
+            else
+            {
+                _soundOnImg.SetActive(false);
+                _soundOffImg.SetActive(true);
+            }
+
+            if (PlayerPrefs.GetInt("vibration_enabled") == 1)
+            {
+                _vibrationOnImg.SetActive(true);
+                _vibrationOffImg.SetActive(false);
+            }
+            else
+            {
+                _vibrationOnImg.SetActive(false);
+                _vibrationOffImg.SetActive(true);
+            }
+
+
         }
 
         /// <summary>
@@ -86,7 +94,6 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnSaveButtonPressed()
         {
-            PlayerPrefs.SetInt("avatar_selected", currentAvatar);
             SoundManager.instance.SetSoundEnabled(currentSound == 1);
             SoundManager.instance.SetMusicEnabled(currentMusic == 1);
             var homeScene = parentScene as HomeScene;
@@ -108,8 +115,6 @@ namespace GameVanilla.Game.Popups
             {
                 PlayerPrefs.DeleteKey(string.Format("level_stars_{0}", i));
             }
-            resetProgressImage.sprite = resetProgressDisabledSprite;
-            resetProgressButton.interactable = false;
         }
 
         /// <summary>
@@ -120,7 +125,7 @@ namespace GameVanilla.Game.Popups
             parentScene.OpenPopup<AlertPopup>("Popups/AlertPopup", popup =>
             {
                 popup.SetTitle("Help");
-                popup.SetText("Do you need help?");
+                popup.SetText("Do you need help? \n info@lumiergames.com");
             }, false);
         }
 
@@ -157,7 +162,27 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnSoundSliderValueChanged()
         {
-            currentSound = (int)soundSlider.value;
+            if (PlayerPrefs.GetInt("sound_enabled")==0)
+            {
+                PlayerPrefs.SetInt("sound_enabled", 1);
+                currentSound = PlayerPrefs.GetInt("sound_enabled");
+                _soundOnImg.SetActive(true);
+                _soundOffImg.SetActive(false);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("sound_enabled", 0);
+                currentSound = PlayerPrefs.GetInt("sound_enabled");
+                _soundOnImg.SetActive(false);
+                _soundOffImg.SetActive(true);
+            }
+            SoundManager.instance.SetSoundEnabled(currentSound == 1);
+            SoundManager.instance.SetMusicEnabled(currentMusic == 1);
+            var homeScene = parentScene as HomeScene;
+            if (homeScene != null)
+            {
+                homeScene.UpdateButtons();
+            }
         }
 
         /// <summary>
@@ -165,7 +190,44 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnMusicSliderValueChanged()
         {
-            currentMusic = (int)musicSlider.value;
+            if (PlayerPrefs.GetInt("music_enabled") == 0)
+            {
+                PlayerPrefs.SetInt("music_enabled", 1);
+                currentMusic = PlayerPrefs.GetInt("music_enabled");
+                _musicOnImg.SetActive(true);
+                _musicOffImg.SetActive(false);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("music_enabled", 0);
+                currentMusic = PlayerPrefs.GetInt("music_enabled");
+                _musicOnImg.SetActive(false);
+                _musicOffImg.SetActive(true);
+            }
+            SoundManager.instance.SetSoundEnabled(currentSound == 1);
+            SoundManager.instance.SetMusicEnabled(currentMusic == 1);
+            var homeScene = parentScene as HomeScene;
+            if (homeScene != null)
+            {
+                homeScene.UpdateButtons();
+            }
+        }
+        public void VibrationValueChanged()
+        {
+            if (PlayerPrefs.GetInt("vibration_enabled") == 0)
+            {
+                PlayerPrefs.SetInt("vibration_enabled", 1);
+                currentVibration = PlayerPrefs.GetInt("vibration_enabled");
+                _vibrationOnImg.SetActive(true);
+                _vibrationOffImg.SetActive(false);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("music_enabled", 0);
+                currentVibration = PlayerPrefs.GetInt("vibration_enabled");
+                _vibrationOnImg.SetActive(false);
+                _vibrationOffImg.SetActive(true);
+            }
         }
     }
 }
