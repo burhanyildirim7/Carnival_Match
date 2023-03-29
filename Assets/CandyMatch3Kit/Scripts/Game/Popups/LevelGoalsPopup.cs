@@ -31,6 +31,7 @@ namespace GameVanilla.Game.Popups
         [SerializeField]
         private Image background;
 
+        private int _ekranGenisligi;
 #pragma warning restore 649
 
         /// <summary>
@@ -50,7 +51,10 @@ namespace GameVanilla.Game.Popups
         {
             base.Start();
             StartCoroutine(AutoKill());
-            background.rectTransform.sizeDelta = new Vector2(background.rectTransform.sizeDelta.x,1285+Screen.width/1285);
+            background.rectTransform.sizeDelta = new Vector2(Screen.width, 601);
+            Debug.Log("screen width:"+Screen.width);
+            _ekranGenisligi= Screen.width;
+            Debug.Log("popup width:" + _ekranGenisligi);
         }
 
         /// <summary>
