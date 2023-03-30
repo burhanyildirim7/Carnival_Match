@@ -28,12 +28,23 @@ namespace GameVanilla.Game.UI
         
         [SerializeField]
         private Sprite inactiveBgSprite;
-        
+
+        [SerializeField]
+        private Sprite inactivePrizeSprite;
+
         [SerializeField]
         private Image tickImage;
         
         [SerializeField]
         private Text amountText;
+        [SerializeField]
+        private GameObject amountTextBG;
+        [SerializeField]
+        private GameObject dayTextObject;
+        [SerializeField]
+        private Text prizeDayText;
+        [SerializeField]
+        private int prizeDay;
 #pragma warning restore 649
 
         /// <summary>
@@ -56,8 +67,27 @@ namespace GameVanilla.Game.UI
         /// <param name="active">True if the daily bonus is active and false otherwise.</param>
         public void SetInfo(DailyBonusType type, int amount, bool active)
         {
-            itemImage.sprite = itemSprites[(int)type];
+            itemImage.sprite = active ? itemSprites[(int)type] : inactivePrizeSprite;
             amountText.text = $"x{amount}";
+            if (active)
+            {
+                amountTextBG.SetActive(true);
+                dayTextObject.SetActive(false);
+            }
+            else
+            {
+                amountTextBG.SetActive(false);
+                dayTextObject.SetActive(true);
+            }
+            if (prizeDay == PlayerPrefs.GetInt("daily_bonus_day")+1)
+            {
+                prizeDayText.text = "Tomorrow";
+            }
+            else
+            {
+                prizeDayText.text = "Day " + prizeDay.ToString();
+            }
+
             bgImage.sprite = active ? activeBgSprite : inactiveBgSprite;
             if (tickImage != null)
                 tickImage.enabled = active;

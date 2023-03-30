@@ -31,7 +31,6 @@ namespace GameVanilla.Game.Scenes
 
         private readonly string dateLastPlayedKey = "date_last_played";
         private readonly string dailyBonusDayKey = "daily_bonus_day";
-        
         /// <summary>
         /// Unity's Awake method.
         /// </summary>
@@ -39,6 +38,7 @@ namespace GameVanilla.Game.Scenes
         {
             Assert.IsNotNull(soundButton);
             Assert.IsNotNull(musicButton);
+            
         }
 
         /// <summary>
@@ -46,6 +46,8 @@ namespace GameVanilla.Game.Scenes
         /// </summary>
         private void Start()
         {
+            Debug.Log("bugün günlerden:"+ PlayerPrefs.GetInt(dailyBonusDayKey));
+            Debug.Log("yarın günlerden:" + (PlayerPrefs.GetInt("daily_bonus_day")+1).ToString());
             if (PlayerPrefs.GetInt("IlkAcilis")==0)
             {
                 PlayerPrefs.SetInt("MevcutLevel", 1);
