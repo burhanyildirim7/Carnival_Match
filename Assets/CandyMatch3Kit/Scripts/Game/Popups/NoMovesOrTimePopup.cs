@@ -42,12 +42,9 @@ namespace GameVanilla.Game.Popups
 
         [SerializeField]
         private ParticleSystem coinParticles;
-        
         [SerializeField]
-        private GameObject girl;
-        
-        [SerializeField]
-        private GameObject boy;
+        private Image background;
+
 #pragma warning restore 649
 
         private GameScene gameScene;
@@ -66,8 +63,6 @@ namespace GameVanilla.Game.Popups
             Assert.IsNotNull(numExtraMovesText);
             Assert.IsNotNull(costText);
             Assert.IsNotNull(coinParticles);
-            Assert.IsNotNull(girl);
-            Assert.IsNotNull(boy);
         }
 
         /// <summary>
@@ -78,11 +73,7 @@ namespace GameVanilla.Game.Popups
             base.Start();
             var coins = PlayerPrefs.GetInt("num_coins");
             numCoinsText.text = coins.ToString("n0");
-            var avatarSelected = PlayerPrefs.GetInt("avatar_selected");
-            if (avatarSelected == 0)
-                boy.SetActive(false);
-            else
-                girl.SetActive(false);
+            background.rectTransform.sizeDelta = new Vector2(Screen.width, 1050);
         }
 
         /// <summary>
