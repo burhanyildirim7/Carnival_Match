@@ -21,20 +21,12 @@ namespace GameVanilla.Game.Popups
         [SerializeField]
         private Text levelText;
 
-        [SerializeField]
-        private Text scoreText;
+       /* [SerializeField]
+        private Text scoreText;*/
 
         [SerializeField]
         private GameObject goalGroup;
 
-        [SerializeField]
-        private Text scoreOnlyReachedText;
-        
-        [SerializeField]
-        private GameObject girl;
-        
-        [SerializeField]
-        private GameObject boy;
 #pragma warning restore 649
 
         /// <summary>
@@ -44,11 +36,8 @@ namespace GameVanilla.Game.Popups
         {
             base.Awake();
             Assert.IsNotNull(levelText);
-            Assert.IsNotNull(scoreText);
+           // Assert.IsNotNull(scoreText);
             Assert.IsNotNull(goalGroup);
-            Assert.IsNotNull(scoreOnlyReachedText);
-            Assert.IsNotNull(girl);
-            Assert.IsNotNull(boy);
         }
         
         /// <summary>
@@ -57,11 +46,6 @@ namespace GameVanilla.Game.Popups
         protected override void Start()
         {
             base.Start();
-            var avatarSelected = PlayerPrefs.GetInt("avatar_selected");
-            if (avatarSelected == 0)
-                boy.SetActive(false);
-            else
-                girl.SetActive(false);
         }
 
         /// <summary>
@@ -100,7 +84,7 @@ namespace GameVanilla.Game.Popups
         /// <param name="score">The score text.</param>
         public void SetScore(int score)
         {
-            scoreText.text = score.ToString();
+           // scoreText.text = score.ToString();
         }
 
         /// <summary>
@@ -112,7 +96,6 @@ namespace GameVanilla.Game.Popups
             var goals = group.GetComponentsInChildren<GoalUiElement>();
             if (goals.Length > 0)
             {
-                scoreOnlyReachedText.gameObject.SetActive(false);
                 foreach (var goal in goals)
                 {
                     var goalObject = Instantiate(goal);
@@ -122,7 +105,6 @@ namespace GameVanilla.Game.Popups
             }
             else
             {
-                scoreOnlyReachedText.gameObject.SetActive(true);
             }
         }
     }

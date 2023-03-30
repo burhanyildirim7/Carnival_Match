@@ -19,7 +19,7 @@ namespace GameVanilla.Core
         [SerializeField]
         private Sprite disabledSprite;
 #pragma warning restore 649
-
+        [SerializeField]
         private Image image;
 
         /// <summary>
@@ -27,7 +27,6 @@ namespace GameVanilla.Core
         /// </summary>
         public void Awake()
         {
-            image = GetComponent<Image>();
         }
 
         /// <summary>

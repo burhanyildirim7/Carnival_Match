@@ -36,7 +36,7 @@ namespace GameVanilla.Core
         }
         public void OpenGameSceneK()
         {
-            PlayerPrefs.SetInt("MevcutLevel", 998);
+            PlayerPrefs.SetInt("MevcutLevel", 1);
             _levelNum = PlayerPrefs.GetInt("MevcutLevel");
             var scene = GameObject.Find("HomeScene").GetComponent<HomeScene>();
             if (!FileUtils.FileExists("Levels/" + _levelNum))
@@ -55,7 +55,7 @@ namespace GameVanilla.Core
         }
         public void _nextButtonInGameScene()
         {
-            PlayerPrefs.SetInt("HomeSceneToplamYildiz", PlayerPrefs.GetInt("HomeSceneToplamYildiz") + PlayerPrefs.GetInt("OyundaKazanilanYildizSayisi"));
+            PlayerPrefs.SetInt("HomeSceneToplamYildiz", PlayerPrefs.GetInt("HomeSceneToplamYildiz") + 1);
             Transition.LoadLevel(scene, duration, color);
             //10-11    650  6
             _bolumSonucu = ((PlayerPrefs.GetInt("KalanLimit") * 50)) / 100;

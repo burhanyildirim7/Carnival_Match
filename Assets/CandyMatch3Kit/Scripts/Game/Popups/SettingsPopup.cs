@@ -24,7 +24,6 @@ namespace GameVanilla.Game.Popups
 
 #pragma warning restore 649
 
-        private int currentAvatar;
         private int currentSound;
         private int currentMusic;
         private int currentVibration;
@@ -146,7 +145,6 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnGirlAvatarSelected()
         {
-            currentAvatar = 0;
         }
 
         /// <summary>
@@ -154,7 +152,6 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnBoyAvatarSelected()
         {
-            currentAvatar = 1;
         }
 
         /// <summary>

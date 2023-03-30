@@ -24765,6 +24765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabledSprite: {fileID: 21300000, guid: 4180a8a86b5d14a4a95a8ff7cca40f01, type: 3}
   disabledSprite: {fileID: 21300000, guid: bbb1cf0afb9c14492aa911b6d54b39f9, type: 3}
+  image: {fileID: 0}
 --- !u!114 &592558970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75097,6 +75098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabledSprite: {fileID: 21300000, guid: e776ee1b955ac498f88ebe8031649e74, type: 3}
   disabledSprite: {fileID: 21300000, guid: 4b7107e518be340048b1f92ec32a4ac4, type: 3}
+  image: {fileID: 0}
 --- !u!114 &1598031927
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,15 +20,7 @@ namespace GameVanilla.Game.Popups
 
         public GameBoard gameBoard;
 
-        [SerializeField]
-        private Image star1;
-
-        [SerializeField]
-        private Image star2;
-
-        [SerializeField]
-        private Image star3;
-
+        int _earnMagnetAmount;
        /* [SerializeField]
         private ParticleSystem star1Particles;
 
@@ -50,10 +42,7 @@ namespace GameVanilla.Game.Popups
         [SerializeField]
         private Sprite disabledStarSprite;
 
-        [SerializeField]
-        private Text _kazanilanCoinText;
 
-        private int _kazanilanCoinMiktari;
 #pragma warning restore 649
 
         /// <summary>
@@ -62,9 +51,6 @@ namespace GameVanilla.Game.Popups
         protected override void Awake()
         {
             base.Awake();
-            Assert.IsNotNull(star1);
-            Assert.IsNotNull(star2);
-            Assert.IsNotNull(star3);
            /* Assert.IsNotNull(star1Particles);
             Assert.IsNotNull(star1WhiteParticles);
             Assert.IsNotNull(star2Particles);
@@ -85,9 +71,7 @@ namespace GameVanilla.Game.Popups
         {
             if (stars == 0)
             {
-                star1.sprite = disabledStarSprite;
-                star2.sprite = disabledStarSprite;
-                star3.sprite = disabledStarSprite;
+                _earnMagnetAmount = 0;
                /* star1Particles.gameObject.SetActive(false);
                 star1WhiteParticles.gameObject.SetActive(false);
                 star2Particles.gameObject.SetActive(false);
@@ -97,8 +81,7 @@ namespace GameVanilla.Game.Popups
             }
             else if (stars == 1)
             {
-                star2.sprite = disabledStarSprite;
-                star3.sprite = disabledStarSprite;
+                _earnMagnetAmount = 1;
                /* star2Particles.gameObject.SetActive(false);
                 star2WhiteParticles.gameObject.SetActive(false);
                 star3Particles.gameObject.SetActive(false);
@@ -106,19 +89,20 @@ namespace GameVanilla.Game.Popups
             }
             else if (stars == 2)
             {
-                star3.sprite = disabledStarSprite;
+                _earnMagnetAmount = 2;
                /* star3Particles.gameObject.SetActive(false);
                 star3WhiteParticles.gameObject.SetActive(false);*/
             }
-
+            else
+            {
+                _earnMagnetAmount = 3;
+            }
+            PlayerPrefs.SetInt("LeveldenKazanilanMagnetMiktari", _earnMagnetAmount);
             //GameWinSetCoins(gameBoard._kalanLimit);
         }
 
         public void GameWinSetCoins(int limit)
         {
-            _bolumSonucu = (limit * 50) / 100;
-            _kazanilanCoinMiktari = 100 + (_bolumSonucu*100);
-            _kazanilanCoinText.text = _kazanilanCoinMiktari.ToString();
         }
     }
 }
