@@ -16,7 +16,7 @@ public class JoinTeamContentObjectScript : MonoBehaviour
 
     public void ShowButton()
     {
-        PlayerPrefs.SetString("SearchTeamName", "Clan A");
+        PlayerPrefs.SetString("SearchTeamName", "Team_A_Tutorial");
         PlayerPrefs.SetString("SearchTeamDescription", "Description Tutorial");
         PlayerPrefs.SetString("SearchTeamType", "Open");
         PlayerPrefs.SetString("SearchMinLevelText", "0");

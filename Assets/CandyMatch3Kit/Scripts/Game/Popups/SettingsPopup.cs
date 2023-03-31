@@ -220,7 +220,7 @@ namespace GameVanilla.Game.Popups
             }
             else
             {
-                PlayerPrefs.SetInt("music_enabled", 0);
+                PlayerPrefs.SetInt("vibration_enabled", 0);
                 currentVibration = PlayerPrefs.GetInt("vibration_enabled");
                 _vibrationOnImg.SetActive(false);
                 _vibrationOffImg.SetActive(true);

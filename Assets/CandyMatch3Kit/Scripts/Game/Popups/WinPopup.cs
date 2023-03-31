@@ -21,23 +21,7 @@ namespace GameVanilla.Game.Popups
         public GameBoard gameBoard;
 
         int _earnMagnetAmount;
-       /* [SerializeField]
-        private ParticleSystem star1Particles;
 
-        [SerializeField]
-        private ParticleSystem star1WhiteParticles;
-
-        [SerializeField]
-        private ParticleSystem star2Particles;
-
-        [SerializeField]
-        private ParticleSystem star2WhiteParticles;
-
-        [SerializeField]
-        private ParticleSystem star3Particles;
-
-        [SerializeField]
-        private ParticleSystem star3WhiteParticles;*/
 
         [SerializeField]
         private Sprite disabledStarSprite;
@@ -51,12 +35,6 @@ namespace GameVanilla.Game.Popups
         protected override void Awake()
         {
             base.Awake();
-           /* Assert.IsNotNull(star1Particles);
-            Assert.IsNotNull(star1WhiteParticles);
-            Assert.IsNotNull(star2Particles);
-            Assert.IsNotNull(star2WhiteParticles);
-            Assert.IsNotNull(star3Particles);
-            Assert.IsNotNull(star3WhiteParticles);*/
             Assert.IsNotNull(disabledStarSprite);
         }
         protected override void Start()
@@ -72,33 +50,20 @@ namespace GameVanilla.Game.Popups
             if (stars == 0)
             {
                 _earnMagnetAmount = 0;
-               /* star1Particles.gameObject.SetActive(false);
-                star1WhiteParticles.gameObject.SetActive(false);
-                star2Particles.gameObject.SetActive(false);
-                star2WhiteParticles.gameObject.SetActive(false);
-                star3Particles.gameObject.SetActive(false);
-                star3WhiteParticles.gameObject.SetActive(false);*/
             }
             else if (stars == 1)
             {
                 _earnMagnetAmount = 1;
-               /* star2Particles.gameObject.SetActive(false);
-                star2WhiteParticles.gameObject.SetActive(false);
-                star3Particles.gameObject.SetActive(false);
-                star3WhiteParticles.gameObject.SetActive(false);*/
             }
             else if (stars == 2)
             {
                 _earnMagnetAmount = 2;
-               /* star3Particles.gameObject.SetActive(false);
-                star3WhiteParticles.gameObject.SetActive(false);*/
             }
             else
             {
                 _earnMagnetAmount = 3;
             }
             PlayerPrefs.SetInt("LeveldenKazanilanMagnetMiktari", _earnMagnetAmount);
-            //GameWinSetCoins(gameBoard._kalanLimit);
         }
 
         public void GameWinSetCoins(int limit)

@@ -7,7 +7,6 @@ public class ContentDizme : MonoBehaviour
 {
     [SerializeField] private GameObject _contentBirimi;
     [SerializeField] public int _contentAdeti;
-    [SerializeField] private Sprite _rank1Img, _rank1Num, _rank2Img, _rank2Num, _rank3Img, _rank3Num;
     [SerializeField] private bool _players, _teams, _friends, _searchTeam,_joinTeam;
     [SerializeField] private InputField _inputTextArea;
     private GameObject _geciciContent;
@@ -22,43 +21,12 @@ public class ContentDizme : MonoBehaviour
             if (_searchTeam==false && _joinTeam==false)
             {
                 _geciciContent = Instantiate(_contentBirimi, transform);
-
-                if (i < 3)
-                {
-                    _geciciContent.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-                    _geciciContent.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-                    switch (i)
-                    {
-
-                        case 0:
-                            _geciciContent.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = _rank1Img;
-                            _geciciContent.transform.GetChild(0).GetChild(1).gameObject.GetComponent<Image>().sprite = _rank1Num;
-                            break;
-                        case 1:
-                            _geciciContent.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = _rank2Img;
-                            _geciciContent.transform.GetChild(0).GetChild(1).gameObject.GetComponent<Image>().sprite = _rank2Num;
-                            break;
-                        case 2:
-                            _geciciContent.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = _rank3Img;
-                            _geciciContent.transform.GetChild(0).GetChild(1).gameObject.GetComponent<Image>().sprite = _rank3Num;
-                            break;
-                    }
-
-                }
-                else
-                {
-                    _geciciContent.transform.GetChild(0).gameObject.GetComponent<Image>().enabled = false;
-                    _geciciContent.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-                    _geciciContent.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-                    _geciciContent.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = (i + 1).ToString();
-                }
-
+                _geciciContent.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Text>().text = (i + 1).ToString();
             }
             else if(_joinTeam)
             {
-
-                    _geciciContent = Instantiate(_contentBirimi, transform);
-
+                _geciciContent = Instantiate(_contentBirimi, transform);
+                _geciciContent.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Text>().text = (i + 1).ToString();
             }
             else
             {
@@ -82,6 +50,7 @@ public class ContentDizme : MonoBehaviour
         for (int i = 0; i < _contentAdeti; i++)
         {
             _geciciContent = Instantiate(_contentBirimi, transform);
+            _geciciContent.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Text>().text = (i + 1).ToString();
         }
 
     }
