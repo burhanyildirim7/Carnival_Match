@@ -47,7 +47,7 @@ namespace GameVanilla.Game.Popups
         /// <param name="stars">The number of stars obtained in the level.</param>
         public void SetStars(int stars)
         {
-            if (stars == 0)
+            /*if (stars == 0)
             {
                 _earnMagnetAmount = 0;
             }
@@ -63,7 +63,7 @@ namespace GameVanilla.Game.Popups
             {
                 _earnMagnetAmount = 3;
             }
-            PlayerPrefs.SetInt("LeveldenKazanilanMagnetMiktari", _earnMagnetAmount);
+            PlayerPrefs.SetInt("LeveldenKazanilanMagnetMiktari", _earnMagnetAmount);*/
         }
 
         public void GameWinSetCoins(int limit)

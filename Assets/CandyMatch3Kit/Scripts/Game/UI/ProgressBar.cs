@@ -26,10 +26,7 @@ namespace GameVanilla.Game.UI
         [HideInInspector]
         public int star3;
 
-        public GameObject girlAvatar;
-        public GameObject boyAvatar;
         public Animator girlAnimator;
-        public Animator boyAnimator;
         private Animator avatarAnimator;
 
         private bool star1Achieved;
@@ -41,17 +38,7 @@ namespace GameVanilla.Game.UI
         /// </summary>
         private void Start()
         {
-            var avatarSelected = PlayerPrefs.GetInt("avatar_selected");
-            if (avatarSelected == 0)
-            {
                 avatarAnimator = girlAnimator;
-                boyAvatar.SetActive(false);
-            }
-            else
-            {
-                avatarAnimator = boyAnimator;
-                girlAvatar.SetActive(false);
-            }
         }
 
         /// <summary>
@@ -87,7 +74,7 @@ namespace GameVanilla.Game.UI
             {
                 star1Achieved = true;
                 star1Image.Activate();
-                PlayerPrefs.SetInt("OyundaKazanilanYildizSayisi", 1);
+                PlayerPrefs.SetInt("LeveldenKazanilanMagnetMiktari", 1);
                 avatarAnimator.SetTrigger("Happy");
                 SoundManager.instance.PlaySound("StarProgressBar");
             }
@@ -95,7 +82,7 @@ namespace GameVanilla.Game.UI
             {
                 star2Achieved = true;
                 star2Image.Activate();
-                PlayerPrefs.SetInt("OyundaKazanilanYildizSayisi", 2);
+                PlayerPrefs.SetInt("LeveldenKazanilanMagnetMiktari", 2);
                 avatarAnimator.SetTrigger("Happy");
                 SoundManager.instance.PlaySound("StarProgressBar");
             }
@@ -103,7 +90,7 @@ namespace GameVanilla.Game.UI
             {
                 star3Achieved = true;
                 star3Image.Activate();
-                PlayerPrefs.SetInt("OyundaKazanilanYildizSayisi", 3);
+                PlayerPrefs.SetInt("LeveldenKazanilanMagnetMiktari", 3);
                 avatarAnimator.SetTrigger("Happy");
                 SoundManager.instance.PlaySound("StarProgressBar");
             }
