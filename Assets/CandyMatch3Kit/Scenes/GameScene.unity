@@ -1884,6 +1884,10 @@ MonoBehaviour:
   button2: {fileID: 1314019173}
   button3: {fileID: 1810081461}
   button4: {fileID: 1840226884}
+  _lock1: {fileID: 1232797664}
+  _lock2: {fileID: 1475813919}
+  _lock3: {fileID: 729912611}
+  _lock4: {fileID: 1025059664}
 --- !u!1 &786456923
 GameObject:
   m_ObjectHideFlags: 0
