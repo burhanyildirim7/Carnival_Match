@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CreatingTeamScript : MonoBehaviour
 {
-    [SerializeField] GameObject _creationPanel, _showTeamPanel,_backGround,_topButton;
+    [SerializeField] GameObject _creationPanel, _showTeamPanel,_topButton;
     [SerializeField] Text _teamName, _teamDescription,_teamType,_minLevel,_clanNameText;
 
     private void Start()
@@ -19,7 +19,6 @@ public class CreatingTeamScript : MonoBehaviour
         {
             
             _showTeamPanel.SetActive(true);
-            _backGround.GetComponent<Image>().enabled = false;
             _topButton.SetActive(false);
             _clanNameText.text = PlayerPrefs.GetString("TeamName");
             _creationPanel.SetActive(false);
@@ -27,7 +26,6 @@ public class CreatingTeamScript : MonoBehaviour
         else
         {
             _showTeamPanel.SetActive(false);
-            _backGround.GetComponent<Image>().enabled = true;
             _topButton.SetActive(true);
             _creationPanel.SetActive(true);
         }
@@ -45,7 +43,6 @@ public class CreatingTeamScript : MonoBehaviour
             PlayerPrefs.SetString("MinLevelText", _minLevel.text);
             _creationPanel.SetActive(false);
             _showTeamPanel.SetActive(true);
-            _backGround.GetComponent<Image>().enabled = false;
             _topButton.SetActive(false);
             _clanNameText.text = PlayerPrefs.GetString("TeamName");
 
@@ -56,7 +53,6 @@ public class CreatingTeamScript : MonoBehaviour
     {
         _creationPanel.SetActive(true);
         _showTeamPanel.SetActive(false);
-        _backGround.GetComponent<Image>().enabled = true;
         _topButton.SetActive(true);
         _teamName.text = "";
         _teamDescription.text = "";

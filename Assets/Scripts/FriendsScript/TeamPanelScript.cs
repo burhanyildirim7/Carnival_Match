@@ -10,7 +10,6 @@ using GameVanilla.Game.Popups;
 public class TeamPanelScript : MonoBehaviour
 {
     [SerializeField] private GameObject _joinBoard, _searchBoard, _createBoard, _leftButton,_middleButton, _rightButton, _showJoinedTeamPanel, _topButton;
-    [SerializeField] private Sprite _openedLeftButtonImg, _openedMiddleButtonImg, _openedRightButtonImg, _closedLeftButtonImg, _closedMiddleButtonImg, _closedRightButtonImg;
     BaseScene _baseScene;
 
     private void Start()
@@ -53,9 +52,9 @@ public class TeamPanelScript : MonoBehaviour
         _searchBoard.SetActive(false);
         _createBoard.SetActive(false);
 
-        _leftButton.GetComponent<Image>().sprite = _openedLeftButtonImg;
-        _middleButton.GetComponent<Image>().sprite = _closedMiddleButtonImg;
-        _rightButton.GetComponent<Image>().sprite = _closedRightButtonImg;
+        _leftButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        _middleButton.GetComponent<Image>().color = new Color(1, 1, 1, .5f);
+        _rightButton.GetComponent<Image>().color = new Color(1, 1, 1, .5f);
 
 
     }
@@ -67,9 +66,9 @@ public class TeamPanelScript : MonoBehaviour
         _searchBoard.SetActive(true);
         _createBoard.SetActive(false);
 
-        _leftButton.GetComponent<Image>().sprite = _closedLeftButtonImg;
-        _middleButton.GetComponent<Image>().sprite = _openedMiddleButtonImg;
-        _rightButton.GetComponent<Image>().sprite = _closedRightButtonImg;
+        _leftButton.GetComponent<Image>().color = new Color(1, 1, 1, .5f);
+        _middleButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        _rightButton.GetComponent<Image>().color = new Color(1, 1, 1, .5f);
 
 
     }
@@ -81,9 +80,9 @@ public class TeamPanelScript : MonoBehaviour
         _searchBoard.SetActive(false);
         _createBoard.SetActive(true);
 
-        _leftButton.GetComponent<Image>().sprite = _closedLeftButtonImg;
-        _middleButton.GetComponent<Image>().sprite = _closedMiddleButtonImg;
-        _rightButton.GetComponent<Image>().sprite = _openedRightButtonImg;
+        _leftButton.GetComponent<Image>().color = new Color(1, 1, 1, .5f);
+        _middleButton.GetComponent<Image>().color = new Color(1, 1, 1, .5f);
+        _rightButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
 
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FlagSelection : MonoBehaviour
 {
-    [SerializeField] private List<Sprite> _flagList = new List<Sprite>();
+    [SerializeField] public List<Sprite> _flagList = new List<Sprite>();
     // Start is called before the first frame update
     void Start()
     {

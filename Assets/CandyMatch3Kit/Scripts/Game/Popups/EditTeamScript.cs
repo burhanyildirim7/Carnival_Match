@@ -46,6 +46,8 @@ namespace GameVanilla.Game.Popups
                 PlayerPrefs.SetString("TeamDescription", _teamDescription.text);
                 PlayerPrefs.SetString("TeamType", _teamType.text);
                 PlayerPrefs.SetString("MinLevelText", _minLeveltext.text);
+                GameObject.Find("TakimBayragi").GetComponent<Image>().sprite = GameObject.Find("TakimBayragi").GetComponent<FlagSelection>()._flagList[PlayerPrefs.GetInt("FlagNo")];
+                    
                 _teamName.text = PlayerPrefs.GetString("TeamName");
                 _teamDescription.text = PlayerPrefs.GetString("TeamDescription");
                 _teamType.text = PlayerPrefs.GetString("TeamType");
@@ -68,6 +70,8 @@ namespace GameVanilla.Game.Popups
 
         public void OnCloseButtonPressed()
         {
+            GameObject.Find("TakimBayragi").GetComponent<Image>().sprite = GameObject.Find("TakimBayragi").GetComponent<FlagSelection>()._flagList[PlayerPrefs.GetInt("FlagNo")];
+
             Close();
         }
 
