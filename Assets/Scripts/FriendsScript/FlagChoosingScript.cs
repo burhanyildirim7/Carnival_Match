@@ -11,9 +11,12 @@ public class FlagChoosingScript : MonoBehaviour
     public void ChooseFlagButton()
     {
 
-        GameObject.Find("TeamFlagButton").GetComponent<Image>().sprite = GetComponent<Image>().sprite;
         _flagChoosePopUp.OnCloseButtonPressed();
-        PlayerPrefs.SetInt("FlagNo",_flagNo);
+        PlayerPrefs.SetInt("TempFlagNo",_flagNo);
+        Debug.Log("TempBayrakNo:" + PlayerPrefs.GetInt("TempFlagNo"));
+
+        GameObject.Find("TeamFlagButton").GetComponent<Image>().sprite = GetComponent<Image>().sprite;
+
     }
 
 }

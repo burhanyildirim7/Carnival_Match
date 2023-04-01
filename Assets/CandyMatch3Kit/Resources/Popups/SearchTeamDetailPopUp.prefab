@@ -113,6 +113,7 @@ MonoBehaviour:
   _minLeveltext: {fileID: 8737011630594846041}
   _teamCapacity: {fileID: 594766425417104983}
   _content: {fileID: 2284322872005382773}
+  _teamFlag: {fileID: 3469960481468358179}
 --- !u!114 &114438551231368098
 MonoBehaviour:
   m_ObjectHideFlags: 0

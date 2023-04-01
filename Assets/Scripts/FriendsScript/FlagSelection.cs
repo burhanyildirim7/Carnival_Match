@@ -9,6 +9,7 @@ public class FlagSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // PlayerPrefs.GetInt("FlagNo")
         if (PlayerPrefs.GetInt("CreationPanel") == 1)
         {
             GetComponent<Image>().sprite = _flagList[PlayerPrefs.GetInt("FlagNo")];
@@ -16,7 +17,17 @@ public class FlagSelection : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("JoinTeamPanel") == 1)
         {
-            GetComponent<Image>().sprite = _flagList[PlayerPrefs.GetInt("FlagNoJoin")];
+            GetComponent<Image>().sprite = _flagList[PlayerPrefs.GetInt("FlagNo")];
+
+        }
+        else if (PlayerPrefs.GetInt("ShowButtonBasildi") == 1)
+        {
+            GetComponent<Image>().sprite = _flagList[PlayerPrefs.GetInt("SearchFlagNo")];
+            PlayerPrefs.SetInt("ShowButtonBasildi",0);
+        }
+        else
+        {
+            GetComponent<Image>().sprite = _flagList[0];
         }
     }
 

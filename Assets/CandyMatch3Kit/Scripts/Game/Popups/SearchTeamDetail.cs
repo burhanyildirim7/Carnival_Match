@@ -14,13 +14,14 @@ namespace GameVanilla.Game.Popups
         private Popup loadingPopup;
         BaseScene _baseScene;
         [SerializeField] Text _teamName, _teamDescription, _teamType, _minLeveltext,_teamCapacity;
-        [SerializeField] GameObject _content;
+        [SerializeField] GameObject _content,_teamFlag;
         protected override void Awake()
         {
             base.Awake();
         }
         protected override void Start()
         {
+            Debug.Log("STARTTAYYYYYIM");
             base.Start();
             _baseScene = GameObject.FindObjectOfType<BaseScene>();
             _teamName.text = PlayerPrefs.GetString("SearchTeamName");
@@ -28,14 +29,14 @@ namespace GameVanilla.Game.Popups
             _teamType.text = PlayerPrefs.GetString("SearchTeamType");
             _minLeveltext.text = PlayerPrefs.GetString("SearchMinLevelText");
             _teamCapacity.text= _content.GetComponent<ContentDizme>()._contentAdeti.ToString()+"/50";
-
+            Debug.Log("FlagNumarası:" + PlayerPrefs.GetInt("FlagNo"));
         }
 
         private void OnDestroy()
         {
             PuzzleMatchManager.instance.coinsSystem.Unsubscribe(OnCoinsChanged);
         }
-
+         
         public void OnBuyButtonPressed(int numCoins)
         {
             PuzzleMatchManager.instance.coinsSystem.BuyCoins(numCoins);

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CreatingTeamScript : MonoBehaviour
 {
-    [SerializeField] GameObject _creationPanel, _showTeamPanel,_topButton;
+    [SerializeField] GameObject _creatTeamFlag,_teamFlag,_creationPanel, _showTeamPanel,_topButton;
     [SerializeField] Text _teamName, _teamDescription,_teamType,_minLevel,_clanNameText;
 
     private void Start()
@@ -45,6 +45,10 @@ public class CreatingTeamScript : MonoBehaviour
             _showTeamPanel.SetActive(true);
             _topButton.SetActive(false);
             _clanNameText.text = PlayerPrefs.GetString("TeamName");
+            PlayerPrefs.SetInt("FlagNo", PlayerPrefs.GetInt("TempFlagNo"));
+            _teamFlag.GetComponent<Image>().sprite = _teamFlag.GetComponent<FlagSelection>()._flagList[PlayerPrefs.GetInt("FlagNo")];
+            Debug.Log("GuncelBayrakNo:" + PlayerPrefs.GetInt("FlagNo"));
+            Debug.Log("TempBayrakNo:" + PlayerPrefs.GetInt("TempFlagNo"));
 
         }
 
@@ -56,6 +60,8 @@ public class CreatingTeamScript : MonoBehaviour
         _topButton.SetActive(true);
         _teamName.text = "";
         _teamDescription.text = "";
+        _creatTeamFlag.GetComponent<Image>().sprite = _creatTeamFlag.GetComponent<FlagSelection>()._flagList[0];
+
     }
 
 }

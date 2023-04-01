@@ -9,7 +9,8 @@ using GameVanilla.Game.Popups;
 
 public class TeamPanelScript : MonoBehaviour
 {
-    [SerializeField] private GameObject _joinBoard, _searchBoard, _createBoard, _leftButton,_middleButton, _rightButton, _showJoinedTeamPanel, _topButton;
+    [SerializeField] private GameObject _joinBoard, _searchBoard, _createBoard, _leftButton,_middleButton, _rightButton, _showJoinedTeamPanel, _topButton,
+        _CreateTeamFlag,_JoinTeamFlag, _JoinTeamName;
     BaseScene _baseScene;
 
     private void Start()
@@ -83,7 +84,7 @@ public class TeamPanelScript : MonoBehaviour
         _leftButton.GetComponent<Image>().color = new Color(1, 1, 1, .5f);
         _middleButton.GetComponent<Image>().color = new Color(1, 1, 1, .5f);
         _rightButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-
+        GameObject.Find("TeamFlagButton").GetComponent<Image>().sprite = GameObject.Find("TeamFlagButton").GetComponent<FlagSelection>()._flagList[0];
     }
 
     public void TeamFlagChooseButton()
@@ -106,6 +107,8 @@ public class TeamPanelScript : MonoBehaviour
         _createBoard.SetActive(false);
         _showJoinedTeamPanel.SetActive(true);
         _topButton.SetActive(false);
+        PlayerPrefs.SetInt("JoinTeamPanel", 1);
+        _JoinTeamFlag.GetComponent<Image>().sprite = _JoinTeamFlag.GetComponent<FlagSelection>()._flagList[PlayerPrefs.GetInt("FlagNo")];
     }
     public void JoiningClosingProgress()
     {
@@ -114,6 +117,7 @@ public class TeamPanelScript : MonoBehaviour
         _createBoard.SetActive(false);
         _showJoinedTeamPanel.SetActive(false);
         _topButton.SetActive(true);
+        _CreateTeamFlag.GetComponent<Image>().sprite = _CreateTeamFlag.GetComponent<FlagSelection>()._flagList[0];
     }
 
 }
