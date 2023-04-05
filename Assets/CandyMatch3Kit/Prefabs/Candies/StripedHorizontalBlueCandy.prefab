@@ -150,6 +150,10 @@ MonoBehaviour:
   destructable: 1
   color: 6
   direction: 0
+  _dikeyRoketler: {fileID: 4207528974238702628, guid: ec669ea2b3c6a414e9e5d93aae7c02c3,
+    type: 3}
+  _yatayRoketler: {fileID: 35947897604436649, guid: cb6476ef7406245a0b23453af4274494,
+    type: 3}
 --- !u!95 &95242144494473290
 Animator:
   serializedVersion: 5
@@ -170,3 +174,4 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

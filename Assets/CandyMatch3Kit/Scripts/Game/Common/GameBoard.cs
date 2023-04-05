@@ -83,6 +83,7 @@ namespace GameVanilla.Game.Common
         private int lastOtherSelectedTileY;
         private CandyColor lastOtherSelectedCandyColor;
 
+        private GameObject birinciTile;
         private GameObject ikinciTile;
 
         private GameConfiguration gameConfig;
@@ -545,16 +546,19 @@ namespace GameVanilla.Game.Common
 
                     if (selectedTile.GetComponent<StripedCandy>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
+                        birinciTile = selectedTile;
                         ExplodeTile(selectedTile);
                         //ApplyGravity();   
                     }
                     else if (selectedTile.GetComponent<WrappedCandy>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
+                        birinciTile = selectedTile;
                         ExplodeTile(selectedTile);
                         ApplyGravity();
                     }
                     else if (selectedTile.GetComponent<ColorBomb>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
+                        birinciTile = selectedTile;
                         ColorBombPatlat(selectedTile);
                     }
                     else
@@ -649,7 +653,7 @@ namespace GameVanilla.Game.Common
                         lastOtherSelectedTileY = idxB / level.width;
 
 
-
+                        birinciTile = selectedTile;
                         selectedTile = null;
 
                         PerformMove();
@@ -724,6 +728,7 @@ namespace GameVanilla.Game.Common
 
                         }
 
+                        birinciTile = selectedTile;
                         selectedTile = null;
 
                         possibleSwaps = DetectPossibleSwaps();
@@ -806,6 +811,7 @@ namespace GameVanilla.Game.Common
 
                         //StartCoroutine(YeniPatlamaGameObject(selectedTile));
 
+                        birinciTile = selectedTile;
                         selectedTile = null;
 
                         possibleSwaps = DetectPossibleSwaps();
@@ -841,6 +847,7 @@ namespace GameVanilla.Game.Common
                             });
                         }
 
+                        birinciTile = selectedTile;
                         selectedTile = null;
 
                         SoundManager.instance.PlaySound("Error");
@@ -1022,6 +1029,7 @@ namespace GameVanilla.Game.Common
                             //lastOtherSelectedCandyColor = CandyColor.Blue;
                         }
 
+                        birinciTile = selectedTile;
                         selectedTile = null;
 
                         possibleSwaps = DetectPossibleSwaps();
@@ -2351,7 +2359,28 @@ namespace GameVanilla.Game.Common
                     }
                 }
 
-                StartCoroutine(ApplyGravityAsync(didAnySpecialCandyExplode ? 0.5f : 0.0f));
+                if (isPlayerMatch)
+                {
+                    if (birinciTile.GetComponent<StripedCandy>() != null || ikinciTile.GetComponent<StripedCandy>() != null)
+                    {
+
+                    }
+                    else if (birinciTile.GetComponent<WrappedCandy>() != null || ikinciTile.GetComponent<WrappedCandy>() != null)
+                    {
+                        //ApplyGravity();
+                        //gameScene.CheckEndGame();
+                    }
+                    else
+                    {
+                        StartCoroutine(ApplyGravityAsync(didAnySpecialCandyExplode ? 0.5f : 0.0f));
+                    }
+                }
+                else
+                {
+                    StartCoroutine(ApplyGravityAsync(didAnySpecialCandyExplode ? 0.5f : 0.0f));
+                }
+
+
                 return true;
             }
             else

@@ -35,6 +35,13 @@ namespace GameVanilla.Game.Common
 
         private int _sayi1;
 
+        private int _sayi2;
+
+        private int _bulunduguSira;
+
+        [SerializeField] private GameObject _dikeyRoketler;
+        [SerializeField] private GameObject _yatayRoketler;
+
         /// <summary>
         /// Returns a list containing all the tiles destroyed when this tile explodes.
         /// </summary>
@@ -111,12 +118,21 @@ namespace GameVanilla.Game.Common
 
             _board = board;
 
+            _bulunduguSira = 0;
+            _sayi1 = 0;
+            _sayi2 = 0;
+
             //_board.BoosterIlePatlat(tile);
 
             tiles.Clear();
 
             if (direction == StripeDirection.Horizontal)
             {
+
+                _bulunduguSira = x;
+                _sayi1 = x - 1;
+                _sayi2 = x + 1;
+
                 for (var i = 0; i < board.level.width; i++)
                 {
                     var tilee = board.GetTile(i, y);
@@ -143,6 +159,11 @@ namespace GameVanilla.Game.Common
             }
             else
             {
+
+                _bulunduguSira = y;
+                _sayi1 = y - 1;
+                _sayi2 = y + 1;
+
                 for (var i = 0; i < board.level.height; i++)
                 {
                     var tilee = board.GetTile(x, i);
@@ -185,8 +206,18 @@ namespace GameVanilla.Game.Common
             float degery = tile.transform.position.y;
 
             //ArrowScript.instance.ArrowYerineGec(degerx, degery);
-            _sayi1 = 0;
-            Invoke("PatlatInvoke", 0.05f);
+
+            Invoke("PatlatInvoke", 0.1f);
+
+            if (direction == StripeDirection.Horizontal)
+            {
+                YatayRoketleriOlustur();
+            }
+            else
+            {
+                DikeyRoketleriOlustur();
+            }
+
             //monoScript.StartCoroutine(Patlat());
             //monoScript.StartCoroutine(Deneme());
 
@@ -255,31 +286,127 @@ namespace GameVanilla.Game.Common
         private void PatlatInvoke()
         {
             //Debug.Log("DeniyozPatlatCalisiyo " + _sayi1);
-            if (cachedTiles[_sayi1] != null)
+
+            Debug.Log("Sayı 1 ---- " + _sayi1);
+            Debug.Log("Sayı 2 ---- " + _sayi2);
+
+            if (_sayi1 >= 0)
             {
-                if (cachedTiles[_sayi1].GetComponent<ColorBomb>() != null)
+                if (cachedTiles[_sayi1] != null)
                 {
-                    _board.ColorBombPatlat(cachedTiles[_sayi1]);
-                    //_board.BoosterIlePatlat(cachedTiles[_sayi1]);
-                }
-                else if (cachedTiles[_sayi1].GetComponent<StripedCandy>() != null && cachedTiles[_sayi1] != gameObject)
-                {
-                    _board.RoketlePatlat(cachedTiles[_sayi1]);
+                    if (cachedTiles[_sayi1].GetComponent<ColorBomb>() != null)
+                    {
+                        _board.ColorBombPatlat(cachedTiles[_sayi1]);
+                        //_board.BoosterIlePatlat(cachedTiles[_sayi1]);
+                    }
+                    else if (cachedTiles[_sayi1].GetComponent<StripedCandy>() != null && cachedTiles[_sayi1] != gameObject)
+                    {
+                        _board.RoketlePatlat(cachedTiles[_sayi1]);
+                    }
+                    else
+                    {
+                        _board.BoosterIlePatlat(cachedTiles[_sayi1]);
+                    }
+
+                    _sayi1--;
                 }
                 else
                 {
-                    _board.BoosterIlePatlat(cachedTiles[_sayi1]);
+
                 }
 
-                _sayi1++;
+
+            }
+            else
+            {
+
+            }
+
+            if (_sayi2 < cachedTiles.Count)
+            {
+                if (cachedTiles[_sayi2] != null)
+                {
+                    if (cachedTiles[_sayi2].GetComponent<ColorBomb>() != null)
+                    {
+                        _board.ColorBombPatlat(cachedTiles[_sayi2]);
+                        //_board.BoosterIlePatlat(cachedTiles[_sayi1]);
+                    }
+                    else if (cachedTiles[_sayi2].GetComponent<StripedCandy>() != null && cachedTiles[_sayi2] != gameObject)
+                    {
+                        _board.RoketlePatlat(cachedTiles[_sayi2]);
+                    }
+                    else
+                    {
+                        _board.BoosterIlePatlat(cachedTiles[_sayi2]);
+                    }
+
+                    _sayi2++;
+
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
 
             }
 
 
 
+
+
+            /*
             if (_sayi1 == cachedTiles.Count)
             {
                 _board.ApplyGravity();
+            }
+            else
+            {
+                TekrarlaInvoke();
+            }
+            */
+
+            GravityKontrol();
+        }
+
+        private void PatlatInvoke2()
+        {
+            //Debug.Log("DeniyozPatlatCalisiyo " + _sayi1);
+
+
+
+
+
+
+            /*
+            if (_sayi1 == cachedTiles.Count)
+            {
+                _board.ApplyGravity();
+            }
+            else
+            {
+                TekrarlaInvoke();
+            }
+            */
+
+            GravityKontrol();
+        }
+
+        private void GravityKontrol()
+        {
+            if (_sayi2 == cachedTiles.Count)
+            {
+                if (_sayi1 == -1)
+                {
+                    _board.ApplyGravity();
+                }
+                else
+                {
+                    TekrarlaInvoke();
+                }
+
             }
             else
             {
@@ -290,7 +417,8 @@ namespace GameVanilla.Game.Common
         private void TekrarlaInvoke()
         {
             //Debug.Log("DeniyozTekrarlaCalisiyo");
-            Invoke("PatlatInvoke", 0.05f);
+            Invoke("PatlatInvoke", 0.1f);
+            //Invoke("PatlatInvoke2", 0.05f);
         }
 
 
@@ -316,6 +444,22 @@ namespace GameVanilla.Game.Common
             */
 
             SoundManager.instance.PlaySound("LineVerticalHorizontal");
+        }
+
+        private void DikeyRoketleriOlustur()
+        {
+            var obj = Instantiate(_dikeyRoketler);
+            //obj.transform.SetParent(transform);
+            obj.transform.position = gameObject.transform.position;
+
+        }
+
+        private void YatayRoketleriOlustur()
+        {
+            var obj = Instantiate(_yatayRoketler);
+            //obj.transform.SetParent(transform);
+            obj.transform.position = gameObject.transform.position;
+
         }
 
     }

@@ -1,0 +1,220 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &35947897604436649
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7717062240635332817}
+  - component: {fileID: 5021378086361226095}
+  m_Layer: 0
+  m_Name: YatayRoket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7717062240635332817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35947897604436649}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4906988604042667704}
+  - {fileID: 8100207217238943146}
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5021378086361226095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35947897604436649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6820f1e2d73d447f2a0421be5cf6b54c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sag: {fileID: 5052554601562435786}
+  _sol: {fileID: 833425853767754710}
+--- !u!1001 &5319076280388283665
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7717062240635332817}
+    m_Modifications:
+    - target: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139234861104176603, guid: d57214c584f2b425c80efa520cca508c,
+        type: 3}
+      propertyPath: m_Name
+      value: YataySag
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d57214c584f2b425c80efa520cca508c, type: 3}
+--- !u!4 &4906988604042667704 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 993052037545823145, guid: d57214c584f2b425c80efa520cca508c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5319076280388283665}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5052554601562435786 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1139234861104176603, guid: d57214c584f2b425c80efa520cca508c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5319076280388283665}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5756743505490458066
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7717062240635332817}
+    m_Modifications:
+    - target: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932817984096802308, guid: d3774d6a888984606bb06677373942e6,
+        type: 3}
+      propertyPath: m_Name
+      value: YataySol
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d3774d6a888984606bb06677373942e6, type: 3}
+--- !u!1 &833425853767754710 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4932817984096802308, guid: d3774d6a888984606bb06677373942e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 5756743505490458066}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8100207217238943146 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4579518962422681720, guid: d3774d6a888984606bb06677373942e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 5756743505490458066}
+  m_PrefabAsset: {fileID: 0}
