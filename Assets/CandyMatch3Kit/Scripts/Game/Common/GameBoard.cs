@@ -1664,6 +1664,33 @@ namespace GameVanilla.Game.Common
             gameUi.UpdateGoals(gameState);
         }
 
+        public void ComboRoketlePatlat(GameObject tile)
+        {
+            //tile.GetComponent<StripedCandy>().Resolve(this, tile);
+            var explodedTiles = new List<GameObject>();
+            ExplodeTileRecursive(tile, explodedTiles);
+            var score = 0;
+            foreach (var explodedTile in explodedTiles)
+            {
+                var idx = tiles.FindIndex(x => x == explodedTile);
+                if (idx != -1)
+                {
+                    explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
+                    explodedTile.GetComponent<Tile>().UpdateGameState(gameState);
+                    score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
+                    DestroyElements(explodedTile);
+                    //DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
+                    explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
+                    tiles[idx] = null;
+                }
+
+                SoundManager.instance.PlaySound("CandyMatch");
+            }
+
+            UpdateScore(score);
+            gameUi.UpdateGoals(gameState);
+        }
+
         /// <summary>
         /// Explodes the specified tile non-recursively.
         /// </summary>

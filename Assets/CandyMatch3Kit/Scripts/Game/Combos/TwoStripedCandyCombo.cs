@@ -15,6 +15,29 @@ namespace GameVanilla.Game.Common
     /// </summary>
     public class TwoStripedCandyCombo : Combo
     {
+        private List<GameObject> cachedTiles = new List<GameObject>();
+        private List<GameObject> cachedTiles2 = new List<GameObject>();
+
+        private List<GameObject> tiles3 = new List<GameObject>();
+        private List<GameObject> tiles2 = new List<GameObject>();
+
+        private int _sayi1;
+
+        private int _sayi2;
+
+        private int _sayi3;
+
+        private int _sayi4;
+
+        //private int _bulunduguSira;
+
+        MonoBehaviour monoScript;
+
+        private GameBoard _board;
+
+        private GameObject _tile1;
+        private GameObject _tile2;
+
         /// <summary>
         /// Resolves this combo.
         /// </summary>
@@ -23,6 +46,7 @@ namespace GameVanilla.Game.Common
         /// <param name="fxPool">The pool to use for the visual effects.</param>
         public override void Resolve(GameBoard board, List<GameObject> tiles, FxPool fxPool)
         {
+            /*
             var x = tileB.x;
             var y = tileB.y;
             var tilesToExplode = new List<GameObject>();
@@ -57,7 +81,11 @@ namespace GameVanilla.Game.Common
             SoundManager.instance.PlaySound("LineVerticalHorizontal");
 
             board.ApplyGravity();
+            */
+
+            GameObject.Find("StripedComboRoketOlustur").GetComponent<StripedComboRoketOlustur>().Resolve(board, tileA, tileB);
         }
+
 
         /// <summary>
         /// Explodes the specified row.
