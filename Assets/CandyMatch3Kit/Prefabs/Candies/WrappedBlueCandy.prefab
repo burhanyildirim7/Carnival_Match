@@ -148,7 +148,7 @@ MonoBehaviour:
   x: 0
   y: 0
   destructable: 1
-  color: 0
+  color: 6
 --- !u!95 &95152891402975290
 Animator:
   serializedVersion: 5
@@ -169,3 +169,4 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

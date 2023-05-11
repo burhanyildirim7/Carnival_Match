@@ -1,8 +1,4 @@
-﻿// Copyright (C) 2017-2022 gamevanilla. All rights reserved.
-// This code can only be used under the standard Unity Asset Store End User License Agreement,
-// a copy of which is available at http://unity3d.com/company/legal/as_terms.
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -39,7 +35,7 @@ namespace GameVanilla.Game.Common
         private TilePool tilePool;
 
         [SerializeField]
-        private FxPool fxPool;
+        public FxPool fxPool;
 
         [SerializeField]
         private Transform boardCenter;
@@ -57,7 +53,7 @@ namespace GameVanilla.Game.Common
         [HideInInspector]
         public int currentLimit;
 
-        private List<GameObject> tiles;
+        public List<GameObject> tiles;
         private List<GameObject> honeys;
         private List<GameObject> ices;
         private List<GameObject> syrups1;
@@ -134,6 +130,10 @@ namespace GameVanilla.Game.Common
 
         public static GameBoard instance;
 
+        public static int _patlamaSirasi;
+
+        public bool _colorBombAktif;
+
         /// <summary>
         /// Unity's Awake method.
         /// </summary>
@@ -157,6 +157,7 @@ namespace GameVanilla.Game.Common
         private void Start()
         {
             SoundManager.instance.AddSounds(gameSounds);
+            _patlamaSirasi = 0;
         }
 
         /// <summary>
@@ -590,16 +591,7 @@ namespace GameVanilla.Game.Common
                     }
 
                     ikinciTile = hit.collider.gameObject;
-                    /*
-                    if (Input.GetMouseButtonUp(0))
-                    {
-                        if (selectedTile.GetComponent<StripedCandy>() != null)
-                        {
-                            ExplodeTile(selectedTile);
-                            ApplyGravity();
-                        }
-                    }
-                    */
+
                     var idxSelected = tiles.FindIndex(x => x == selectedTile);
                     var xSelected = idxSelected % level.width;
                     var ySelected = idxSelected / level.width;
@@ -788,13 +780,6 @@ namespace GameVanilla.Game.Common
                             lastOtherSelectedCandyColor = hit.collider.gameObject.GetComponent<Candy>().color;
                             //lastOtherSelectedCandyColor = CandyColor.Black;
                         }
-                        /*
-                        if (selectedTile.GetComponent<StripedCandy>() != null)
-                        {
-                            ExplodeTile(selectedTile);
-                            ApplyGravity();
-                        }
-                        */
 
                         if (selectedTile.GetComponent<StripedCandy>() != null || selectedTile.GetComponent<WrappedCandy>() != null)
                         {
@@ -1281,6 +1266,7 @@ namespace GameVanilla.Game.Common
             tile.transform.position = tilePositions[tileIdx];
             tiles[tileIdx] = tile;
             CreateSpawnParticles(tile.transform.position);
+            tile.GetComponent<StripedCandy>()._patladim = false;
             return tile;
         }
 
@@ -1295,14 +1281,9 @@ namespace GameVanilla.Game.Common
             tile.transform.position = tilePositions[tileIdx];
             tiles[tileIdx] = tile;
             CreateSpawnParticles(tile.transform.position);
+            tile.GetComponent<StripedCandy>()._patladim = false;
             //PatlatHorizontalBooster(tile);
             return tile;
-        }
-
-        public void PatlatHorizontalBooster()
-        {
-            //ExplodeTile(obje);
-            ApplyGravity();
         }
 
         /// <summary>
@@ -1323,28 +1304,8 @@ namespace GameVanilla.Game.Common
             tile.transform.position = tilePositions[tileIdx];
             tiles[tileIdx] = tile;
             CreateSpawnParticles(tile.transform.position);
+            tile.GetComponent<StripedCandy>()._patladim = false;
             return tile;
-        }
-
-        public GameObject CreateVerticalStripedTileBooster(int x, int y, CandyColor color)
-        {
-            var tileIdx = x + (y * level.width);
-            //var tile = tilePool.GetStripedCandyPool(StripeDirection.Vertical, color).GetObject();
-            var tile = tilePool.GetStripedCandyPool(StripeDirection.Vertical, CandyColor.Blue).GetObject();
-            tile.GetComponent<Tile>().board = this;
-            tile.GetComponent<Tile>().x = x;
-            tile.GetComponent<Tile>().y = y;
-            tile.transform.position = tilePositions[tileIdx];
-            tiles[tileIdx] = tile;
-            CreateSpawnParticles(tile.transform.position);
-            PatlatVerticalBooster(tile);
-            return tile;
-        }
-
-        public void PatlatVerticalBooster(GameObject obje)
-        {
-            ExplodeTile(obje);
-            ApplyGravity();
         }
 
         /// <summary>
@@ -1522,39 +1483,6 @@ namespace GameVanilla.Game.Common
 
 
 
-        }
-
-        private IEnumerator ExplodeTileYeni(GameObject tile, bool didAnySpecialCandyExplode = false)
-        {
-            var explodedTiles = new List<GameObject>();
-
-            ExplodeTileRecursive(tile, explodedTiles);
-
-            var score = 0;
-
-            foreach (var explodedTile in explodedTiles)
-            {
-                var idx = tiles.FindIndex(x => x == explodedTile);
-                if (idx != -1)
-                {
-                    explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
-                    explodedTile.GetComponent<Tile>().UpdateGameState(gameState);
-                    score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
-                    DestroyElements(explodedTile);
-                    DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
-                    explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
-                    tiles[idx] = null;
-                }
-
-                SoundManager.instance.PlaySound("CandyMatch");
-
-                yield return new WaitForSeconds(0.1f);
-            }
-
-
-
-            UpdateScore(score);
-            gameUi.UpdateGoals(gameState);
         }
 
         public void CekicIlePatlat(GameObject tile, bool didAnySpecialCandyExplode = false)
@@ -1781,81 +1709,6 @@ namespace GameVanilla.Game.Common
             }
         }
 
-        private IEnumerator ExplodeTileRecursiveYeni(GameObject tile, List<GameObject> explodedTiles)
-        {
-            //var newTilesToExplode = tile.GetComponent<Tile>().Explode();
-
-            //explodedTiles.Add(tile);
-
-            for (int i = 0; i < explodedTiles.Count; i++)
-            {
-                if (explodedTiles[i] != null && explodedTiles[i].GetComponent<Tile>() != null && explodedTiles[i].GetComponent<Tile>().destructable && explodedTiles[i] != tile)
-                {
-                    if (explodedTiles[i].GetComponent<ColorBomb>() != null)
-                    {
-                        ColorBombPatlat(explodedTiles[i]);
-                        //explodedTiles.Add(t);
-                        //StartCoroutine(ExplodeTileRecursiveYeni(t, explodedTiles));
-                        //explodedTiles[i].GetComponent<Tile>().Explode();
-                    }
-                    else
-                    {
-                        //explodedTiles.Add(t);
-                        //StartCoroutine(ExplodeTileRecursiveYeni(t, explodedTiles));
-
-                        if (explodedTiles[i].GetComponent<WrappedCandy>() != null)
-                        {
-                            //ExplodeTile(explodedTiles[i]);
-                            explodedTiles[i].GetComponent<Tile>().Explode();
-                        }
-                        else
-                        {
-                            explodedTiles[i].GetComponent<Tile>().Explode();
-                        }
-
-                    }
-
-                }
-                if (i == explodedTiles.Count - 1)
-                {
-                    ApplyGravity();
-                    //gameScene.CheckEndGame();
-                }
-
-                yield return new WaitForSeconds(0.1f);
-            }
-
-
-            /*
-            foreach (var t in explodedTiles)
-            {
-                if (t != null && t.GetComponent<Tile>() != null && t.GetComponent<Tile>().destructable &&
-                    !explodedTiles.Contains(t) && t != tile)
-                {
-                    if (t.GetComponent<ColorBomb>() != null)
-                    {
-                        //ColorBombPatlat(t);
-                        //explodedTiles.Add(t);
-                        //StartCoroutine(ExplodeTileRecursiveYeni(t, explodedTiles));
-                        t.GetComponent<Tile>().Explode();
-                    }
-                    else
-                    {
-                        //explodedTiles.Add(t);
-                        //StartCoroutine(ExplodeTileRecursiveYeni(t, explodedTiles));
-
-                        t.GetComponent<Tile>().Explode();
-                    }
-
-                }
-
-                yield return new WaitForSeconds(0.2f);
-            }
-            */
-
-
-        }
-
         private void PatlatCombo(GameObject tile)
         {
             tile.GetComponent<Tile>().Explode();
@@ -1867,6 +1720,7 @@ namespace GameVanilla.Game.Common
         /// <param name="tile">The tile.</param>
         private void DestroyElements(GameObject tile)
         {
+
             var idx = tile.GetComponent<Tile>().x + (tile.GetComponent<Tile>().y * level.width);
             // Check for honey.
             if (idx != -1 && level.tiles[idx] != null && level.tiles[idx].elementType == ElementType.Honey)
@@ -1933,6 +1787,7 @@ namespace GameVanilla.Game.Common
 
                 SoundManager.instance.PlaySound("Ice");
             }
+
 
         }
 
@@ -2296,12 +2151,12 @@ namespace GameVanilla.Game.Common
                                 if (match.tiles.Contains(lastSelectedTile))
                                 {
                                     CreateWrappedTile(lastSelectedTileX, lastSelectedTileY,
-                                        lastSelectedCandyColor);
+                                        CandyColor.Blue);
                                 }
                                 else if (match.tiles.Contains(lastOtherSelectedTile))
                                 {
                                     CreateWrappedTile(lastOtherSelectedTileX, lastOtherSelectedTileY,
-                                        lastOtherSelectedCandyColor);
+                                        CandyColor.Blue);
                                 }
                             }
                             else if (randomIdx != -1)
@@ -2322,12 +2177,12 @@ namespace GameVanilla.Game.Common
                                     if (match.tiles.Contains(lastSelectedTile))
                                     {
                                         CreateHorizontalStripedTile(lastSelectedTileX, lastSelectedTileY,
-                                            lastSelectedCandyColor);
+                                            CandyColor.Blue);
                                     }
                                     else if (match.tiles.Contains(lastOtherSelectedTile))
                                     {
                                         CreateHorizontalStripedTile(lastOtherSelectedTileX, lastOtherSelectedTileY,
-                                            lastOtherSelectedCandyColor);
+                                            CandyColor.Blue);
                                     }
                                 }
                                 else if (randomIdx != -1)
@@ -2344,12 +2199,12 @@ namespace GameVanilla.Game.Common
                                     if (match.tiles.Contains(lastSelectedTile))
                                     {
                                         CreateVerticalStripedTile(lastSelectedTileX, lastSelectedTileY,
-                                            lastSelectedCandyColor);
+                                            CandyColor.Blue);
                                     }
                                     else if (match.tiles.Contains(lastOtherSelectedTile))
                                     {
                                         CreateVerticalStripedTile(lastOtherSelectedTileX, lastOtherSelectedTileY,
-                                            lastOtherSelectedCandyColor);
+                                            CandyColor.Blue);
                                     }
                                 }
                                 else if (randomIdx != -1)
@@ -3056,17 +2911,17 @@ namespace GameVanilla.Game.Common
                     if (UnityEngine.Random.Range(0, 2) % 2 == 0)
                     {
                         CreateHorizontalStripedTile(randomIdx % level.width, randomIdx / level.width,
-                            GetRandomCandyColor());
+                            CandyColor.Blue);
                     }
                     else
                     {
                         CreateVerticalStripedTile(randomIdx % level.width, randomIdx / level.width,
-                            GetRandomCandyColor());
+                            CandyColor.Blue);
                     }
                 }
                 else
                 {
-                    CreateWrappedTile(randomIdx % level.width, randomIdx / level.width, GetRandomCandyColor());
+                    CreateWrappedTile(randomIdx % level.width, randomIdx / level.width, CandyColor.Blue);
                 }
 
                 SoundManager.instance.PlaySound("BoosterAward");

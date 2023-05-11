@@ -23,68 +23,9 @@ namespace GameVanilla.Game.Common
     /// </summary>
     public class ColorBombWithCandyCombo : ColorBombCombo
     {
-
-        //MonoBehaviour monoScript;
-        /// <summary>
-        /// Resolves this combo.
-        /// </summary>
-        /// <param name="board">The game board.</param>
-        /// <param name="tiles">The tiles destroyed by the combo.</param>
-        /// <param name="fxPool">The pool to use for the visual effects.</param>
         public override void Resolve(GameBoard board, List<GameObject> tiles, FxPool fxPool)
         {
-            //monoScript = GameObject.FindObjectOfType<MonoBehaviour>();
-            //monoScript.StartCoroutine(Delay(board, tiles, fxPool));
-
-            base.Resolve(board, tiles, fxPool);
-
-            var candy = tileA.GetComponent<Candy>() != null ? tileA : tileB;
-
-
-
-            for (var i = tiles.Count - 1; i >= 0; i--)
-            {
-                var tile = tiles[i];
-                if (tile != null && tile.GetComponent<Candy>() != null &&
-                    tile.GetComponent<Candy>().color == candy.GetComponent<Candy>().color)
-                {
-                    board.ExplodeTileNonRecursive(tile);
-                }
-
-            }
-
-            SoundManager.instance.PlaySound("ColorBomb");
-
-            board.ApplyGravity();
-
+            GameObject.Find("ColorBombAndCandy").GetComponent<ColorBombAndCandy>().Resolve(board, tileA, tileB);
         }
-
-        /*
-        private IEnumerator Delay(GameBoard board, List<GameObject> tiles, FxPool fxPool)
-        {
-            yield return new WaitForSeconds(0.1f);
-            base.Resolve(board, tiles, fxPool);
-
-            var candy = tileA.GetComponent<Candy>() != null ? tileA : tileB;
-
-
-
-            for (var i = tiles.Count - 1; i >= 0; i--)
-            {
-                var tile = tiles[i];
-                if (tile != null && tile.GetComponent<Candy>() != null &&
-                    tile.GetComponent<Candy>().color == candy.GetComponent<Candy>().color)
-                {
-                    board.ExplodeTileNonRecursive(tile);
-                }
-
-            }
-
-            SoundManager.instance.PlaySound("ColorBomb");
-
-            board.ApplyGravity();
-
-        }
-        */
     }
 }

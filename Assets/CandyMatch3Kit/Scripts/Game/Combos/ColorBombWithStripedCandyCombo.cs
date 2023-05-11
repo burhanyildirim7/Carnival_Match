@@ -23,6 +23,7 @@ namespace GameVanilla.Game.Common
         /// <param name="fxPool">The pool to use for the visual effects.</param>
         public override void Resolve(GameBoard board, List<GameObject> tiles, FxPool fxPool)
         {
+            /*
             base.Resolve(board, tiles, fxPool);
 
             var striped = tileA.GetComponent<StripedCandy>() != null ? tileA : tileB;
@@ -32,7 +33,7 @@ namespace GameVanilla.Game.Common
             {
                 var tile = tiles[i];
                 if (tile != null && tile.GetComponent<Candy>() != null &&
-                    tile.GetComponent<Candy>().color == striped.GetComponent<Candy>().color)
+                    tile.GetComponent<Candy>().color == CandyColor.Blue)
                 {
                     var x = tile.GetComponent<Tile>().x;
                     var y = tile.GetComponent<Tile>().y;
@@ -54,6 +55,9 @@ namespace GameVanilla.Game.Common
             SoundManager.instance.PlaySound("ColorBomb");
 
             board.ExplodeGeneratedTiles(newTiles);
+            */
+
+            GameObject.Find("ColorBombAndStripedCandy").GetComponent<ColorBombAndStripedCandy>().Resolve(board, tileA, tileB);
         }
     }
 }

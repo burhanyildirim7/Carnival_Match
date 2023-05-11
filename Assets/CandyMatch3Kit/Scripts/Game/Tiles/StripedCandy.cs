@@ -18,9 +18,6 @@ namespace GameVanilla.Game.Common
         Vertical
     }
 
-    /// <summary>
-    /// The class used for striped candies.
-    /// </summary>
     public class StripedCandy : Candy
     {
         public StripeDirection direction;
@@ -42,87 +39,28 @@ namespace GameVanilla.Game.Common
         [SerializeField] private GameObject _dikeyRoketler;
         [SerializeField] private GameObject _yatayRoketler;
 
-        /// <summary>
-        /// Returns a list containing all the tiles destroyed when this tile explodes.
-        /// </summary>
-        /// <returns>A list containing all the tiles destroyed when this tile explodes.</returns>
-        /*
-        public override List<GameObject> Explode()
-        {
-            var tiles = new List<GameObject>();
+        public bool _patladim;
 
-            if (direction == StripeDirection.Horizontal)
-            {
-                for (var i = 0; i < board.level.width; i++)
-                {
-                    if (board.GetTile(i, y) != null)
-                    {
-                        var tile = board.GetTile(i, y);
-                        if (tile.GetComponent<Tile>() != null)
-                        {
-                            tiles.Add(tile);
-                        }
-                        //tiles.Add(tile);
-                    }
-                    //var tile = board.GetTile(i, y);
-                    //tiles.Add(tile);
-                }
-            }
-            else
-            {
-                for (var j = 0; j < board.level.height; j++)
-                {
-                    if (board.GetTile(x, j) != null)
-                    {
-                        var tile = board.GetTile(x, j);
-                        if (tile.GetComponent<Tile>() != null)
-                        {
-                            tiles.Add(tile);
-                        }
-                        //tiles.Add(tile);
-                    }
-                    //var tile = board.GetTile(x, j);
-                    //tiles.Add(tile);
-                }
-            }
-
-            cachedTiles.Clear();
-            foreach (var tile in tiles)
-            {
-                if (tile != null)
-                {
-                    cachedTiles.Add(tile);
-                }
-            }
-
-            return tiles;
-        }
-        */
+        private bool _patlamaBitti;
 
         public override List<GameObject> Explode()
         {
+            _patladim = true;
             return new List<GameObject> { gameObject };
         }
 
         public void Resolve(GameBoard board, GameObject tile)
         {
-            monoScript = GameObject.FindObjectOfType<MonoBehaviour>();
+            //GameBoard._patlamaSirasi++;
 
-
-            //Debug.Log("CALISTI");
             var x = tile.GetComponent<Tile>().x;
             var y = tile.GetComponent<Tile>().y;
-            //board.ExplodeTile(tile);
-
-            //Debug.Log(tile);
 
             _board = board;
 
             _bulunduguSira = 0;
             _sayi1 = 0;
             _sayi2 = 0;
-
-            //_board.BoosterIlePatlat(tile);
 
             tiles.Clear();
 
@@ -136,7 +74,7 @@ namespace GameVanilla.Game.Common
                 for (var i = 0; i < board.level.width; i++)
                 {
                     var tilee = board.GetTile(i, y);
-                    //Debug.Log(tilee);
+
                     if (tilee != null)
                     {
                         if (tilee.GetComponent<Collectable>() != null && tilee.GetComponent<Unbreakable>() != null)
@@ -146,8 +84,6 @@ namespace GameVanilla.Game.Common
                         else
                         {
                             tiles.Add(tilee);
-                            //Debug.Log(tilee);
-                            //Debug.Log("################################################");
                         }
                     }
                     else
@@ -167,7 +103,7 @@ namespace GameVanilla.Game.Common
                 for (var i = 0; i < board.level.height; i++)
                 {
                     var tilee = board.GetTile(x, i);
-                    //Debug.Log(tilee);
+
                     if (tilee != null)
                     {
                         if (tilee.GetComponent<Collectable>() != null && tilee.GetComponent<Unbreakable>() != null)
@@ -200,14 +136,8 @@ namespace GameVanilla.Game.Common
             }
 
 
-            //float degerx = ((cachedTiles.Count) * (-cachedTiles.Count) - 20);
-            //float degerx = ((board.level.width) * (-board.level.width) - 20);
-            float degerx = -110;
-            float degery = tile.transform.position.y;
 
-            //ArrowScript.instance.ArrowYerineGec(degerx, degery);
-
-            Invoke("PatlatInvoke", 0.1f);
+            Invoke("PatlatInvoke", 0.01f);
 
             if (direction == StripeDirection.Horizontal)
             {
@@ -217,91 +147,30 @@ namespace GameVanilla.Game.Common
             {
                 DikeyRoketleriOlustur();
             }
-
-            //monoScript.StartCoroutine(Patlat());
-            //monoScript.StartCoroutine(Deneme());
-
-        }
-
-        private IEnumerator Patlat()
-        {
-
-            //yield return new WaitForSeconds(0.5f);
-
-            int deg1 = 0;
-            int deg2 = 0;
-
-            for (int i = 0; i < 20; i++)
-            {
-                deg1++;
-                Debug.Log("Deger 1 :" + deg1);
-
-            }
-
-            for (var i = 0; i < cachedTiles.Count; i++)
-            {
-                Debug.Log("Element " + i + ":" + cachedTiles[i].activeSelf);
-            }
-
-            for (var i = 0; i < cachedTiles.Count; i++)
-            {
-                Debug.Log("Elementtttt " + i + ":" + cachedTiles[i].activeSelf);
-
-                if (cachedTiles[i] != null)
-                {
-                    if (cachedTiles[i].GetComponent<ColorBomb>() != null)
-                    {
-                        _board.ColorBombPatlat(cachedTiles[i]);
-                        _board.BoosterIlePatlat(cachedTiles[i]);
-                    }
-                    else if (cachedTiles[i].GetComponent<StripedCandy>() != null && cachedTiles[i] != gameObject)
-                    {
-                        _board.RoketlePatlat(cachedTiles[i]);
-                    }
-                    else
-                    {
-                        _board.BoosterIlePatlat(cachedTiles[i]);
-                    }
-
-                    yield return new WaitForSeconds(0.05f);
-                }
-            }
-
-            for (int i = 0; i < 20; i++)
-            {
-                deg2++;
-                Debug.Log("Deger 2 :" + deg2);
-            }
-
-            //yield return new WaitForSeconds(0.1f);
-
-            _board.ApplyGravity();
-
-            //_board.BoosterModdanCik();
-
-            //Debug.Log("BITTI");
-
         }
 
         private void PatlatInvoke()
         {
-            //Debug.Log("DeniyozPatlatCalisiyo " + _sayi1);
-
-            Debug.Log("Sayı 1 ---- " + _sayi1);
-            Debug.Log("Sayı 2 ---- " + _sayi2);
-
-            if (_sayi1 >= 0)
+            if (_sayi1 >= 0 && _sayi1 < cachedTiles.Count)
             {
+                Debug.Log("Sayı 1  =  " + _sayi1);
+                Debug.Log("CachedTile Sayı  =  " + cachedTiles.Count);
                 if (cachedTiles[_sayi1] != null)
                 {
                     if (cachedTiles[_sayi1].GetComponent<ColorBomb>() != null)
                     {
                         _board.ColorBombPatlat(cachedTiles[_sayi1]);
-                        //_board.BoosterIlePatlat(cachedTiles[_sayi1]);
                     }
                     else if (cachedTiles[_sayi1].GetComponent<StripedCandy>() != null && cachedTiles[_sayi1] != gameObject)
                     {
-                        _board.RoketlePatlat(cachedTiles[_sayi1]);
+                        if (cachedTiles[_sayi1].GetComponent<StripedCandy>()._patladim == true)
+                        {
+
+                        }
+                        else
+                        {
+                            _board.RoketlePatlat(cachedTiles[_sayi1]);
+                        }
                     }
                     else
                     {
@@ -329,11 +198,18 @@ namespace GameVanilla.Game.Common
                     if (cachedTiles[_sayi2].GetComponent<ColorBomb>() != null)
                     {
                         _board.ColorBombPatlat(cachedTiles[_sayi2]);
-                        //_board.BoosterIlePatlat(cachedTiles[_sayi1]);
                     }
                     else if (cachedTiles[_sayi2].GetComponent<StripedCandy>() != null && cachedTiles[_sayi2] != gameObject)
                     {
-                        _board.RoketlePatlat(cachedTiles[_sayi2]);
+                        if (cachedTiles[_sayi2].GetComponent<StripedCandy>()._patladim == true)
+                        {
+
+                        }
+                        else
+                        {
+                            _board.RoketlePatlat(cachedTiles[_sayi2]);
+                        }
+
                     }
                     else
                     {
@@ -353,54 +229,38 @@ namespace GameVanilla.Game.Common
 
             }
 
-
-
-
-
-            /*
-            if (_sayi1 == cachedTiles.Count)
+            if (_patlamaBitti == false)
             {
-                _board.ApplyGravity();
+                GravityKontrol();
             }
             else
             {
-                TekrarlaInvoke();
+
             }
-            */
 
-            GravityKontrol();
-        }
-
-        private void PatlatInvoke2()
-        {
-            //Debug.Log("DeniyozPatlatCalisiyo " + _sayi1);
-
-
-
-
-
-
-            /*
-            if (_sayi1 == cachedTiles.Count)
-            {
-                _board.ApplyGravity();
-            }
-            else
-            {
-                TekrarlaInvoke();
-            }
-            */
-
-            GravityKontrol();
         }
 
         private void GravityKontrol()
         {
+            //Debug.Log("patlama Sırası = " + GameBoard._patlamaSirasi);
             if (_sayi2 == cachedTiles.Count)
             {
+                //Debug.Log("Sayı 2 Kontrol");
                 if (_sayi1 == -1)
                 {
-                    _board.ApplyGravity();
+
+
+                    if (_board._colorBombAktif == false)
+                    {
+                        _board.ApplyGravity();
+                    }
+                    else
+                    {
+
+                    }
+
+
+
                 }
                 else
                 {
@@ -416,17 +276,8 @@ namespace GameVanilla.Game.Common
 
         private void TekrarlaInvoke()
         {
-            //Debug.Log("DeniyozTekrarlaCalisiyo");
             Invoke("PatlatInvoke", 0.1f);
-            //Invoke("PatlatInvoke2", 0.05f);
         }
-
-
-
-        /// <summary>
-        /// Shows the visual effects associated to the explosion of this tile.
-        /// </summary>
-        /// <param name="pool">The pool to use for the visual effects.</param>
 
         public override void ShowExplosionFx(FxPool pool)
         {
@@ -449,17 +300,13 @@ namespace GameVanilla.Game.Common
         private void DikeyRoketleriOlustur()
         {
             var obj = Instantiate(_dikeyRoketler);
-            //obj.transform.SetParent(transform);
             obj.transform.position = gameObject.transform.position;
-
         }
 
         private void YatayRoketleriOlustur()
         {
             var obj = Instantiate(_yatayRoketler);
-            //obj.transform.SetParent(transform);
             obj.transform.position = gameObject.transform.position;
-
         }
 
     }

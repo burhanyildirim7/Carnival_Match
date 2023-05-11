@@ -23,6 +23,7 @@ namespace GameVanilla.Game.Common
         /// <param name="fxPool">The pool to use for the visual effects.</param>
         public override void Resolve(GameBoard board, List<GameObject> tiles, FxPool fxPool)
         {
+            /*
             var x = tileB.x;
             var y = tileB.y;
             
@@ -43,6 +44,9 @@ namespace GameVanilla.Game.Common
             SoundManager.instance.PlaySound("LineVerticalHorizontal");
 
             board.ApplyGravity();
+            */
+
+            GameObject.Find("WrappedAndStripedCandy").GetComponent<WrappedAndStripedCandy>().Resolve(board, tileA, tileB);
         }
 
         /// <summary>

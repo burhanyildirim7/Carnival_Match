@@ -29,7 +29,6 @@ namespace GameVanilla.Game.Common
                 {
                     tiles.Add(board.GetTile(x - 1, y - 1));
                 }
-                //tiles.Add(board.GetTile(x - 1, y - 1));
             }
 
             if (board.GetTile(x, y - 1) != null)
@@ -38,7 +37,6 @@ namespace GameVanilla.Game.Common
                 {
                     tiles.Add(board.GetTile(x, y - 1));
                 }
-                //tiles.Add(board.GetTile(x, y - 1));
             }
 
             if (board.GetTile(x + 1, y - 1) != null)
@@ -47,7 +45,6 @@ namespace GameVanilla.Game.Common
                 {
                     tiles.Add(board.GetTile(x + 1, y - 1));
                 }
-                //tiles.Add(board.GetTile(x + 1, y - 1));
             }
 
             if (board.GetTile(x - 1, y) != null)
@@ -56,7 +53,6 @@ namespace GameVanilla.Game.Common
                 {
                     tiles.Add(board.GetTile(x - 1, y));
                 }
-                //tiles.Add(board.GetTile(x - 1, y));
             }
 
             if (board.GetTile(x + 1, y) != null)
@@ -65,7 +61,6 @@ namespace GameVanilla.Game.Common
                 {
                     tiles.Add(board.GetTile(x + 1, y));
                 }
-                //tiles.Add(board.GetTile(x + 1, y));
             }
 
             if (board.GetTile(x - 1, y + 1) != null)
@@ -74,7 +69,6 @@ namespace GameVanilla.Game.Common
                 {
                     tiles.Add(board.GetTile(x - 1, y + 1));
                 }
-                //tiles.Add(board.GetTile(x - 1, y + 1));
             }
 
             if (board.GetTile(x, y + 1) != null)
@@ -83,7 +77,6 @@ namespace GameVanilla.Game.Common
                 {
                     tiles.Add(board.GetTile(x, y + 1));
                 }
-                //tiles.Add(board.GetTile(x, y + 1));
             }
 
             if (board.GetTile(x + 1, y + 1) != null)
@@ -92,18 +85,10 @@ namespace GameVanilla.Game.Common
                 {
                     tiles.Add(board.GetTile(x + 1, y + 1));
                 }
-                //tiles.Add(board.GetTile(x + 1, y + 1));
             }
 
-            //tiles.Add(board.GetTile(x - 1, y - 1));
-            //tiles.Add(board.GetTile(x, y - 1));
-            //tiles.Add(board.GetTile(x + 1, y - 1));
-            //tiles.Add(board.GetTile(x - 1, y));
             tiles.Add(gameObject);
-            //tiles.Add(board.GetTile(x + 1, y));
-            //tiles.Add(board.GetTile(x - 1, y + 1));
-            //tiles.Add(board.GetTile(x, y + 1));
-            //tiles.Add(board.GetTile(x + 1, y + 1));
+
             return tiles;
         }
 

@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using GameVanilla.Core;
 using GameVanilla.Game.Common;
+using UnityEngine;
 
-public class StripedComboRoketOlustur : MonoBehaviour
+public class WrappedAndStripedCandy : MonoBehaviour
 {
-
     [SerializeField] private GameObject _dikeyRoketler;
     [SerializeField] private GameObject _yatayRoketler;
 
@@ -29,102 +27,72 @@ public class StripedComboRoketOlustur : MonoBehaviour
     public void Resolve(GameBoard board, Tile tileA, Tile tileB)
     {
 
-        Debug.Log("Debug -- 1 --");
-        Debug.Log("Tile A -- " + tileA);
-        Debug.Log("Tile B -- " + tileB);
-
-        board.ComboRoketlePatlat(tileA.gameObject);
-        board.ComboRoketlePatlat(tileB.gameObject);
-
         var x = tileB.x;
         var y = tileB.y;
 
-        _board = board;
+        var a = tileA.x;
+        var b = tileA.y;
 
-        _sayi1 = 0;
-        _sayi2 = 0;
+        var tilesToExplode = new List<GameObject>();
 
-        _sayi3 = 0;
-        _sayi4 = 0;
+        //ExplodeRow(board, fxPool, tilesToExplode, y - 1);
+        //ExplodeRow(board, fxPool, tilesToExplode, y);
+        //ExplodeRow(board, fxPool, tilesToExplode, y + 1);
+        //ExplodeColumn(board, fxPool, tilesToExplode, x - 1);
+        //ExplodeColumn(board, fxPool, tilesToExplode, x);
+        //ExplodeColumn(board, fxPool, tilesToExplode, x + 1);
 
-        tiles.Clear();
-        tiles2.Clear();
+        board.GetTile(x, y);
+        var newTiles = new List<GameObject>();
 
-        _sayi1 = x - 1;
-        _sayi2 = x + 1;
 
-        Debug.Log("Debug -- 2 --");
 
-        for (var i = 0; i < board.level.width; i++)
+
+        GameObject newTile1;
+        GameObject newTile2;
+        GameObject newTile3;
+        GameObject newTile4;
+        GameObject newTile5;
+        GameObject newTile6;
+
+        board.ExplodeTileNonRecursive(board.GetTile(x, y));
+        newTile1 = board.CreateHorizontalStripedTile(x, y, CandyColor.Black);
+        newTiles.Add(newTile1);
+
+        board.ExplodeTileNonRecursive(board.GetTile(x + 1, y));
+        newTile2 = board.CreateVerticalStripedTile(x + 1, y, CandyColor.Black);
+        newTiles.Add(newTile2);
+
+        board.ExplodeTileNonRecursive(board.GetTile(x - 1, y));
+        newTile3 = board.CreateVerticalStripedTile(x - 1, y, CandyColor.Black);
+        newTiles.Add(newTile3);
+
+        board.ExplodeTileNonRecursive(board.GetTile(x, y));
+        newTile4 = board.CreateVerticalStripedTile(x, y, CandyColor.Black);
+        newTiles.Add(newTile4);
+
+        board.ExplodeTileNonRecursive(board.GetTile(x, y + 1));
+        newTile5 = board.CreateHorizontalStripedTile(x, y + 1, CandyColor.Black);
+        newTiles.Add(newTile5);
+
+        board.ExplodeTileNonRecursive(board.GetTile(x, y - 1));
+        newTile6 = board.CreateHorizontalStripedTile(x, y - 1, CandyColor.Black);
+        newTiles.Add(newTile6);
+        /*
+        if (Random.Range(0, 2) % 2 == 0)
         {
-            var tilee = board.GetTile(i, y);
-            if (tilee != null)
-            {
-                if (tilee.GetComponent<Collectable>() != null && tilee.GetComponent<Unbreakable>() != null)
-                {
-
-                }
-                else
-                {
-                    tiles.Add(tilee);
-                }
-            }
-            else
-            {
-
-            }
-
+            newTile = board.CreateHorizontalStripedTile(a, b, CandyColor.Black);
         }
-
-        _sayi3 = y - 1;
-        _sayi4 = y + 1;
-
-        for (var i = 0; i < board.level.height; i++)
+        else
         {
-            var tilee = board.GetTile(x, i);
-            if (tilee != null)
-            {
-                if (tilee.GetComponent<Collectable>() != null && tilee.GetComponent<Unbreakable>() != null)
-                {
-
-                }
-                else
-                {
-                    tiles2.Add(tilee);
-                }
-            }
-            else
-            {
-
-            }
-
-
+            newTile = board.CreateVerticalStripedTile(a, b, CandyColor.Black);
         }
+        */
 
-        Debug.Log("Debug -- 3 --");
+        //newTiles.Add(newTile1);
 
-        cachedTiles.Clear();
-        foreach (var tiled in tiles)
-        {
-            if (tiled != null)
-            {
-                cachedTiles.Add(tiled);
-            }
-        }
 
-        cachedTiles2.Clear();
-        foreach (var tiled in tiles2)
-        {
-            if (tiled != null)
-            {
-                cachedTiles2.Add(tiled);
-            }
-        }
-
-        Invoke("PatlatInvoke", 0.01f);
-        ComboRoketleriOlustur(tileB.gameObject);
-
-        Debug.Log("Debug -- 4 --");
+        board.ExplodeGeneratedTiles(newTiles);
     }
 
     private void PatlatInvoke()
@@ -301,6 +269,4 @@ public class StripedComboRoketOlustur : MonoBehaviour
         obj.transform.position = objectKonum.transform.position;
 
     }
-
-
 }
