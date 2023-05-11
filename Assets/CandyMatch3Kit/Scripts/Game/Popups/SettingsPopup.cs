@@ -24,10 +24,8 @@ namespace GameVanilla.Game.Popups
 
 #pragma warning restore 649
 
-        private int currentSound;
-        private int currentMusic;
-        private int currentVibration;
-        private int currentNotifications;
+        private int currentSound, currentMusic, currentVibration, currentNotifications;
+
 
         /// <summary>
         /// Unity's Awake method.
@@ -43,6 +41,32 @@ namespace GameVanilla.Game.Popups
         protected override void Start()
         {
             base.Start();
+
+            if (PlayerPrefs.GetInt("ilk_acilis_ses_ayari_kontrol") == 1)
+            {   
+
+            }
+            else
+            {
+                PlayerPrefs.SetInt("music_enabled",1);
+                currentSound = PlayerPrefs.GetInt("sound_enabled");
+                PlayerPrefs.SetInt("sound_enabled", 1);
+                currentMusic = PlayerPrefs.GetInt("music_enabled");
+                PlayerPrefs.SetInt("vibration_enabled", 1);
+                currentVibration = PlayerPrefs.GetInt("vibration_enabled");
+
+                _musicOnImg.SetActive(true);
+                _musicOffImg.SetActive(false);
+
+                _soundOnImg.SetActive(true);
+                _soundOffImg.SetActive(false);
+
+                _vibrationOnImg.SetActive(true);
+                _vibrationOffImg.SetActive(false);
+
+                PlayerPrefs.SetInt("ilk_acilis_ses_ayari_kontrol", 1);
+            }
+
             if (PlayerPrefs.GetInt("music_enabled") == 1)
             {
                 _musicOnImg.SetActive(true);

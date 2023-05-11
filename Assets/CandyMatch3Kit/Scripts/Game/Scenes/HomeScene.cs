@@ -21,11 +21,7 @@ namespace GameVanilla.Game.Scenes
     public class HomeScene : BaseScene
     {
 #pragma warning disable 649
-        [SerializeField]
-        private AnimatedButton soundButton;
-
-        [SerializeField]
-        private AnimatedButton musicButton;
+       
         [SerializeField] private Text _playButtonText;
 #pragma warning restore 649
 
@@ -36,9 +32,6 @@ namespace GameVanilla.Game.Scenes
         /// </summary>
         private void Awake()
         {
-            Assert.IsNotNull(soundButton);
-            Assert.IsNotNull(musicButton);
-            
         }
 
         /// <summary>
