@@ -15,31 +15,36 @@ public class HomePageBottomButtonScript : MonoBehaviour
     void Start()
     {
         _homePageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 405 / 1262, 301);
-        _homePageButton.GetChild(2).transform.localPosition = new Vector3(0, 200, 0);
+        _homePageButton.GetChild(2).transform.localPosition = new Vector3(0, 135, 0);
+        _homePageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -190, 0), .2f);
         RectTransform rtHome = (RectTransform)_homePageButton.GetChild(2).transform;
-        rtHome.DOSizeDelta(new Vector2(350, 350), .1f);
+        rtHome.DOSizeDelta(new Vector2(300, 300), .1f);
         _homePageButton.GetComponent<Image>().sprite = _selectedImage;
 
         _teamPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _teamPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _teamPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtTeam = (RectTransform)_teamPageButton.GetChild(2).transform;
         rtTeam.DOSizeDelta(new Vector2(175, 175), .1f);
         _teamPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _collectionPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _collectionPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _collectionPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtCollection = (RectTransform)_collectionPageButton.GetChild(2).transform;
         rtCollection.DOSizeDelta(new Vector2(175, 175), .1f);
         _collectionPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _tournementPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _tournementPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _tournementPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtTournement = (RectTransform)_tournementPageButton.GetChild(2).transform;
         rtTournement.DOSizeDelta(new Vector2(175, 175), .1f);
         _tournementPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _friendsPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _friendsPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _friendsPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtFriend = (RectTransform)_friendsPageButton.GetChild(2).transform;
         rtFriend.DOSizeDelta(new Vector2(175, 175), .1f);
         _friendsPageButton.GetComponent<Image>().sprite = _unSelectedImage;
@@ -64,34 +69,40 @@ public class HomePageBottomButtonScript : MonoBehaviour
     {
 
         _homePageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 405 / 1262, 301);
-        _homePageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 200, 0), .2f);
+        _homePageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 135, 0), .2f);
+        _homePageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -190, 0), .2f);
         RectTransform rtHome = (RectTransform)_homePageButton.GetChild(2).transform;
-        rtHome.DOSizeDelta(new Vector2(350, 350), .1f);
+        rtHome.DOSizeDelta(new Vector2(300, 300), .1f);
         _homePageButton.GetComponent<Image>().sprite = _selectedImage;
 
         _teamPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _teamPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _teamPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtTeam = (RectTransform)_teamPageButton.GetChild(2).transform;
         rtTeam.DOSizeDelta(new Vector2(175, 175), .1f);
         _teamPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _collectionPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _collectionPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _collectionPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtCollection = (RectTransform)_collectionPageButton.GetChild(2).transform;
         rtCollection.DOSizeDelta(new Vector2(175, 175), .1f);
         _collectionPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _tournementPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _tournementPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _tournementPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtTournement = (RectTransform)_tournementPageButton.GetChild(2).transform;
         rtTournement.DOSizeDelta(new Vector2(175, 175), .1f);
         _tournementPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _friendsPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _friendsPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _friendsPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtFriend = (RectTransform)_friendsPageButton.GetChild(2).transform;
         rtFriend.DOSizeDelta(new Vector2(175, 175), .1f);
         _friendsPageButton.GetComponent<Image>().sprite = _unSelectedImage;
+
         _homePage.SetActive(true);
         _teamPage.SetActive(false);
         _collectionPage.SetActive(false);
@@ -104,33 +115,40 @@ public class HomePageBottomButtonScript : MonoBehaviour
 
         _homePageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _homePageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _homePageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
+
         RectTransform rtHome = (RectTransform)_homePageButton.GetChild(2).transform;
         rtHome.DOSizeDelta(new Vector2(175, 175), .1f);
         _homePageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _teamPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 405 / 1262, 301);
-        _teamPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 200, 0), .2f);
+        _teamPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 135, 0), .2f);
+        _teamPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -190, 0), .2f);
         RectTransform rtTeam = (RectTransform)_teamPageButton.GetChild(2).transform;
-        rtTeam.DOSizeDelta(new Vector2(350, 350), .1f);
+        rtTeam.DOSizeDelta(new Vector2(300, 300), .1f);
         _teamPageButton.GetComponent<Image>().sprite = _selectedImage;
 
         _collectionPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _collectionPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _collectionPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtCollection = (RectTransform)_collectionPageButton.GetChild(2).transform;
         rtCollection.DOSizeDelta(new Vector2(175, 175), .1f);
         _collectionPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _tournementPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _tournementPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _tournementPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtTournement = (RectTransform)_tournementPageButton.GetChild(2).transform;
         rtTournement.DOSizeDelta(new Vector2(175, 175), .1f);
         _tournementPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _friendsPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _friendsPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _friendsPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtFriend = (RectTransform)_friendsPageButton.GetChild(2).transform;
         rtFriend.DOSizeDelta(new Vector2(175, 175), .1f);
         _friendsPageButton.GetComponent<Image>().sprite = _unSelectedImage;
+
         _homePage.SetActive(false);
         _teamPage.SetActive(true);
         _collectionPage.SetActive(false);
@@ -152,33 +170,39 @@ public class HomePageBottomButtonScript : MonoBehaviour
 
         _homePageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _homePageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _homePageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtHome = (RectTransform)_homePageButton.GetChild(2).transform;
         rtHome.DOSizeDelta(new Vector2(175, 175), .1f);
         _homePageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _teamPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _teamPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _teamPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtTeam = (RectTransform)_teamPageButton.GetChild(2).transform;
         rtTeam.DOSizeDelta(new Vector2(175, 175), .1f);
         _teamPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _collectionPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 405 / 1262, 301);
-        _collectionPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 200, 0), .2f);
+        _collectionPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 135, 0), .2f);
+        _collectionPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -190, 0), .2f);
         RectTransform rtCollection = (RectTransform)_collectionPageButton.GetChild(2).transform;
-        rtCollection.DOSizeDelta(new Vector2(350, 350), .1f);
+        rtCollection.DOSizeDelta(new Vector2(300, 300), .1f);
         _collectionPageButton.GetComponent<Image>().sprite = _selectedImage;
 
         _tournementPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _tournementPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _tournementPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtTournement = (RectTransform)_tournementPageButton.GetChild(2).transform;
         rtTournement.DOSizeDelta(new Vector2(175, 175), .1f);
         _tournementPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _friendsPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _friendsPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _friendsPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtFriend = (RectTransform)_friendsPageButton.GetChild(2).transform;
         rtFriend.DOSizeDelta(new Vector2(175, 175), .1f);
         _friendsPageButton.GetComponent<Image>().sprite = _unSelectedImage;
+
         _homePage.SetActive(false);
         _teamPage.SetActive(false);
         _collectionPage.SetActive(true);
@@ -191,33 +215,39 @@ public class HomePageBottomButtonScript : MonoBehaviour
 
         _homePageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _homePageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _homePageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtHome = (RectTransform)_homePageButton.GetChild(2).transform;
         rtHome.DOSizeDelta(new Vector2(175, 175), .1f);
         _homePageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _teamPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _teamPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _teamPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtTeam = (RectTransform)_teamPageButton.GetChild(2).transform;
         rtTeam.DOSizeDelta(new Vector2(175, 175), .1f);
         _teamPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _collectionPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _collectionPageButton.GetChild(2).transform.localPosition = new Vector3(0, 50, 0);
+        _collectionPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtCollection = (RectTransform)_collectionPageButton.GetChild(2).transform;
         rtCollection.DOSizeDelta(new Vector2(175, 175), .1f);
         _collectionPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _tournementPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 405 / 1262, 301);
-        _tournementPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 200, 0), .2f);
+        _tournementPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 135, 0), .2f);
+        _tournementPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -190, 0), .2f);
         RectTransform rtTournement = (RectTransform)_tournementPageButton.GetChild(2).transform;
-        rtTournement.DOSizeDelta(new Vector2(350, 350), .1f);
+        rtTournement.DOSizeDelta(new Vector2(300, 300), .1f);
         _tournementPageButton.GetComponent<Image>().sprite = _selectedImage;
 
         _friendsPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _friendsPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _friendsPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtFriend = (RectTransform)_friendsPageButton.GetChild(2).transform;
         rtFriend.DOSizeDelta(new Vector2(175, 175), .1f);
         _friendsPageButton.GetComponent<Image>().sprite = _unSelectedImage;
+
         _homePage.SetActive(false);
         _teamPage.SetActive(false);
         _collectionPage.SetActive(false);
@@ -230,33 +260,39 @@ public class HomePageBottomButtonScript : MonoBehaviour
 
         _homePageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _homePageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _homePageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtHome = (RectTransform)_homePageButton.GetChild(2).transform;
         rtHome.DOSizeDelta(new Vector2(175, 175), .1f);
         _homePageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _teamPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _teamPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _teamPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtTeam = (RectTransform)_teamPageButton.GetChild(2).transform;
         rtTeam.DOSizeDelta(new Vector2(175, 175), .1f);
         _teamPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _collectionPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _collectionPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _collectionPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtCollection = (RectTransform)_collectionPageButton.GetChild(2).transform;
         rtCollection.DOSizeDelta(new Vector2(175, 175), .1f);
         _collectionPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _tournementPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 215 / 1262, 301);
         _tournementPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 50, 0), .1f);
+        _tournementPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -250, 0), .2f);
         RectTransform rtTournement = (RectTransform)_tournementPageButton.GetChild(2).transform;
         rtTournement.DOSizeDelta(new Vector2(175, 175), .1f);
         _tournementPageButton.GetComponent<Image>().sprite = _unSelectedImage;
 
         _friendsPageButton.sizeDelta = new Vector2(_UICanvas.rect.width * 405 / 1262, 301);
-        _friendsPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 200, 0), .2f);
+        _friendsPageButton.GetChild(2).transform.DOLocalMove(new Vector3(0, 135, 0), .2f);
+        _friendsPageButton.GetChild(2).GetChild(1).transform.DOLocalMove(new Vector3(0, -190, 0), .2f);
         RectTransform rtFriend = (RectTransform)_friendsPageButton.GetChild(2).transform;
-        rtFriend.DOSizeDelta(new Vector2(350, 350), .1f);
+        rtFriend.DOSizeDelta(new Vector2(300, 300), .1f);
         _friendsPageButton.GetComponent<Image>().sprite = _selectedImage;
+
         _homePage.SetActive(false);
         _teamPage.SetActive(false);
         _collectionPage.SetActive(false);
