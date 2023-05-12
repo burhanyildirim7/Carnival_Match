@@ -12,7 +12,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
     [Header("ORTAK OBJELERI")]
     [SerializeField] List<GameObject> _roundObjects=new List<GameObject>();
     [SerializeField] Slider _timeSlider;
-    [SerializeField] Text _oyuncuSirasiText;
+    [SerializeField] GameObject _oyuncuSirasiGorseli;
 
     [Header("PLAYER OBJELERI")] 
     [SerializeField] List<GameObject> _playerMoves = new List<GameObject>();
