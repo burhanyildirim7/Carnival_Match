@@ -44,6 +44,8 @@ namespace GameVanilla.Game.Common
         public ObjectPool redWrappedCandyPool;
         public ObjectPool yellowWrappedCandyPool;
 
+        public ObjectPool bumerangCandyPool;
+
         public ObjectPool colorBombCandyPool;
 
         public ObjectPool honeyPool;
@@ -65,6 +67,7 @@ namespace GameVanilla.Game.Common
         private readonly List<ObjectPool> horizontalStripedCandies = new List<ObjectPool>();
         private readonly List<ObjectPool> verticalStripedCandies = new List<ObjectPool>();
         private readonly List<ObjectPool> wrappedCandies = new List<ObjectPool>();
+        private readonly List<ObjectPool> bumerangCandies = new List<ObjectPool>();
 
         private readonly List<ObjectPool> specialBlocks = new List<ObjectPool>();
 
@@ -102,6 +105,8 @@ namespace GameVanilla.Game.Common
             Assert.IsNotNull(purpleWrappedCandyPool);
             Assert.IsNotNull(redWrappedCandyPool);
             Assert.IsNotNull(yellowWrappedCandyPool);
+
+            Assert.IsNotNull(bumerangCandyPool);
 
             Assert.IsNotNull(colorBombCandyPool);
 
@@ -148,6 +153,8 @@ namespace GameVanilla.Game.Common
             wrappedCandies.Add(redWrappedCandyPool);
             wrappedCandies.Add(yellowWrappedCandyPool);
 
+            bumerangCandies.Add(bumerangCandyPool);
+
             specialBlocks.Add(marshmallowPool);
             specialBlocks.Add(chocolatePool);
             specialBlocks.Add(unbreakablePool);
@@ -163,7 +170,7 @@ namespace GameVanilla.Game.Common
         /// <returns>The pool of the specified candy color.</returns>
         public ObjectPool GetCandyPool(CandyColor color)
         {
-            return candies[(int) color];
+            return candies[(int)color];
         }
 
         /// <summary>
@@ -177,10 +184,10 @@ namespace GameVanilla.Game.Common
             switch (direction)
             {
                 case StripeDirection.Horizontal:
-                    return horizontalStripedCandies[(int) color];
+                    return horizontalStripedCandies[(int)color];
 
                 default:
-                    return verticalStripedCandies[(int) color];
+                    return verticalStripedCandies[(int)color];
 
             }
         }
@@ -192,7 +199,7 @@ namespace GameVanilla.Game.Common
         /// <returns>The pool of the specified wrapped candy.</returns>
         public ObjectPool GetWrappedCandyPool(CandyColor color)
         {
-            return wrappedCandies[(int) color];
+            return wrappedCandies[(int)color];
         }
 
         /// <summary>
@@ -202,7 +209,7 @@ namespace GameVanilla.Game.Common
         /// <returns>The pool of the specified block.</returns>
         public ObjectPool GetSpecialBlockPool(SpecialBlockType block)
         {
-            return specialBlocks[(int) block];
+            return specialBlocks[(int)block];
         }
 
         /// <summary>
@@ -212,7 +219,14 @@ namespace GameVanilla.Game.Common
         /// <returns>The pool of the specified collectable.</returns>
         public ObjectPool GetCollectablePool(CollectableType collectable)
         {
-            return collectables[(int) collectable];
+            return collectables[(int)collectable];
+        }
+
+
+
+        public ObjectPool GetBumerangCandyPool(CandyColor color)
+        {
+            return bumerangCandies[(int)color];
         }
     }
 }
