@@ -3,13 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
-using Photon.Chat;
 using Photon.Pun;
 using Photon.Realtime;
 
 public class ServerKontrol : MonoBehaviourPunCallbacks
 {
     private bool _IsInternetAvailable = false;
+
+    [Header("GENEL")]
+
+    [SerializeField] List<GameObject> _pvpLevels = new List<GameObject>();
+    [SerializeField] List<GameObject> _pvpLevelsLockedObjects = new List<GameObject>();
+    [SerializeField] List<Text> _pvpLevelsAcilisBedelText=new List<Text>();
+    [SerializeField] List<Text> _pvpLevelsOynamaBedelText = new List<Text>();
+    [SerializeField] List<Text> _pvpLevelsRewarsAmountText = new List<Text>();
+    [SerializeField] GameObject _sagOkObject, _solOkObject;
+    [SerializeField] Text _rozetAmountText, _sliderRozetAmountText,_sliderBasiLevelText,_sliderSonuLevelText;
+    [SerializeField] Slider _rozetBiriktirmeSlideri;
+
+
+    [Header("RAKIP ARAMA PANELI")]
+    [SerializeField] GameObject _rakipAraniyorPanel,_cancelButton;
+    [SerializeField] Text _rakipAraniyorText,_playerNameText,_playerTeamNameText,_playerRozetAmountText,_rakipPlayerNameText, _rakipPlayerTeamNameText, _rakipPlayerRozetAmountText;
+
+
 
     void Start()
     {

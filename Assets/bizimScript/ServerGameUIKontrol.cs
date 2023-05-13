@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Chat;
 using Photon.Pun;
 using Photon.Realtime;
 using Unity.VisualScripting;
