@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace GameVanilla.Game.Common
 {
     /// <summary>
     /// Match detector that detects horizontal matches.
     /// </summary>
-	public class HorizontalMatchDetector : MatchDetector
+	public class KareMatchDetector : MatchDetector
     {
         /// <summary>
         /// Returns the list of detected matches.
