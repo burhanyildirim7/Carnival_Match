@@ -410,20 +410,21 @@ namespace GameVanilla.Game.Common
 
             var zoomLevel = gameConfig.GetZoomLevel();
             // Camera.main.orthographicSize = ((totalWidth * zoomLevel) * (Screen.height / (float)Screen.width) * 0.5f);
-            //Debug.Log("SCREEN WIDTH: " + Screen.width);
-            //Debug.Log("SCREEN HEIGHT: " + Screen.height);
-            //Debug.Log("SCREEN ORANI: " + (Screen.height / Screen.width));
-
 
             if (Screen.height / Screen.width >= 2f)
             {
                 Camera.main.orthographicSize = 160 * level.width / 7;
-
             }
             else
             {
-                Camera.main.orthographicSize = 120 * level.width / 7;
-
+                if (PhotonNetwork.IsConnected)
+                {
+                    Camera.main.orthographicSize = 155 * level.width / 7;
+                }
+                else
+                {
+                    Camera.main.orthographicSize = 120 * level.width / 7;
+                }
             }
             //Camera.main.orthographicSize = 140/(Screen.width/1284)*1.25f;
 
