@@ -13,6 +13,7 @@ using GameVanilla.Game.Popups;
 using GameVanilla.Game.Scenes;
 using GameVanilla.Game.UI;
 using UnityEngine.SocialPlatforms.Impl;
+using System.Text.RegularExpressions;
 
 namespace GameVanilla.Game.Common
 {
@@ -2220,6 +2221,108 @@ namespace GameVanilla.Game.Common
                     }
                 }
 
+                /*
+                if (!didAnySpecialCandyExplode && numSpecialCandiesGenerated == 0)
+                {
+                    if (match.tiles.Count >= 5 && match.type != MatchType.TShaped &&
+                        match.type != MatchType.LShaped)
+                    {
+                        if (isPlayerMatch)
+                        {
+                            if (match.tiles.Contains(lastSelectedTile))
+                            {
+                                CreateColorBomb(lastSelectedTileX, lastSelectedTileY);
+                            }
+                            else if (match.tiles.Contains(lastOtherSelectedTile))
+                            {
+                                CreateColorBomb(lastOtherSelectedTileX, lastOtherSelectedTileY);
+                            }
+                        }
+                        else if (randomIdx != -1)
+                        {
+                            var i = randomIdx % level.width;
+                            var j = randomIdx / level.width;
+                            CreateColorBomb(i, j);
+                        }
+
+                        ++numSpecialCandiesGenerated;
+                    }
+                    else if (match.tiles.Count >= 5)
+                    {
+                        if (isPlayerMatch)
+                        {
+                            if (match.tiles.Contains(lastSelectedTile))
+                            {
+                                CreateWrappedTile(lastSelectedTileX, lastSelectedTileY,
+                                    CandyColor.Blue);
+                            }
+                            else if (match.tiles.Contains(lastOtherSelectedTile))
+                            {
+                                CreateWrappedTile(lastOtherSelectedTileX, lastOtherSelectedTileY,
+                                    CandyColor.Blue);
+                            }
+                        }
+                        else if (randomIdx != -1)
+                        {
+                            var i = randomIdx % level.width;
+                            var j = randomIdx / level.width;
+                            CreateWrappedTile(i, j, randomColor);
+                        }
+
+                        ++numSpecialCandiesGenerated;
+                    }
+                    else if (match.tiles.Count >= 4)
+                    {
+                        if (swapDirection == SwapDirection.Horizontal)
+                        {
+                            if (isPlayerMatch)
+                            {
+                                if (match.tiles.Contains(lastSelectedTile))
+                                {
+                                    CreateHorizontalStripedTile(lastSelectedTileX, lastSelectedTileY,
+                                        CandyColor.Blue);
+                                }
+                                else if (match.tiles.Contains(lastOtherSelectedTile))
+                                {
+                                    CreateHorizontalStripedTile(lastOtherSelectedTileX, lastOtherSelectedTileY,
+                                        CandyColor.Blue);
+                                }
+                            }
+                            else if (randomIdx != -1)
+                            {
+                                var i = randomIdx % level.width;
+                                var j = randomIdx / level.width;
+                                CreateHorizontalStripedTile(i, j, randomColor);
+                            }
+                        }
+                        else
+                        {
+                            if (isPlayerMatch)
+                            {
+                                if (match.tiles.Contains(lastSelectedTile))
+                                {
+                                    CreateVerticalStripedTile(lastSelectedTileX, lastSelectedTileY,
+                                        CandyColor.Blue);
+                                }
+                                else if (match.tiles.Contains(lastOtherSelectedTile))
+                                {
+                                    CreateVerticalStripedTile(lastOtherSelectedTileX, lastOtherSelectedTileY,
+                                        CandyColor.Blue);
+                                }
+                            }
+                            else if (randomIdx != -1)
+                            {
+                                var i = randomIdx % level.width;
+                                var j = randomIdx / level.width;
+                                CreateVerticalStripedTile(i, j, randomColor);
+                            }
+                        }
+
+                        ++numSpecialCandiesGenerated;
+                    }
+                }
+            }
+                */
                 if (isPlayerMatch)
                 {
                     consecutiveCascades = 0;
