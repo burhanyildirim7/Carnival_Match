@@ -11,16 +11,16 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
     private bool _IsInternetAvailable = false;
 
     [Header("GENEL")]
-
+    [SerializeField] PVPPanelUI _pvpPanelUIScript;
+    [SerializeField] GameObject _pvpLevelsContentObject;
     [SerializeField] List<GameObject> _pvpLevels = new List<GameObject>();
     [SerializeField] List<GameObject> _pvpLevelsLockedObjects = new List<GameObject>();
     [SerializeField] List<Text> _pvpLevelsAcilisBedelText=new List<Text>();
     [SerializeField] List<Text> _pvpLevelsOynamaBedelText = new List<Text>();
-    [SerializeField] List<Text> _pvpLevelsRewarsAmountText = new List<Text>();
-    [SerializeField] GameObject _sagOkObject, _solOkObject;
+    [SerializeField] List<Text> _pvpLevelsRewardsAmountText = new List<Text>();
     [SerializeField] Text _rozetAmountText, _sliderRozetAmountText,_sliderBasiLevelText,_sliderSonuLevelText;
     [SerializeField] Slider _rozetBiriktirmeSlideri;
-
+    private int _pvpContentSira;
 
     [Header("RAKIP ARAMA PANELI")]
     [SerializeField] GameObject _rakipAraniyorPanel,_cancelButton;
@@ -30,6 +30,42 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        for (int i = 0; i < _pvpLevelsContentObject.transform.childCount; i++)
+        {
+            _pvpLevels.Add(_pvpLevelsContentObject.transform.GetChild(i).gameObject);
+        }
+        for (int i = 0; i < _pvpLevelsContentObject.transform.childCount; i++)
+        {
+            _pvpLevelsLockedObjects.Add(_pvpLevelsContentObject.transform.GetChild(i).GetChild(0).GetChild(2).gameObject);
+        }
+        for (int i = 0; i < _pvpLevelsContentObject.transform.childCount; i++)
+        {
+            _pvpLevelsAcilisBedelText.Add(_pvpLevelsContentObject.transform.GetChild(i).GetChild(0).GetChild(2).GetChild(0).gameObject.GetComponent<Text>());
+        }
+        for (int i = 0; i < _pvpLevelsContentObject.transform.childCount; i++)
+        {
+            _pvpLevelsOynamaBedelText.Add(_pvpLevelsContentObject.transform.GetChild(i).GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<Text>());
+        }
+        for (int i = 0; i < _pvpLevelsContentObject.transform.childCount; i++)
+        {
+            _pvpLevelsRewardsAmountText.Add(_pvpLevelsContentObject.transform.GetChild(i).GetChild(0).GetChild(5).gameObject.GetComponent<Text>());
+        }
+        _pvpContentSira = 0;
+
+
+        for (int i = 1; i < _pvpLevelsLockedObjects.Count; i++) 
+        {
+            if (_pvpLevelsLockedObjects[i].activeSelf)   
+            {
+
+            }
+            else
+            {
+                _pvpContentSira++;
+            }
+        }
+        _pvpPanelUIScript.ContentSiraDegiskeniniGuncelle(_pvpContentSira);
+
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             Debug.Log("HATA:INTERNETE BAĞLI DEĞİL");
@@ -88,8 +124,7 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
     {
 
         Debug.Log("SERVERA BAĞLANILDI");
-        //_serverDurumText.text = "SERVERA BAĞLANILDI";
-
+        InvokeRepeating("SearchinTextAnimasyon", .01f, .25f);
     }
 
     public override void OnJoinedLobby()
@@ -100,23 +135,16 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("ODAYA GIRILDI");
+
         if (PhotonNetwork.PlayerList.Length > 1)
         {
             Debug.Log("ODADA BIRI VAR-ODADAKİ OYUNCU SAYISI: " + PhotonNetwork.PlayerList.Length);
-            GameObject playerNesne = PhotonNetwork.Instantiate("PlayerObjesi", new Vector3(-3, 1, 5), Quaternion.identity, 0, null);
-            playerNesne.transform.tag = "Player";
-            playerNesne.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = PhotonNetwork.NickName;
-            //_rakipDurumuText.text = "RAKİP BULUNDU";
         }
         else
         {
             Debug.Log("ODADA KIMSE YOK");
-            GameObject playerNesne = PhotonNetwork.Instantiate("PlayerObjesi", new Vector3(3, 1, 5), Quaternion.identity, 0, null);
-            playerNesne.transform.tag = "Player";
-            playerNesne.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = PhotonNetwork.NickName;
-            //_rakipDurumuText.text = "RAKİP BEKLENİYOR...";
-        }
 
+        }
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -152,7 +180,6 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer) //bir kullıcı odaya girdiğinde çalışır.
     {
         Debug.Log("BIR KULLANICI ODAYA KATILDI-ODADAKİ OYUNCU SAYISI: " + PhotonNetwork.PlayerList.Length);
-        //_rakipDurumuText.text = "RAKİP BULUNDU";
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)//bir kullıcı odaya çıktığında çalışır.
@@ -167,6 +194,46 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
 
     #endregion
 
+    #region // private metodlar
+    private void SearchinTextAnimasyon()
+    {
+        if (_rakipAraniyorText.text=="Searching...")
+        {
+            _rakipAraniyorText.text="Searching";
+        }
+        else
+        {
+            _rakipAraniyorText.text = _rakipAraniyorText.text + ".";
+        }
+    }
 
+    private void RakipAramaCancelButtonAktiflik()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            _cancelButton.GetComponent<Button>().interactable = true;
+            CancelInvoke("RakipAramaCancelButtonAktiflik");
+        }
+        else
+        {
+            _cancelButton.GetComponent<Button>().interactable = false;
+        }
+    }
+    #endregion
 
+    #region //public metodlar
+    public void MatchButton()
+    {
+        PhotonNetwork.ConnectUsingSettings();
+        _rakipAraniyorPanel.SetActive(true);
+        InvokeRepeating("RakipAramaCancelButtonAktiflik",.01f,.1f);
+    }
+
+    public void RakipAramaCancelButton()
+    {
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.Disconnect();
+        _rakipAraniyorPanel.SetActive(false);
+    }
+    #endregion
 }
