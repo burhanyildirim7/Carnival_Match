@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.Animations;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Drawing;
 using GameVanilla.Core;
+using DG.Tweening;
 
 public class ServerKontrol : MonoBehaviourPunCallbacks
 {
     private bool _IsInternetAvailable = false;
-
+    [SerializeField] InputField _kullaniciAdi;
     [Header("GENEL")]
     [SerializeField] PVPPanelUI _pvpPanelUIScript;
     [SerializeField] GameObject _pvpLevelsContentObject;
@@ -26,9 +28,11 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
     private int _pvpContentSira;
 
     [Header("RAKIP ARAMA PANELI")]
-    [SerializeField] GameObject _rakipAraniyorPanel,_cancelButton;
+    [SerializeField] GameObject _rakipAraniyorPanel;
+    [SerializeField] GameObject _cancelButton;
+    [SerializeField] GameObject _rakipPlayerPic;
+    [SerializeField] List<Sprite> _rakipPlayerPicSprites=new List<Sprite>();
     [SerializeField] Text _rakipAraniyorText,_playerNameText,_playerTeamNameText,_playerRozetAmountText,_rakipPlayerNameText, _rakipPlayerTeamNameText, _rakipPlayerRozetAmountText;
-
 
 
     void Start()
@@ -125,9 +129,8 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
 
     public override void OnConnected()
     {
-
         Debug.Log("SERVERA BAĞLANILDI");
-        InvokeRepeating("SearchinTextAnimasyon", .01f, .25f);
+        PhotonNetwork.NickName = _kullaniciAdi.text;
     }
 
     public override void OnJoinedLobby()
@@ -184,6 +187,7 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer) //bir kullıcı odaya girdiğinde çalışır.
     {
         Debug.Log("BIR KULLANICI ODAYA KATILDI-ODADAKİ OYUNCU SAYISI: " + PhotonNetwork.PlayerList.Length);
+
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)//bir kullıcı odaya çıktığında çalışır.
@@ -204,10 +208,16 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
         if (_rakipAraniyorText.text=="Searching...")
         {
             _rakipAraniyorText.text="Searching";
+            _rakipPlayerNameText.text = "";
+            _rakipPlayerTeamNameText.text = "";
+            _rakipPlayerRozetAmountText.text = "";
         }
         else
         {
             _rakipAraniyorText.text = _rakipAraniyorText.text + ".";
+            _rakipPlayerNameText.text = _rakipPlayerNameText.text + "?";
+            _rakipPlayerTeamNameText.text = _rakipPlayerTeamNameText.text + "?";
+            _rakipPlayerRozetAmountText.text = _rakipPlayerRozetAmountText.text + "?";
         }
     }
 
@@ -217,6 +227,7 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
         {
             _cancelButton.GetComponent<Button>().interactable = true;
             CancelInvoke("RakipAramaCancelButtonAktiflik");
+
         }
         else
         {
@@ -228,13 +239,24 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.PlayerListOthers.Length>0)
         {
-            //SceneManager.LoadScene("PVPGameScene");
-            GetComponent<SceneTransition>().OpenPVPScene();
+            Animator _rakipPicAnimator = _rakipPlayerPic.GetComponent<Animator>();
+            _rakipPicAnimator.SetBool("run", false);
+            CancelInvoke("RakipSorgula");
+            CancelInvoke("SearchinTextAnimasyon");
+            string[] _rakipBilgileri = PhotonNetwork.PlayerListOthers[0].NickName.Split('/');
+            _rakipPlayerNameText.text = _rakipBilgileri[0];
+            _rakipPlayerTeamNameText.text = _rakipBilgileri[1];
+            _rakipPlayerRozetAmountText.text= _rakipBilgileri[2];
+            Invoke("PVPSahnesineGecis", 1f);
         }
         else
         {
 
         }
+    }
+    private void PVPSahnesineGecis()
+    {
+        GetComponent<SceneTransition>().OpenPVPScene();
     }
     #endregion
 
@@ -243,7 +265,11 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.ConnectUsingSettings();
         _rakipAraniyorPanel.SetActive(true);
+        InvokeRepeating("SearchinTextAnimasyon", .01f, .375f);
         InvokeRepeating("RakipAramaCancelButtonAktiflik",.01f,.1f);
+
+        Animator _rakipPicAnimator = _rakipPlayerPic.GetComponent<Animator>();
+        _rakipPicAnimator.SetBool("run",true);
     }
 
     public void RakipAramaCancelButton()

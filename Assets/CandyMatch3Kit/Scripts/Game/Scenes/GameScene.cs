@@ -1,8 +1,4 @@
-﻿// Copyright (C) 2017-2022 gamevanilla. All rights reserved.
-// This code can only be used under the standard Unity Asset Store End User License Agreement,
-// a copy of which is available at http://unity3d.com/company/legal/as_terms.
-
-using System.Collections;
+﻿using System.Collections;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -13,6 +9,8 @@ using GameVanilla.Game.Common;
 using GameVanilla.Game.Popups;
 using GameVanilla.Game.UI;
 using System.Collections.Generic;
+
+using Photon.Pun;
 
 namespace GameVanilla.Game.Scenes
 {
@@ -301,13 +299,27 @@ namespace GameVanilla.Game.Scenes
         /// </summary>
         public void OnPauseButtonPressed()
         {
-            if (currentPopups.Count == 0)
+            if (PhotonNetwork.IsConnected)
             {
-                OpenPopup<InGameSettingsPopup>("Popups/InGameSettingsPopup");
+                if (currentPopups.Count == 0)
+                {
+                    OpenPopup<InGameSettingsPopup>("Popups/PVPInGameSettingsPopup");
+                }
+                else
+                {
+                    CloseCurrentPopup();
+                }
             }
             else
             {
-                CloseCurrentPopup();
+                if (currentPopups.Count == 0)
+                {
+                    OpenPopup<InGameSettingsPopup>("Popups/InGameSettingsPopup");
+                }
+                else
+                {
+                    CloseCurrentPopup();
+                }
             }
         }
 

@@ -38,6 +38,13 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        #region //Kullanıcı bilgileri
+        string[] _playerBilgileri = PhotonNetwork.NickName.Split('/');
+        _rakipPlayerNameText.text = _playerBilgileri[0];
+
+        string[] _rakipBilgileri = PhotonNetwork.PlayerListOthers[0].NickName.Split('/');
+        _rakipPlayerNameText.text = _rakipBilgileri[0];
+        #endregion
 
         #region //Round Object kontrol baslangic
 
@@ -57,30 +64,18 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
             }
         }
         #endregion
-
-        #region //oyuncu isimlerini güncelleme
-
-        #endregion
     }
 
     void Update()
     {
-        /* ORNEK KOD
-         * 
-        if (PhotonNetwork.IsConnected)
-        {
-           
-           
-        }
-
-        hit.collider.gameObject.GetComponent<PhotonView>().RPC("OrnekMetod",RpcTarget.All,null);
-        hit.collider.gameObject.GetComponent<PhotonView>().RPC("OrnekMetod", RpcTarget.All, 10); //her vuruşta 10 can götürecek
-        *
-        */
-
-
 
     }
+
+    public void DEGERDEGISIMDENEME()
+    {
+        RoundObjeleriniDuzenle();
+    }
+
 
     #region // RPC kodlar
 
@@ -93,6 +88,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 
     }
 
+    [PunRPC]
     public void RoundGuncelle()
     {
         switch (_roundNo)
@@ -120,11 +116,10 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         }
     }
 
-    #endregion
-
+    [PunRPC]
     private void RoundObjeleriniDuzenle()
     {
-
+        _roundNo++;
         for (int i = 0; i < _roundObjects.Count; i++)
         {
             if (i == _roundNo)
@@ -138,6 +133,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
                 _roundObjects[i].transform.GetChild(0).GetComponent<Text>().color = Color.black;
             }
         }
-
     }
+    #endregion
+
 }
