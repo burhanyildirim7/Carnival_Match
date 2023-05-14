@@ -15,6 +15,8 @@ using GameVanilla.Game.UI;
 using UnityEngine.SocialPlatforms.Impl;
 using System.Text.RegularExpressions;
 
+using Photon.Pun;
+
 namespace GameVanilla.Game.Common
 {
     /// <summary>
@@ -312,7 +314,14 @@ namespace GameVanilla.Game.Common
                     var tilePos = new Vector2(i * (tileW + horizontalSpacing), -j * (tileH + verticalSpacing));
                     var newPos = tilePos;
                     newPos.x -= (totalWidth / 2);
-                    newPos.y += (totalHeight / 2) - 12.5f;
+                    if (PhotonNetwork.IsConnected)
+                    {
+                        newPos.y += (totalHeight / 2) - 53.5f;
+                    }
+                    else
+                    {
+                        newPos.y += (totalHeight / 2) - 12.5f;
+                    }
                     newPos.y += boardCenter.position.y;
                     var tile = tiles[i + (j * level.width)];
                     if (tile != null)

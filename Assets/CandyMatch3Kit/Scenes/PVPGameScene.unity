@@ -15712,6 +15712,7 @@ Transform:
   - {fileID: 1535988632}
   - {fileID: 1428915866}
   - {fileID: 1559309338}
+  - {fileID: 7012146293978045367}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15751,7 +15752,7 @@ MonoBehaviour:
   purpleWrappedCandyPool: {fileID: 57897207}
   redWrappedCandyPool: {fileID: 1350519033}
   yellowWrappedCandyPool: {fileID: 252913083}
-  bumerangCandyPool: {fileID: 0}
+  bumerangCandyPool: {fileID: 8306447985716929057}
   colorBombCandyPool: {fileID: 1774125304}
   honeyPool: {fileID: 1551116278}
   icePool: {fileID: 716916832}
@@ -31068,7 +31069,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1526686538}
   m_FillRect: {fileID: 1974940382}
   m_HandleRect: {fileID: 1526686537}
@@ -31604,7 +31605,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1705991869}
   m_FillRect: {fileID: 120696724}
   m_HandleRect: {fileID: 1705991868}
@@ -47697,3 +47698,49 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25fd453a50cc84324960864b1d9610ca, type: 3}
+--- !u!4 &7012146293978045367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7939143122444699385}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 882554315}
+  m_RootOrder: 24
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7939143122444699385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7012146293978045367}
+  - component: {fileID: 8306447985716929057}
+  m_Layer: 0
+  m_Name: BumerangCandyPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &8306447985716929057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7939143122444699385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36fa1b3a050f52747a37fc16cdf85f57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1834606758426242, guid: 4ea0c64d3c2034db99fc939808ee797b, type: 3}
+  initialSize: 16
