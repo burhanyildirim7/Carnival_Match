@@ -1,7 +1,3 @@
-// Copyright (C) 2017-2022 gamevanilla. All rights reserved.
-// This code can only be used under the standard Unity Asset Store End User License Agreement,
-// a copy of which is available at http://unity3d.com/company/legal/as_terms.
-
 using GameVanilla.Game.Popups;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,6 +6,7 @@ using GameVanilla.Core;
 using GameVanilla.Game.Scenes;
 using GameVanilla.Game.Common;
 
+using FullSerializer;
 
 namespace GameVanilla.Core
 {
@@ -62,5 +59,17 @@ namespace GameVanilla.Core
             _kazanilacakCoinMiktari = (100 + (_bolumSonucu * 100));
             PuzzleMatchManager.instance.coinsSystem.LevelCoinEkle(_kazanilacakCoinMiktari);
         }
+
+        #region //PVP ALANI
+        public void OpenPVPScene()
+        {
+            PlayerPrefs.SetInt("PVPLevel", 998);
+            _levelNum = PlayerPrefs.GetInt("PVPLevel");
+            //var serializer = new fsSerializer();
+            //var level = FileUtils.LoadJsonFile<Level>(serializer, "Levels/" + _levelNum);
+            PuzzleMatchManager.instance.lastSelectedLevel = _levelNum;
+            Transition.LoadLevel(scene, duration, color);
+        }
+        #endregion
     }
 }

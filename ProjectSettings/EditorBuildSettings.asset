@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/CandyMatch3Kit/Scenes/GameScene.unity
     guid: f61bdcf053b6d4590b74a2953da5f91e
+  - enabled: 1
+    path: Assets/CandyMatch3Kit/Scenes/PVPGameScene.unity
+    guid: a1fad33ad19cb4d6ab1999b286dbb89b
   m_configObjects: {}

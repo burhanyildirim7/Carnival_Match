@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Drawing;
+using GameVanilla.Core;
 
 public class ServerKontrol : MonoBehaviourPunCallbacks
 {
@@ -139,11 +142,12 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
         if (PhotonNetwork.PlayerList.Length > 1)
         {
             Debug.Log("ODADA BIRI VAR-ODADAKİ OYUNCU SAYISI: " + PhotonNetwork.PlayerList.Length);
+            Invoke("RakipSorgula", .1f);
         }
         else
         {
             Debug.Log("ODADA KIMSE YOK");
-
+            InvokeRepeating("RakipSorgula", .1f,.1f);
         }
     }
 
@@ -217,6 +221,19 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
         else
         {
             _cancelButton.GetComponent<Button>().interactable = false;
+        }
+    }
+
+    private void RakipSorgula()
+    {
+        if (PhotonNetwork.PlayerListOthers.Length>0)
+        {
+            //SceneManager.LoadScene("PVPGameScene");
+            GetComponent<SceneTransition>().OpenPVPScene();
+        }
+        else
+        {
+
         }
     }
     #endregion

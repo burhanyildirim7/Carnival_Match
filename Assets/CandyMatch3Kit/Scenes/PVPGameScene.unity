@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &7324049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,7 +274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &27524762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15751,6 +15751,7 @@ MonoBehaviour:
   purpleWrappedCandyPool: {fileID: 57897207}
   redWrappedCandyPool: {fileID: 1350519033}
   yellowWrappedCandyPool: {fileID: 252913083}
+  bumerangCandyPool: {fileID: 0}
   colorBombCandyPool: {fileID: 1774125304}
   honeyPool: {fileID: 1551116278}
   icePool: {fileID: 716916832}
@@ -28172,7 +28173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1314994282
 MonoBehaviour:
   m_ObjectHideFlags: 0
