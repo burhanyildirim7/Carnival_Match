@@ -13,7 +13,8 @@ namespace GameVanilla.Game.Common
         Horizontal,
         Vertical,
         TShaped,
-        LShaped
+        LShaped,
+        KareShaped
     }
 
     public class Match
