@@ -111,7 +111,8 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 
     public void DEGERDEGISIMDENEME()
     {
-        RoundObjeleriniDuzenle();
+       // RoundObjeleriniDuzenle();
+        GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle",RpcTarget.All,null);
     }
 
 

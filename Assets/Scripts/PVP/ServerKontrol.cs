@@ -247,6 +247,10 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
             _rakipPlayerNameText.text = _rakipBilgileri[0];
             _rakipPlayerTeamNameText.text = _rakipBilgileri[1];
             _rakipPlayerRozetAmountText.text= _rakipBilgileri[2];
+
+            string[] _playerBilgileri = PhotonNetwork.NickName.Split('/');
+            _playerTeamNameText.text = _playerBilgileri[1];
+
             Invoke("PVPSahnesineGecis", 1f);
         }
         else

@@ -427,9 +427,6 @@ namespace GameVanilla.Game.Common
                 }
             }
             //Camera.main.orthographicSize = 140/(Screen.width/1284)*1.25f;
-
-            //Debug.Log("Camera.main.orthographicSize : "+Camera.main.orthographicSize);
-            //Debug.Log("Level Width : "+level.width);
             possibleSwaps = DetectPossibleSwaps();
         }
 
