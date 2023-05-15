@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using Unity.VisualScripting;
+using GameVanilla.Game.Popups;
+using GameVanilla.Game.Scenes;
 
 public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 {
@@ -28,6 +30,8 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
     [SerializeField] GameObject _rakipPlayerPic, _rakipPlayerSkill,_rakipPlayerBoosterHammer,_rakipPlayerBoosterShuffle;
     [SerializeField] Slider _rakipPlayerMovesSlider;
 
+    [Header("SUPPORTs")]
+
     #region //public degiskenler
     public int _oyuncuSirasi;
     #endregion
@@ -35,6 +39,9 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
     #region //private degiskenler
     private int _roundNo;
     #endregion
+
+    [SerializeField] GameScene gameScene;
+
 
     void Start()
     {
@@ -68,6 +75,37 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 
     void Update()
     {
+
+    }
+
+    #region // photon metodlar
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)//bir kullıcı odaya çıktığında çalışır.
+    {
+        Debug.Log("BIR KULLANICI ODADAN AYRILDI-ODADAKİ OYUNCU SAYISI: " + PhotonNetwork.PlayerList.Length);
+        InvokeRepeating("RakipKontrol",.01f,.1f);
+    }
+    public override void OnLeftRoom()
+    {
+        Debug.Log("ODADAN CIKILDI");
+        PhotonNetwork.Disconnect();
+        CancelInvoke("RakipKontrol");
+    }
+    #endregion
+
+    private void RakipKontrol()
+    {
+        if (PhotonNetwork.PlayerListOthers.Length==0)
+        {
+            //gameScene.OpenPopup<RegenLevelPopup>("Popups/RegenLevelPopup"); // buraya "rakip karşılaşmayı terk etti" popUp'ı koyulacak.
+            //Aşağıdakiler "rakip karşılaşmayı terk etti" popUp'ının içindeki "devam et" buttonuna koyulacak.
+            PhotonNetwork.LeaveRoom();
+            gameScene.OpenPopup<RegenLevelPopup>("Popups/PvPWinPopup");
+        }
+        else
+        {
+
+        }
 
     }
 

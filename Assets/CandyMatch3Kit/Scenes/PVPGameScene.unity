@@ -15611,6 +15611,7 @@ MonoBehaviour:
   _rakipPlayerBoosterShuffle: {fileID: 582335904}
   _rakipPlayerMovesSlider: {fileID: 1699021745}
   _oyuncuSirasi: 0
+  gameScene: {fileID: 7324049}
 --- !u!1 &834903015
 GameObject:
   m_ObjectHideFlags: 0

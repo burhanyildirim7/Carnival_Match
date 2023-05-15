@@ -25,7 +25,14 @@ namespace GameVanilla.Game.Popups
         {
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.Disconnect();
-            PuzzleMatchManager.instance.livesSystem.RemoveLife();
+            if (PhotonNetwork.IsConnected)
+            {
+
+            }
+            else
+            {
+                PuzzleMatchManager.instance.livesSystem.RemoveLife();
+            }
             GetComponent<SceneTransition>().PerformTransition();
         }
 
