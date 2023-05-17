@@ -1,10 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine;
+
 
 public class CameraMovement : MonoBehaviour
 {
+    [SerializeField]
+    private float _leftLimit;
+
+    [SerializeField]
+    private float _rightLimit;
+
+    [SerializeField]
+    private float _bottomLimit;
+
+    [SerializeField]
+    private float _upperLimit;
+
+    [SerializeField]
+    private float _yukseklikLimit;
 
     private Camera _cam;
 
@@ -31,6 +46,10 @@ public class CameraMovement : MonoBehaviour
         {
             if (Input.touchCount == 2)
             {
+
+            }
+            else
+            {
                 Touch touch = Input.GetTouch(0);
 
                 switch (touch.phase)
@@ -51,10 +70,21 @@ public class CameraMovement : MonoBehaviour
                         {
                             Vector3 direction = _touchPos - _cam.ScreenToWorldPoint(touch.position);
                             _cam.transform.position += direction;
+
+
+                            transform.position = new Vector3
+                                (
+                                Mathf.Clamp(transform.position.x, _leftLimit, _rightLimit),
+                                _yukseklikLimit,
+                                Mathf.Clamp(transform.position.z, _bottomLimit, _upperLimit)
+                                );
+
                         }
                         break;
                 }
             }
         }
     }
+
+
 }
