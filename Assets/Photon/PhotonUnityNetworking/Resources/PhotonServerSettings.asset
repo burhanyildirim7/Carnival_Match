@@ -42,6 +42,14 @@ MonoBehaviour:
   - OrnekMetod
   - RoundGuncelle
   - RoundObjeleriniDuzenle
+  - CreateTile
+  - LoadLevel
+  - ClearSuggestedMatch
+  - ResetLevelData
+  - StartGame
+  - ApplyGravity
+  - HandleMatches
+  - PatlatInvoke
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
