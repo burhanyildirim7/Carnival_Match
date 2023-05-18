@@ -111,8 +111,8 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 
     public void DEGERDEGISIMDENEME()
     {
-       // RoundObjeleriniDuzenle();
-        GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle",RpcTarget.All,null);
+        GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle", RpcTarget.All, null);
+        //Debug.Log("oda sahibi: "+GetComponent<PhotonView>().Owner.NickName);
     }
 
 
@@ -127,52 +127,30 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 
     }
 
-    [PunRPC]
-    public void RoundGuncelle()
-    {
-        switch (_roundNo)
-        {
-            case 0:
-                _roundNo++;
-                RoundObjeleriniDuzenle();
-                break;
-            case 1:
-                _roundNo++;
-                RoundObjeleriniDuzenle();
-                break;
-            case 2:
-                _roundNo++;
-                RoundObjeleriniDuzenle();
-                break;
-            case 3:
-                _roundNo++;
-                RoundObjeleriniDuzenle();
-                break;
-            case 4:
-                _roundNo++;
-                RoundObjeleriniDuzenle();
-                break;
-        }
-    }
 
     [PunRPC]
     private void RoundObjeleriniDuzenle()
     {
         _roundNo++;
-        for (int i = 0; i < _roundObjects.Count; i++)
+        if (_roundNo<5) 
         {
-            if (i == _roundNo)
+            for (int i = 0; i < _roundObjects.Count; i++)
             {
-                _roundObjects[i].GetComponent<RectTransform>().sizeDelta = new Vector2(90, 130);
-                _roundObjects[i].transform.GetChild(0).GetComponent<Text>().color = Color.white;
+                if (i == _roundNo)
+                {
+                    _roundObjects[i].GetComponent<RectTransform>().sizeDelta = new Vector2(90, 130);
+                    _roundObjects[i].transform.GetChild(0).GetComponent<Text>().color = Color.white;
+                }
+                else
+                {
+                    _roundObjects[i].GetComponent<RectTransform>().sizeDelta = new Vector2(75, 110);
+                    _roundObjects[i].transform.GetChild(0).GetComponent<Text>().color = Color.black;
+                }
             }
-            else
-            {
-                _roundObjects[i].GetComponent<RectTransform>().sizeDelta = new Vector2(75, 110);
-                _roundObjects[i].transform.GetChild(0).GetComponent<Text>().color = Color.black;
-            }
+
         }
     }
     #endregion
 
+    
 }
