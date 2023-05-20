@@ -63,7 +63,7 @@ namespace GameVanilla.Core
         #region //PVP ALANI
         public void OpenPVPScene()
         {
-            PlayerPrefs.SetInt("PVPLevel", 998);
+            PlayerPrefs.SetInt("PVPLevel", 123456);
             _levelNum = PlayerPrefs.GetInt("PVPLevel");
             //var serializer = new fsSerializer();
             //var level = FileUtils.LoadJsonFile<Level>(serializer, "Levels/" + _levelNum);

@@ -137,11 +137,17 @@ namespace GameVanilla.Game.Common
 
         public bool _colorBombAktif;
 
+        public List<int> _tileListem = new List<int>();
+        public List<int> _rakipTileListem = new List<int>();
+
+        private int _tileListeSiram;
+        private bool _tekSefer;
         /// <summary>
         /// Unity's Awake method.
         /// </summary>
         private void Awake()
         {
+            _tekSefer = false;
             Assert.IsNotNull(gameScene);
             Assert.IsNotNull(gameUi);
             Assert.IsNotNull(boosterBar);
@@ -159,10 +165,50 @@ namespace GameVanilla.Game.Common
         /// </summary>
         private void Start()
         {
+            _tileListeSiram = 0;
             SoundManager.instance.AddSounds(gameSounds);
             _patlamaSirasi = 0;
+
         }
 
+        private void Update()
+        {
+            if (PhotonNetwork.IsConnected)
+            {
+                if (PhotonNetwork.MasterClient.NickName==PhotonNetwork.NickName)
+                {
+                    return;
+                }
+                else
+                {
+                    if (_rakipTileListem.Count == 81 && !_tekSefer)
+                    {
+                        _tekSefer = true;
+                        RakipTahtaDizebilir();
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+        [PunRPC]
+        public void ListeleriEsitle(int _colorType)
+        {
+            _rakipTileListem.Add(_colorType);
+            Debug.Log("RAKİPLISTESi"+_rakipTileListem.Count+" = " + _rakipTileListem[_rakipTileListem.Count-1]);
+        }
+
+        public void RakipTahtaDizebilir()
+        {
+            GameObject.Find("GameScene").GetComponent<GameScene>().TahtaStart();
+        }
         /// <summary>
         /// Unity's OnDestroy method.
         /// </summary>
@@ -273,35 +319,116 @@ namespace GameVanilla.Game.Common
 
             const float horizontalSpacing = 0.0f;
             const float verticalSpacing = 0.0f;
-
-            for (var j = 0; j < level.height; j++)
+            if (PhotonNetwork.IsConnected)
             {
-                for (var i = 0; i < level.width; i++)
+                if (PhotonNetwork.MasterClient.NickName==PhotonNetwork.NickName)
                 {
-                    var levelTile = level.tiles[i + (j * level.width)];
-                    var tile = CreateTileFromLevel(levelTile, i, j);
-                    if (tile != null)
+                    for (var j = 0; j < level.height; j++)
                     {
-                        var spriteRenderer = tile.GetComponent<SpriteRenderer>();
-                        tileW = spriteRenderer.bounds.size.x;
-                        tileH = spriteRenderer.bounds.size.y;
-                        tile.transform.position =
-                            new Vector2(i * (tileW + horizontalSpacing), -j * (tileH + verticalSpacing));
-
-                        var collectable = tile.GetComponent<Collectable>();
-                        if (collectable != null)
+                        for (var i = 0; i < level.width; i++)
                         {
-                            var cidx = eligibleCollectables.FindIndex(x => x == collectable.type);
-                            if (cidx != -1)
+                            var levelTile = level.tiles[i + (j * level.width)];
+                            var tile = CreateTileFromLevel(levelTile, i, j);
+                            if (tile != null)
                             {
-                                eligibleCollectables.RemoveAt(cidx);
-                            }
+                                var spriteRenderer = tile.GetComponent<SpriteRenderer>();
+                                tileW = spriteRenderer.bounds.size.x;
+                                tileH = spriteRenderer.bounds.size.y;
+                                //tileW = 20;
+                                //tileH = 20;
+                                tile.transform.position =
+                                    new Vector2(i * (tileW + horizontalSpacing), -j * (tileH + verticalSpacing));
 
+                                var collectable = tile.GetComponent<Collectable>();
+                                if (collectable != null)
+                                {
+                                    var cidx = eligibleCollectables.FindIndex(x => x == collectable.type);
+                                    if (cidx != -1)
+                                    {
+                                        eligibleCollectables.RemoveAt(cidx);
+                                    }
+
+                                }
+                            }
+                            //_tileListem.Add((int)tile.GetComponent<Candy>().color);
+                            GetComponent<PhotonView>().RPC("ListeleriEsitle", RpcTarget.Others, (int)tile.GetComponent<Candy>().color);
+                            //Debug.Log("TILELISTEM"+(_tileListem.Count-1)+"---"+i+j+" = "+ _tileListem[_tileListem.Count-1]); // 81 OGE ALIYOR 9X9 tahta
+                            tiles.Add(tile);
                         }
                     }
 
-                    tiles.Add(tile);
                 }
+                else
+                {
+                    for (var j = 0; j < level.height; j++)
+                    {
+                        for (var i = 0; i < level.width; i++)
+                        {
+                            var levelTile = level.tiles[i + (j * level.width)];
+
+                            var tile = PVPRakipCreatTile(levelTile, i, j);
+                            if (tile != null)
+                            {
+                                var spriteRenderer = tile.GetComponent<SpriteRenderer>();
+                                tileW = spriteRenderer.bounds.size.x;
+                                tileH = spriteRenderer.bounds.size.y;
+                                //tileW = 20;
+                                //ileH = 20;
+                                tile.transform.position =
+                                    new Vector2(i * (tileW + horizontalSpacing), -j * (tileH + verticalSpacing));
+
+                                var collectable = tile.GetComponent<Collectable>();
+                                if (collectable != null)
+                                {
+                                    var cidx = eligibleCollectables.FindIndex(x => x == collectable.type);
+                                    if (cidx != -1)
+                                    {
+                                        eligibleCollectables.RemoveAt(cidx);
+                                    }
+
+                                }
+                            }
+                            tiles.Add(tile);
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                for (var j = 0; j < level.height; j++)
+                {
+                    for (var i = 0; i < level.width; i++)
+                    {
+                        var levelTile = level.tiles[i + (j * level.width)];
+                        var tile = CreateTileFromLevel(levelTile, i, j);
+                        if (tile != null)
+                        {
+                            var spriteRenderer = tile.GetComponent<SpriteRenderer>();
+                            tileW = spriteRenderer.bounds.size.x;
+                            Debug.Log("OBJEGENİŞLİĞİ= "+tileW);
+                            tileH = spriteRenderer.bounds.size.y;
+                            Debug.Log("OBJEYUKSEKLIĞI= " + tileH);
+
+                            tile.transform.position =
+                                new Vector2(i * (tileW + horizontalSpacing), -j * (tileH + verticalSpacing));
+
+                            var collectable = tile.GetComponent<Collectable>();
+                            if (collectable != null)
+                            {
+                                var cidx = eligibleCollectables.FindIndex(x => x == collectable.type);
+                                if (cidx != -1)
+                                {
+                                    eligibleCollectables.RemoveAt(cidx);
+                                }
+
+                            }
+                        }
+                        //Debug.Log("CANDY"+i+j+" = "+(int)tile.GetComponent<Candy>().color);
+                        tiles.Add(tile);
+                    }
+                }
+
             }
             // GAME BOARD EKRANININ YUKSEKLIGI VE GENISLIGI BURADAN AYARLANIYOR !!!!!!!
             var totalWidth = (level.width - (1f)) * (tileW + horizontalSpacing);
@@ -1192,7 +1319,77 @@ namespace GameVanilla.Game.Common
 
             return null;
         }
+        // PVP RAKIP TAHTASI DIZME
+        private GameObject PVPRakipCreatTile(LevelTile levelTile, int x, int y)
+        {
+            if (levelTile is CandyTile)
+            {
+                var candyTile = (CandyTile)levelTile;
+                var tile = tilePool.GetCandyPool((CandyColor)(_rakipTileListem[_tileListeSiram])).GetObject();
+                _tileListeSiram++;
+                Debug.Log("TILESIRAM :"+_tileListeSiram);
+                tile.GetComponent<Tile>().board = this;
+                tile.GetComponent<Tile>().x = x;
+                tile.GetComponent<Tile>().y = y;
+                return tile;
 
+            }
+
+            if (levelTile is SpecialCandyTile)
+            {
+                GameObject tile;
+
+                var specialCandyTile = (SpecialCandyTile)levelTile;
+                var specialCandyType = (int)specialCandyTile.type;
+                if (specialCandyType >= 0 &&
+                    specialCandyType <= (int)SpecialCandyType.YellowCandyHorizontalStriped)
+                {
+                    tile = tilePool.GetStripedCandyPool(StripeDirection.Horizontal, (CandyColor)(specialCandyType % 6))
+                        .GetObject();
+                }
+                else if (specialCandyType <= (int)SpecialCandyType.YellowCandyVerticalStriped)
+                {
+                    tile = tilePool.GetStripedCandyPool(StripeDirection.Vertical, (CandyColor)(specialCandyType % 6))
+                        .GetObject();
+                }
+                else if (specialCandyType <= (int)SpecialCandyType.YellowCandyWrapped)
+                {
+                    tile = tilePool.GetWrappedCandyPool((CandyColor)(specialCandyType % 6)).GetObject();
+                }
+                else
+                {
+                    tile = tilePool.colorBombCandyPool.GetObject();
+                }
+
+                tile.GetComponent<Tile>().board = this;
+                tile.GetComponent<Tile>().x = x;
+                tile.GetComponent<Tile>().y = y;
+                return tile;
+            }
+
+            if (levelTile is SpecialBlockTile)
+            {
+                var specialBlockTile = (SpecialBlockTile)levelTile;
+                var block = tilePool.GetSpecialBlockPool(specialBlockTile.type).GetObject();
+                block.GetComponent<Tile>().board = this;
+                block.GetComponent<Tile>().x = x;
+                block.GetComponent<Tile>().y = y;
+                return block;
+            }
+
+            if (levelTile is CollectableTile)
+            {
+                var collectableTile = (CollectableTile)levelTile;
+                var tile = tilePool.GetCollectablePool(collectableTile.type).GetObject();
+                tile.GetComponent<Tile>().board = this;
+                tile.GetComponent<Tile>().x = x;
+                tile.GetComponent<Tile>().y = y;
+                return tile;
+            }
+
+            return null;
+
+        }
         /// <summary>
         /// Creates a new, random tile.
         /// </summary>

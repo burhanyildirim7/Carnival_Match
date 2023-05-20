@@ -339,6 +339,8 @@ MonoBehaviour:
   tiles: []
   _kalanLimit: 0
   _colorBombAktif: 0
+  _tileListem: 
+  _rakipTileListem: 
 --- !u!4 &27524763
 Transform:
   m_ObjectHideFlags: 0

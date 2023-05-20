@@ -60,6 +60,8 @@ namespace GameVanilla.Game.Scenes
 
         public bool _boosterColorBombAktif;
 
+        PhotonView _pV;
+
         /// <summary>
         /// Unity's Awake method.
         /// </summary>
@@ -78,11 +80,27 @@ namespace GameVanilla.Game.Scenes
         /// </summary>
         private void Start()
         {
-            gameBoard.InitializeObjectPools();
-            gameBoard.LoadLevel();
+         
+            if (PhotonNetwork.IsConnected)
+            {
+                if (PhotonNetwork.MasterClient.NickName == PhotonNetwork.NickName)
+                {
+                    gameBoard.InitializeObjectPools();
+                    gameBoard.LoadLevel();
+                    level = gameBoard.level;
+                }
+                else
+                {
 
-            level = gameBoard.level;
-            OpenPopup<LevelGoalsPopup>("Popups/LevelGoalsPopup", popup => popup.SetGoals(level.goals));
+                }
+            }
+            else
+            {
+                gameBoard.InitializeObjectPools();
+                gameBoard.LoadLevel();
+                level = gameBoard.level;
+                OpenPopup<LevelGoalsPopup>("Popups/LevelGoalsPopup", popup => popup.SetGoals(level.goals));
+            }
         }
 
         /// <summary>
@@ -118,6 +136,20 @@ namespace GameVanilla.Game.Scenes
             else
             {
                 gameBoard.HandleInput();
+            }
+        }
+
+        public void TahtaStart()
+        {
+            if (PhotonNetwork.MasterClient.NickName==PhotonNetwork.NickName)
+            {
+
+            }
+            else
+            {
+                gameBoard.InitializeObjectPools();
+                gameBoard.LoadLevel();
+                level = gameBoard.level;
             }
         }
 
