@@ -114,7 +114,7 @@ namespace GameVanilla.Game.Common
                 {
                     foreach (var child in goalGroup.GetComponentsInChildren<GoalUiElement>().ToList())
                     {
-                        child.GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1.0f);
+                        child.GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1.0f);
                     }
                 }
             }
