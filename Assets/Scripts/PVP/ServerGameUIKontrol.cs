@@ -1,12 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using Photon.Pun;
-using Photon.Realtime;
-using Unity.VisualScripting;
+using GameVanilla.Game.Common;
 using GameVanilla.Game.Popups;
 using GameVanilla.Game.Scenes;
+using Photon.Pun;
+using Photon.Realtime;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 {
@@ -15,19 +14,20 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
     [SerializeField] Slider _timeSlider;
     [SerializeField] GameObject _oyuncuSirasiGorseli;
 
+
     [Header("PLAYER OBJELERI")] 
-    [SerializeField] List<GameObject> _playerMoves = new List<GameObject>();
-    [SerializeField] List<Sprite> _playerSkillPics = new List<Sprite>(), _playerGoalPics = new List<Sprite>(),_playerPictures = new List<Sprite>();
+    [SerializeField] public List<GameObject> _playerMoves = new List<GameObject>();
+    [SerializeField] List<Sprite> _playerSkillSprites = new List<Sprite>(), _playerGoalSprites = new List<Sprite>(),_playerPictureSprites = new List<Sprite>();
     [SerializeField] Text _playerNameText, _playerSkillText, _playerScoreText;
-    [SerializeField] GameObject _playerPic, _playerSkill,_playerBoosterHammer,_playerBoosterShuffle;
+    [SerializeField] GameObject _playerPic,_playerGoalPic, _playerSkill,_playerBoosterHammer,_playerBoosterShuffle;
     [SerializeField] Slider _playerMovesSlider;
 
 
     [Header("RAKİP PLAYER OBJELERI")]
-    [SerializeField] List<GameObject> _rakipPlayerMoves = new List<GameObject>();
-    [SerializeField] List<Sprite> _rakipPlayerSkillPics = new List<Sprite>(), _rakipplayerGoalPics = new List<Sprite>(), _rakipPlayerPictures = new List<Sprite>();
+    [SerializeField] public List<GameObject> _rakipPlayerMoves = new List<GameObject>();
+    [SerializeField] List<Sprite> _rakipPlayerSkillSprites = new List<Sprite>(), _rakipplayerGoalSprites = new List<Sprite>(), _rakipPlayerPictureSprites = new List<Sprite>();
     [SerializeField] Text _rakipPlayerNameText, _rakipPlayerSkillText, _rakipPlayerScoreText;
-    [SerializeField] GameObject _rakipPlayerPic, _rakipPlayerSkill,_rakipPlayerBoosterHammer,_rakipPlayerBoosterShuffle;
+    [SerializeField] GameObject _rakipPlayerPic,_rakipPlayerGoalPic, _rakipPlayerSkill,_rakipPlayerBoosterHammer,_rakipPlayerBoosterShuffle;
     [SerializeField] Slider _rakipPlayerMovesSlider;
 
     [Header("SUPPORTS")]
@@ -38,13 +38,16 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 
     #region //private degiskenler
     private int _roundNo;
+    private float _timerDeger;
     #endregion
 
     [SerializeField] GameScene gameScene;
-
-
+    
     void Start()
     {
+        _timerDeger = 45f;
+        _timeSlider.maxValue = 45f;
+        _timeSlider.value = 45f;
         #region //Kullanıcı bilgileri
         string[] _playerBilgileri = PhotonNetwork.NickName.Split('/');
         _rakipPlayerNameText.text = _playerBilgileri[0];
@@ -71,11 +74,31 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
             }
         }
         #endregion
+
+        if (PhotonNetwork.MasterClient.NickName==PhotonNetwork.NickName)   
+        {
+            _playerGoalPic.GetComponent<Image>().sprite = _playerGoalSprites[0];
+            _rakipPlayerGoalPic.GetComponent<Image>().sprite = _playerGoalSprites[4];
+        }
+        else
+        {
+            _playerGoalPic.GetComponent<Image>().sprite = _playerGoalSprites[4];
+            _rakipPlayerGoalPic.GetComponent<Image>().sprite = _playerGoalSprites[0];
+        }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-
+        //HAMLE HAKKI DIGER KULLANICIYA GECINCE TIMER SIFIRLANMIYOR-RAKIP ve MASTER olarak iki sayac denenecek.
+        //HAMLE HAKKI SORGUSU İLE SAYAC 45 E CEKILEBILIR-TEK KULLANICI UZERINDEN IKI KULLANICIYI YONETMEYE CALISMA
+        //HAMLE HAKKI KIMDEYSE SAYAC SIFIRLANDIGIN O ROUNDU DEGISTIRSIN-ROUND DEGISINCE SAYACLAR 45E CEKILEBILIR
+        /*
+        if (PhotonNetwork.IsConnected)
+        {
+            _timerDeger -= Time.deltaTime;
+            TimerGeriSayım(_timerDeger);
+        }
+        */
     }
 
     #region // photon metodlar
@@ -109,27 +132,61 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 
     }
 
-    public void DEGERDEGISIMDENEME()
+    [PunRPC]
+    public void TimerGeriSayım(float _deger)
     {
-        GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle", RpcTarget.All, null);
-        //Debug.Log("oda sahibi: "+GetComponent<PhotonView>().Owner.NickName);
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PhotonNetwork.MasterClient.NickName == PhotonNetwork.NickName)
+            {
+                if (GameObject.Find("GameBoard").GetComponent<GameBoard>()._hamleSirasi)
+                {
+                    if (_timeSlider.value >= 1)
+                    {
+                        _timeSlider.value = _deger;
+                        //GetComponent<PhotonView>().RPC("TimerGeriSayım", RpcTarget.Others, (float)_deger);
+                    }
+                    else
+                    {
+                        GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle", RpcTarget.All, null);
+
+                        GameObject.Find("GameBoard").GetComponent<GameBoard>().RakipSiraTextDuzenleme();
+                        GameObject.Find("GameBoard").GetComponent<GameBoard>().SiraTextDuzenleme();
+                    }
+                }
+            }
+            else
+            {
+                if (!GameObject.Find("GameBoard").GetComponent<GameBoard>()._hamleSirasi)
+                {
+                    if (_timeSlider.value >= 1)
+                    {
+                        _timeSlider.value = _deger;
+                        //GetComponent<PhotonView>().RPC("TimerGeriSayım", RpcTarget.Others, (float)_deger);
+                    }
+                    else
+                    {
+                        GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle", RpcTarget.All, null);
+
+                        GameObject.Find("GameBoard").GetComponent<GameBoard>().RakipSiraTextDuzenleme();
+                        GameObject.Find("GameBoard").GetComponent<GameBoard>().SiraTextDuzenleme();
+                    }
+                }
+            }
+        }
     }
 
 
     #region // RPC kodlar
 
-    [PunRPC]
-    public void OrnekMetod(int _deger)
+    public void MoveTimerSifirlama()
     {
-
-
-
-
+        _timeSlider.value = 45f;
     }
 
 
     [PunRPC]
-    private void RoundObjeleriniDuzenle()
+    public void RoundObjeleriniDuzenle()
     {
         _roundNo++;
         if (_roundNo<5) 

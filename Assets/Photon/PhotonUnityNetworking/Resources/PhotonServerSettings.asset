@@ -53,6 +53,11 @@ MonoBehaviour:
   - TahtaStart
   - ListeleriEsitle
   - SiraDegisikligi
+  - MoveTimerSifirlama
+  - "TimerGeriSay\u0131m"
+  - MovesObjectKontrol
+  - RakipSiraTextDuzenleme
+  - HandObjeCalistir
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

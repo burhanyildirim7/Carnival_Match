@@ -19,8 +19,6 @@ namespace GameVanilla.Game.Popups
         int _earnMagnetAmount;
 
 
-        [SerializeField]
-        private Sprite disabledStarSprite;
 
 
 #pragma warning restore 649
@@ -31,11 +29,10 @@ namespace GameVanilla.Game.Popups
         protected override void Awake()
         {
             base.Awake();
-            Assert.IsNotNull(disabledStarSprite);
         }
         protected override void Start()
         {
-            PlayerPrefs.SetInt("MevcutLevel", PlayerPrefs.GetInt("MevcutLevel") + 1);
+            //PlayerPrefs.SetInt("MevcutLevel", PlayerPrefs.GetInt("MevcutLevel") + 1);
         }
         /// <summary>
         /// Sets the number of stars obtained in the level.

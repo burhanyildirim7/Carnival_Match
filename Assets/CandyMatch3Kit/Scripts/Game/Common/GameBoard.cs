@@ -21,9 +21,6 @@ using DG.Tweening;
 
 namespace GameVanilla.Game.Common
 {
-    /// <summary>
-    /// This class is responsible for managing the match-3 gameplay of the kit.
-    /// </summary>
     public class GameBoard : MonoBehaviour
     {
 #pragma warning disable 649
@@ -147,7 +144,7 @@ namespace GameVanilla.Game.Common
 
         private int _tileListeSiram;
         private bool _tekSefer;
-        private bool _halmeBasladi,_hamleBitti;
+        private bool _hamleBasladi, _hamleBitti;
         private int _hamleAdedi;
 
         public bool _hamleSirasi;
@@ -162,13 +159,13 @@ namespace GameVanilla.Game.Common
             if (PhotonNetwork.IsConnected)
             {
                 _tekSefer = false;
-
-                _handObject.transform.position=new Vector3(2000,2000,0);
+                _handObject.SetActive(false);
+                _handObject.transform.position = new Vector3(0 , 0, 0);
                 _hamleSirasi = false;
-                _halmeBasladi = false;
+                _hamleBasladi = false;
                 _hamleBitti = false;
                 _pView = GetComponent<PhotonView>();
-                if (PhotonNetwork.MasterClient.NickName==PhotonNetwork.NickName)
+                if (PhotonNetwork.MasterClient.NickName == PhotonNetwork.NickName)
                 {
                     _hamleSirasi = true;
                     _hamleAdedi = 2;
@@ -209,13 +206,12 @@ namespace GameVanilla.Game.Common
         {
             if (PhotonNetwork.IsConnected)
             {
-                if (PhotonNetwork.MasterClient.NickName==PhotonNetwork.NickName)
+                if (PhotonNetwork.MasterClient.NickName == PhotonNetwork.NickName)
                 {
                     return;
                 }
                 else
                 {
-                    Debug.Log("TEKSEFER=" + _tekSefer);
                     if (_rakipTileListem.Count == 81 && !_tekSefer)
                     {
                         _tekSefer = true;
@@ -237,7 +233,7 @@ namespace GameVanilla.Game.Common
         public void ListeleriEsitle(int _colorType)
         {
             _rakipTileListem.Add(_colorType);
-            Debug.Log("RAKİPLISTESi"+_rakipTileListem.Count +" = "+_rakipTileListem[_rakipTileListem.Count - 1]);
+            Debug.Log("RAKİPLISTESi" + _rakipTileListem.Count + " = " + _rakipTileListem[_rakipTileListem.Count - 1]);
         }
 
         public void RakipTahtaDizebilir()
@@ -356,7 +352,7 @@ namespace GameVanilla.Game.Common
             const float verticalSpacing = 0.0f;
             if (PhotonNetwork.IsConnected)
             {
-                if (PhotonNetwork.MasterClient.NickName==PhotonNetwork.NickName)
+                if (PhotonNetwork.MasterClient.NickName == PhotonNetwork.NickName)
                 {
                     for (var j = 0; j < level.height; j++)
                     {
@@ -679,10 +675,10 @@ namespace GameVanilla.Game.Common
             {
                 return;
             }
-            if (Input.GetMouseButtonDown(0) || _halmeBasladi)
+            if (Input.GetMouseButtonDown(0) || _hamleBasladi)
             {
                 drag = true;
-                if (PhotonNetwork.IsConnected && !_hamleSirasi)   
+                if (PhotonNetwork.IsConnected && !_hamleSirasi)
                 {
                     var hit = Physics2D.Raycast(_handObject.transform.position, Vector2.zero);
                     if (hit.collider != null && hit.collider.gameObject.CompareTag("Tile"))
@@ -1218,37 +1214,122 @@ namespace GameVanilla.Game.Common
             if (PhotonNetwork.IsConnected)
             {
                 _hamleAdedi--;
-                if (_hamleAdedi==0) // HAMLE HAKKI BİTİNCE RAKİBE SIRA GEÇMESİ İÇİN
+                _pView.RPC("MovesObjectKontrol", RpcTarget.All, (int)_hamleAdedi);
+
+                if (_hamleAdedi == 0) // HAMLE HAKKI BİTİNCE RAKİBE SIRA GEÇMESİ İÇİN
                 {
                     _hamleAdedi = 2;
                     _hamleSirasi = !_hamleSirasi;
                     Invoke("SiraTextDuzenleme", 1f);
-                    _pView.RPC("SiraDegisikligi", RpcTarget.Others,null);
+                    _pView.RPC("RakipSiraTextDuzenleme", RpcTarget.Others, null);
+                    //ROUND OBJELERİ DUZENLEME TETIKLEYICI
+                   // GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().RoundObjeleriniDuzenle();
                 }
-                else // HAMLENİN RAKİPTE GÖRÜNMESİ İÇİN
+                else
                 {
 
                 }
+                //HAND OBJECT KONTROLÜ
+                /* 
+                float _xDeger1 = birinciTile.transform.localPosition.x;
+                float _yDeger1 = birinciTile.transform.localPosition.y;
+                Debug.LogError("BIRINCITILEPOSITION---- X ="+_xDeger1+" -- Y = "+_yDeger1);
+                float _xDeger2 = ikinciTile.transform.localPosition.x;
+                float _yDeger2 = ikinciTile.transform.localPosition.y;
+                Debug.LogError("IKINCITILEPOSITION---- X =" + _xDeger2 + " -- Y = " + _yDeger2);
+
+                _pView.RPC("HandObjeCalistir",RpcTarget.Others,(float)_xDeger1, (float)_yDeger1, (float)_xDeger2, (float)_yDeger2);
+                */
             }
         }
-
+        //HAND OBJECT KONTROLÜ FONKSİYONLAR
+        /*
         [PunRPC]
-        public void SiraDegisikligi()
+        public void HandObjeCalistir(float _x1, float _y1, float _x2, float _y2)
+        {
+            Debug.Log("GELEN DEGER --- x1 ="+_x1+" --- y1 = "+_y1+" --- x2 = "+_x2+" ---y2 "+_y2);
+            _handObject.transform.localPosition = new Vector3(_x1, _y1+5f,0);
+            _handObject.SetActive(true);
+            HandObjectHareket(_x1, _y1, _x2, _y2);
+        }
+
+        private void HandObjectHareket(float _x1, float _y1, float _x2, float _y2)
+        {
+            Debug.Log("GELEN HAREKET DEGER --- x1 =" + _x1 + " --- y1 = " + _y1 + " --- x2 = " + _x2 + " ---y2 " + _y2);
+
+            _hamleBasladi = true;
+            _hamleBitti = false;
+            _handObject.transform.DOLocalMove(new Vector3(_x1, _y1, 0), .25f).OnComplete(() => HandObjectSonHareket( _x2, _y2));
+        }
+        private void HandObjectSonHareket( float _x2, float _y2)
+        {
+            _hamleBasladi = true;
+            _hamleBitti = false;
+            _handObject.transform.DOLocalMove(new Vector3(_x2, _y2, 0), .25f).OnComplete(() => HandObjectSonlandir());
+        }
+
+        private void HandObjectSonlandir()
+        {
+            Debug.Log("HandObjeCaslismasSonlandı");
+            _hamleBasladi = false;
+            _hamleBitti = true;
+            _handObject.SetActive(false);
+
+            if (!drag)  
+            {
+                _hamleBitti = false;
+            }
+        }
+        */
+        [PunRPC]
+        public void RakipSiraTextDuzenleme()
         {
             _hamleSirasi = !_hamleSirasi;
+
+            Debug.Log("RAKİP TEXT DUZENLEME");
+
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[1].SetActive(true);
+
             SiraDegisikligiPaneliAcma("Your Turn");
 
         }
-
-        #region
-        private void SiraTextDuzenleme()
+        public void SiraTextDuzenleme()
         {
+            Debug.Log("PLAYER TEXT DUZENLEME");
+
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[1].SetActive(true);
+
             SiraDegisikligiPaneliAcma("Opponent's Turn");
         }
+
+        [PunRPC]
+        public void MovesObjectKontrol(int _deger)
+        {
+            if (_pView.IsMine)   
+            {               
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[2-(_deger+1)].SetActive(false);
+
+            }
+            else
+            {
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[2 - (_deger + 1)].SetActive(false);
+
+            }
+        }
+
+        #region
+
         private void SiraDegisikligiPaneliAcma(string _siraSahibi) // SIRA DEGİSİKLİGİ PANELİNİN ANİMASYONU İÇİN
         {
             _siraDegisikligiPaneli.SetActive(true);
             _siraDegisikligiPanelBG.SetActive(true);
+            _siraDegisikligiPaneli.transform.GetChild(0).GetComponent<Text>().text = _siraSahibi;
             float _x1 = _siraDegisikligiPaneli.transform.localPosition.x;
             float _y1 = _siraDegisikligiPaneli.transform.localPosition.y;
             float _z1 = _siraDegisikligiPaneli.transform.localPosition.z;
@@ -1268,6 +1349,7 @@ namespace GameVanilla.Game.Common
         }
         private void SiraDegisikligiPanelAutoKill()
         {
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().MoveTimerSifirlama();
             _siraDegisikligiPanelBG.SetActive(false);
             _siraDegisikligiPaneli.SetActive(false);
         }
