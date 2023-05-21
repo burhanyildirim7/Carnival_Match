@@ -17,6 +17,8 @@ using System.Text.RegularExpressions;
 
 using Photon.Pun;
 
+using DG.Tweening;
+
 namespace GameVanilla.Game.Common
 {
     /// <summary>
@@ -133,21 +135,55 @@ namespace GameVanilla.Game.Common
 
         public static GameBoard instance;
 
-        public static int _patlamaSirasi;
-
         public bool _colorBombAktif;
 
-        public List<int> _tileListem = new List<int>();
         public List<int> _rakipTileListem = new List<int>();
+
+        [Header("PVP Objeleri")]
+
+        [SerializeField] GameObject _handObject;
+        [SerializeField] GameObject _siraDegisikligiPaneli;
+        [SerializeField] GameObject _siraDegisikligiPanelBG;
 
         private int _tileListeSiram;
         private bool _tekSefer;
+        private bool _halmeBasladi,_hamleBitti;
+        private int _hamleAdedi;
+
+        public bool _hamleSirasi;
+
+        PhotonView _pView;
+
         /// <summary>
         /// Unity's Awake method.
         /// </summary>
         private void Awake()
         {
-            _tekSefer = false;
+            if (PhotonNetwork.IsConnected)
+            {
+                _tekSefer = false;
+
+                _handObject.transform.position=new Vector3(2000,2000,0);
+                _hamleSirasi = false;
+                _halmeBasladi = false;
+                _hamleBitti = false;
+                _pView = GetComponent<PhotonView>();
+                if (PhotonNetwork.MasterClient.NickName==PhotonNetwork.NickName)
+                {
+                    _hamleSirasi = true;
+                    _hamleAdedi = 2;
+                }
+                else
+                {
+                    _hamleSirasi = false;
+                    _hamleAdedi = 2;
+                }
+            }
+            else
+            {
+
+            }
+
             Assert.IsNotNull(gameScene);
             Assert.IsNotNull(gameUi);
             Assert.IsNotNull(boosterBar);
@@ -167,8 +203,6 @@ namespace GameVanilla.Game.Common
         {
             _tileListeSiram = 0;
             SoundManager.instance.AddSounds(gameSounds);
-            _patlamaSirasi = 0;
-
         }
 
         private void Update()
@@ -181,6 +215,7 @@ namespace GameVanilla.Game.Common
                 }
                 else
                 {
+                    Debug.Log("TEKSEFER=" + _tekSefer);
                     if (_rakipTileListem.Count == 81 && !_tekSefer)
                     {
                         _tekSefer = true;
@@ -202,7 +237,7 @@ namespace GameVanilla.Game.Common
         public void ListeleriEsitle(int _colorType)
         {
             _rakipTileListem.Add(_colorType);
-            Debug.Log("RAKİPLISTESi"+_rakipTileListem.Count+" = " + _rakipTileListem[_rakipTileListem.Count-1]);
+            Debug.Log("RAKİPLISTESi"+_rakipTileListem.Count +" = "+_rakipTileListem[_rakipTileListem.Count - 1]);
         }
 
         public void RakipTahtaDizebilir()
@@ -350,9 +385,7 @@ namespace GameVanilla.Game.Common
 
                                 }
                             }
-                            //_tileListem.Add((int)tile.GetComponent<Candy>().color);
                             GetComponent<PhotonView>().RPC("ListeleriEsitle", RpcTarget.Others, (int)tile.GetComponent<Candy>().color);
-                            //Debug.Log("TILELISTEM"+(_tileListem.Count-1)+"---"+i+j+" = "+ _tileListem[_tileListem.Count-1]); // 81 OGE ALIYOR 9X9 tahta
                             tiles.Add(tile);
                         }
                     }
@@ -646,28 +679,50 @@ namespace GameVanilla.Game.Common
             {
                 return;
             }
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || _halmeBasladi)
             {
                 drag = true;
-                var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                if (hit.collider != null && hit.collider.gameObject.CompareTag("Tile"))
+                if (PhotonNetwork.IsConnected && !_hamleSirasi)   
                 {
-                    var idx = tiles.FindIndex(x => x == hit.collider.gameObject);
-                    if (level.tiles[idx] != null && level.tiles[idx].elementType == ElementType.Ice)
+                    var hit = Physics2D.Raycast(_handObject.transform.position, Vector2.zero);
+                    if (hit.collider != null && hit.collider.gameObject.CompareTag("Tile"))
                     {
-                        return;
+                        var idx = tiles.FindIndex(x => x == hit.collider.gameObject);
+                        if (level.tiles[idx] != null && level.tiles[idx].elementType == ElementType.Ice)
+                        {
+                            return;
+                        }
+                        if (hit.collider.GetComponent<SpecialBlock>() != null)
+                        {
+                            return;
+                        }
+                        selectedTile = hit.collider.gameObject;
+                        birinciTile = selectedTile;
+                        selectedTile.GetComponent<Animator>().SetTrigger("Pressed");
                     }
-                    if (hit.collider.GetComponent<SpecialBlock>() != null)
+                }
+                else
+                {
+                    var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                    if (hit.collider != null && hit.collider.gameObject.CompareTag("Tile"))
                     {
-                        return;
+                        var idx = tiles.FindIndex(x => x == hit.collider.gameObject);
+                        if (level.tiles[idx] != null && level.tiles[idx].elementType == ElementType.Ice)
+                        {
+                            return;
+                        }
+                        if (hit.collider.GetComponent<SpecialBlock>() != null)
+                        {
+                            return;
+                        }
+                        selectedTile = hit.collider.gameObject;
+                        birinciTile = selectedTile;
+                        selectedTile.GetComponent<Animator>().SetTrigger("Pressed");
                     }
-                    selectedTile = hit.collider.gameObject;
-                    birinciTile = selectedTile;
-                    selectedTile.GetComponent<Animator>().SetTrigger("Pressed");
                 }
             }
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) || _hamleBitti)
             {
                 drag = false;
                 if (selectedTile != null && selectedTile.GetComponent<Animator>() != null && selectedTile.gameObject.activeSelf)
@@ -1149,8 +1204,7 @@ namespace GameVanilla.Game.Common
         private void PerformMove()
         {
             ClearSuggestedMatch();
-            Debug.Log("HAMLE GERCEKLESTİ");
-            if (level.limitType == LimitType.Moves)
+            if (level.limitType == LimitType.Moves && !PhotonNetwork.IsConnected)
             {
                 currentLimit -= 1;
                 if (currentLimit < 0)
@@ -1160,7 +1214,64 @@ namespace GameVanilla.Game.Common
 
                 gameUi.SetLimit(currentLimit);
             }
+
+            if (PhotonNetwork.IsConnected)
+            {
+                _hamleAdedi--;
+                if (_hamleAdedi==0) // HAMLE HAKKI BİTİNCE RAKİBE SIRA GEÇMESİ İÇİN
+                {
+                    _hamleAdedi = 2;
+                    _hamleSirasi = !_hamleSirasi;
+                    Invoke("SiraTextDuzenleme", 1f);
+                    _pView.RPC("SiraDegisikligi", RpcTarget.Others,null);
+                }
+                else // HAMLENİN RAKİPTE GÖRÜNMESİ İÇİN
+                {
+
+                }
+            }
         }
+
+        [PunRPC]
+        public void SiraDegisikligi()
+        {
+            _hamleSirasi = !_hamleSirasi;
+            SiraDegisikligiPaneliAcma("Your Turn");
+
+        }
+
+        #region
+        private void SiraTextDuzenleme()
+        {
+            SiraDegisikligiPaneliAcma("Opponent's Turn");
+        }
+        private void SiraDegisikligiPaneliAcma(string _siraSahibi) // SIRA DEGİSİKLİGİ PANELİNİN ANİMASYONU İÇİN
+        {
+            _siraDegisikligiPaneli.SetActive(true);
+            _siraDegisikligiPanelBG.SetActive(true);
+            float _x1 = _siraDegisikligiPaneli.transform.localPosition.x;
+            float _y1 = _siraDegisikligiPaneli.transform.localPosition.y;
+            float _z1 = _siraDegisikligiPaneli.transform.localPosition.z;
+            _siraDegisikligiPaneli.transform.localPosition = new Vector3(_x1,_siraDegisikligiPaneli.transform.localPosition.y+500,_z1);
+
+            _siraDegisikligiPaneli.transform.DOLocalMove(new Vector3(_x1, _y1, _z1), .5f).OnComplete(() =>SRDPanelScaleAnimasyon());
+
+            Invoke("SiraDegisikligiPanelAutoKill", 1.5f);
+        }
+        private void SRDPanelScaleAnimasyon()
+        {
+            _siraDegisikligiPaneli.transform.DOScale(new Vector3(1, .5f, 1), 0.25f).OnComplete(() => SRDPanelScaleAnimasyonReverse());
+        }
+        private void SRDPanelScaleAnimasyonReverse()
+        {
+            _siraDegisikligiPaneli.transform.DOScale(new Vector3(1, 1f, 1), 0.25f);
+        }
+        private void SiraDegisikligiPanelAutoKill()
+        {
+            _siraDegisikligiPanelBG.SetActive(false);
+            _siraDegisikligiPaneli.SetActive(false);
+        }
+        #endregion
 
         /// <summary>
         /// Applies the gravity to the level tiles.

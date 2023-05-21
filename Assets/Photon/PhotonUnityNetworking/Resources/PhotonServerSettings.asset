@@ -52,6 +52,7 @@ MonoBehaviour:
   - PatlatInvoke
   - TahtaStart
   - ListeleriEsitle
+  - SiraDegisikligi
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

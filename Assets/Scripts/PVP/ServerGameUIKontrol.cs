@@ -30,7 +30,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
     [SerializeField] GameObject _rakipPlayerPic, _rakipPlayerSkill,_rakipPlayerBoosterHammer,_rakipPlayerBoosterShuffle;
     [SerializeField] Slider _rakipPlayerMovesSlider;
 
-    [Header("SUPPORTs")]
+    [Header("SUPPORTS")]
 
     #region //public degiskenler
     public int _oyuncuSirasi;
