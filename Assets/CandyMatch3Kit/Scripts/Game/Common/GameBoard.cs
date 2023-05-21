@@ -406,9 +406,7 @@ namespace GameVanilla.Game.Common
                         {
                             var spriteRenderer = tile.GetComponent<SpriteRenderer>();
                             tileW = spriteRenderer.bounds.size.x;
-                            Debug.Log("OBJEGENİŞLİĞİ= "+tileW);
                             tileH = spriteRenderer.bounds.size.y;
-                            Debug.Log("OBJEYUKSEKLIĞI= " + tileH);
 
                             tile.transform.position =
                                 new Vector2(i * (tileW + horizontalSpacing), -j * (tileH + verticalSpacing));
@@ -640,17 +638,14 @@ namespace GameVanilla.Game.Common
             {
                 return;
             }
-
             if (currentlySwapping)
             {
                 return;
             }
-
             if (currentlyAwarding)
             {
                 return;
             }
-
             if (Input.GetMouseButtonDown(0))
             {
                 drag = true;
@@ -662,13 +657,12 @@ namespace GameVanilla.Game.Common
                     {
                         return;
                     }
-
                     if (hit.collider.GetComponent<SpecialBlock>() != null)
                     {
                         return;
                     }
-
                     selectedTile = hit.collider.gameObject;
+                    birinciTile = selectedTile;
                     selectedTile.GetComponent<Animator>().SetTrigger("Pressed");
                 }
             }
@@ -682,30 +676,27 @@ namespace GameVanilla.Game.Common
 
                     if (selectedTile.GetComponent<StripedCandy>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
-                        birinciTile = selectedTile;
                         ExplodeTile(selectedTile);
                         //ApplyGravity();   
                     }
                     else if (selectedTile.GetComponent<WrappedCandy>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
-                        birinciTile = selectedTile;
                         ExplodeTile(selectedTile);
                         ApplyGravity();
                     }
                     else if (selectedTile.GetComponent<ColorBomb>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
-                        birinciTile = selectedTile;
                         ColorBombPatlat(selectedTile);
                     }
                     else
                     {
-
                     }
                 }
             }
 
             if (drag && selectedTile != null)
             {
+                Debug.Log("DRAG OKUNDU");
                 var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
                 if (hit.collider != null && hit.collider.gameObject != selectedTile)
                 {
@@ -713,18 +704,15 @@ namespace GameVanilla.Game.Common
                     {
                         return;
                     }
-
                     if (selectedTile.GetComponent<Animator>() != null && selectedTile.gameObject.activeSelf)
                     {
                         selectedTile.GetComponent<Animator>().SetTrigger("Unpressed");
                     }
-
                     var idx = tiles.FindIndex(x => x == hit.collider.gameObject);
                     if (level.tiles[idx] != null && level.tiles[idx].elementType == ElementType.Ice)
                     {
                         return;
                     }
-
                     ikinciTile = hit.collider.gameObject;
 
                     var idxSelected = tiles.FindIndex(x => x == selectedTile);
@@ -737,16 +725,15 @@ namespace GameVanilla.Game.Common
                     {
                         return;
                     }
-
                     if (Math.Abs(xSelected - xNew) == 1 && Math.Abs(ySelected - yNew) == 1)
                     {
                         return;
                     }
-
                     var combo = comboDetector.GetCombo(hit.collider.gameObject.GetComponent<Tile>(),
                         selectedTile.GetComponent<Tile>());
                     if (combo != null)
                     {
+                        Debug.Log("COMBO OKUNDU_1");
                         var selectedTileCopy = selectedTile;
                         selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
                         currentlySwapping = true;
@@ -780,7 +767,6 @@ namespace GameVanilla.Game.Common
                         lastOtherSelectedTileY = idxB / level.width;
 
 
-                        birinciTile = selectedTile;
                         selectedTile = null;
 
                         PerformMove();
@@ -790,6 +776,7 @@ namespace GameVanilla.Game.Common
                              possibleSwaps.Find(x => x.tileB == hit.collider.gameObject && x.tileA == selectedTile) !=
                              null)
                     {
+                        Debug.Log("COMBO OKUNDU_2");
 
                         var selectedTileCopy = selectedTile;
                         selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
@@ -855,7 +842,6 @@ namespace GameVanilla.Game.Common
 
                         }
 
-                        birinciTile = selectedTile;
                         selectedTile = null;
 
                         possibleSwaps = DetectPossibleSwaps();
@@ -864,6 +850,7 @@ namespace GameVanilla.Game.Common
                     }
                     else if (selectedTile.GetComponent<StripedCandy>() != null || selectedTile.GetComponent<WrappedCandy>() != null || ikinciTile.GetComponent<StripedCandy>() != null || ikinciTile.GetComponent<WrappedCandy>() != null)
                     {
+                        Debug.Log("COMBO OKUNDU_3");
                         //Debug.Log("2. IF");
                         var selectedTileCopy = selectedTile;
                         selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
@@ -931,7 +918,6 @@ namespace GameVanilla.Game.Common
 
                         //StartCoroutine(YeniPatlamaGameObject(selectedTile));
 
-                        birinciTile = selectedTile;
                         selectedTile = null;
 
                         possibleSwaps = DetectPossibleSwaps();
@@ -940,6 +926,7 @@ namespace GameVanilla.Game.Common
                     }
                     else
                     {
+                        Debug.Log("COMBO OKUNDU_4");
                         var selectedTileCopy = selectedTile;
                         var hitTileCopy = hit.collider.gameObject;
                         selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
@@ -967,7 +954,6 @@ namespace GameVanilla.Game.Common
                             });
                         }
 
-                        birinciTile = selectedTile;
                         selectedTile = null;
 
                         SoundManager.instance.PlaySound("Error");
@@ -1149,7 +1135,6 @@ namespace GameVanilla.Game.Common
                             //lastOtherSelectedCandyColor = CandyColor.Blue;
                         }
 
-                        birinciTile = selectedTile;
                         selectedTile = null;
 
                         possibleSwaps = DetectPossibleSwaps();
@@ -1164,7 +1149,7 @@ namespace GameVanilla.Game.Common
         private void PerformMove()
         {
             ClearSuggestedMatch();
-
+            Debug.Log("HAMLE GERCEKLESTİ");
             if (level.limitType == LimitType.Moves)
             {
                 currentLimit -= 1;
@@ -1327,7 +1312,6 @@ namespace GameVanilla.Game.Common
                 var candyTile = (CandyTile)levelTile;
                 var tile = tilePool.GetCandyPool((CandyColor)(_rakipTileListem[_tileListeSiram])).GetObject();
                 _tileListeSiram++;
-                Debug.Log("TILESIRAM :"+_tileListeSiram);
                 tile.GetComponent<Tile>().board = this;
                 tile.GetComponent<Tile>().x = x;
                 tile.GetComponent<Tile>().y = y;

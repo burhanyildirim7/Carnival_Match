@@ -88,6 +88,7 @@ namespace GameVanilla.Game.Scenes
                     gameBoard.InitializeObjectPools();
                     gameBoard.LoadLevel();
                     level = gameBoard.level;
+                    gameStarted = true;
                 }
                 else
                 {
@@ -117,7 +118,6 @@ namespace GameVanilla.Game.Scenes
             {
                 return;
             }
-
             if (boosterMode)
             {
                 /*
@@ -150,6 +150,7 @@ namespace GameVanilla.Game.Scenes
                 gameBoard.InitializeObjectPools();
                 gameBoard.LoadLevel();
                 level = gameBoard.level;
+                gameStarted = true;
             }
         }
 
