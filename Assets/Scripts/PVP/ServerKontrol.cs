@@ -243,13 +243,19 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
             _rakipPicAnimator.SetBool("run", false);
             CancelInvoke("RakipSorgula");
             CancelInvoke("SearchinTextAnimasyon");
+            _rakipPlayerNameText.text = PhotonNetwork.PlayerListOthers[0].NickName;
+            _playerNameText.text = PhotonNetwork.NickName;
+            _rakipPlayerTeamNameText.text = "No Team";
+            _playerTeamNameText.text ="No Team";
+            /*
             string[] _rakipBilgileri = PhotonNetwork.PlayerListOthers[0].NickName.Split('/');
             _rakipPlayerNameText.text = _rakipBilgileri[0];
             _rakipPlayerTeamNameText.text = _rakipBilgileri[1];
             _rakipPlayerRozetAmountText.text= _rakipBilgileri[2];
-
+            
             string[] _playerBilgileri = PhotonNetwork.NickName.Split('/');
             _playerTeamNameText.text = _playerBilgileri[1];
+            */
 
             Invoke("PVPSahnesineGecis", 1f);
         }

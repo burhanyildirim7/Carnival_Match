@@ -18,7 +18,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
     [Header("PLAYER OBJELERI")] 
     [SerializeField] public List<GameObject> _playerMoves = new List<GameObject>();
     [SerializeField] List<Sprite> _playerSkillSprites = new List<Sprite>(), _playerGoalSprites = new List<Sprite>(),_playerPictureSprites = new List<Sprite>();
-    [SerializeField] Text _playerNameText, _playerSkillText, _playerScoreText;
+    [SerializeField] public Text _playerNameText, _playerSkillText, _playerScoreText;
     [SerializeField] GameObject _playerPic,_playerGoalPic, _playerSkill,_playerBoosterHammer,_playerBoosterShuffle;
     [SerializeField] Slider _playerMovesSlider;
 
@@ -26,7 +26,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
     [Header("RAKİP PLAYER OBJELERI")]
     [SerializeField] public List<GameObject> _rakipPlayerMoves = new List<GameObject>();
     [SerializeField] List<Sprite> _rakipPlayerSkillSprites = new List<Sprite>(), _rakipplayerGoalSprites = new List<Sprite>(), _rakipPlayerPictureSprites = new List<Sprite>();
-    [SerializeField] Text _rakipPlayerNameText, _rakipPlayerSkillText, _rakipPlayerScoreText;
+    [SerializeField] public Text _rakipPlayerNameText, _rakipPlayerSkillText, _rakipPlayerScoreText;
     [SerializeField] GameObject _rakipPlayerPic,_rakipPlayerGoalPic, _rakipPlayerSkill,_rakipPlayerBoosterHammer,_rakipPlayerBoosterShuffle;
     [SerializeField] Slider _rakipPlayerMovesSlider;
 
@@ -48,12 +48,13 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         _timerDeger = 45f;
         _timeSlider.maxValue = 45f;
         _timeSlider.value = 45f;
-        #region //Kullanıcı bilgileri
-        string[] _playerBilgileri = PhotonNetwork.NickName.Split('/');
-        _rakipPlayerNameText.text = _playerBilgileri[0];
 
-        string[] _rakipBilgileri = PhotonNetwork.PlayerListOthers[0].NickName.Split('/');
-        _rakipPlayerNameText.text = _rakipBilgileri[0];
+        #region //Kullanıcı bilgileri
+        _rakipPlayerNameText.text = PhotonNetwork.NickName;
+        _rakipPlayerNameText.text = PhotonNetwork.PlayerListOthers[0].NickName;
+
+        _playerScoreText.text = "0";
+        _rakipPlayerScoreText.text = "0";
         #endregion
 
         #region //Round Object kontrol baslangic
@@ -150,8 +151,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
                     {
                         GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle", RpcTarget.All, null);
 
-                        GameObject.Find("GameBoard").GetComponent<GameBoard>().RakipSiraTextDuzenleme();
-                        GameObject.Find("GameBoard").GetComponent<GameBoard>().SiraTextDuzenleme();
+                        GameObject.Find("GameBoard").GetComponent<GameBoard>().SiraDüzenlemeTetikleme();
                     }
                 }
             }
@@ -168,8 +168,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
                     {
                         GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle", RpcTarget.All, null);
 
-                        GameObject.Find("GameBoard").GetComponent<GameBoard>().RakipSiraTextDuzenleme();
-                        GameObject.Find("GameBoard").GetComponent<GameBoard>().SiraTextDuzenleme();
+                        GameObject.Find("GameBoard").GetComponent<GameBoard>().SiraDüzenlemeTetikleme();
                     }
                 }
             }

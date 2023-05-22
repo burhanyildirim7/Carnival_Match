@@ -58,6 +58,8 @@ MonoBehaviour:
   - MovesObjectKontrol
   - RakipSiraTextDuzenleme
   - HandObjeCalistir
+  - SiraTextDuzenleme
+  - PVPUpdateScore
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

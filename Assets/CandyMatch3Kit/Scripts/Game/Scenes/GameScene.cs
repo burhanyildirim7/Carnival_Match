@@ -135,7 +135,14 @@ namespace GameVanilla.Game.Scenes
             }
             else
             {
-                gameBoard.HandleInput();
+                if (PhotonNetwork.IsConnected)
+                {
+                    gameBoard.PVPHandleInputAktivate();
+                }
+                else
+                {
+                    gameBoard.HandleInput();
+                }
             }
         }
 

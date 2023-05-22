@@ -161,7 +161,6 @@ namespace GameVanilla.Game.Common
                 _tekSefer = false;
                 _handObject.SetActive(false);
                 _handObject.transform.position = new Vector3(0 , 0, 0);
-                _hamleSirasi = false;
                 _hamleBasladi = false;
                 _hamleBitti = false;
                 _pView = GetComponent<PhotonView>();
@@ -178,7 +177,7 @@ namespace GameVanilla.Game.Common
             }
             else
             {
-
+                _hamleSirasi = true;
             }
 
             Assert.IsNotNull(gameScene);
@@ -280,6 +279,25 @@ namespace GameVanilla.Game.Common
             gameState.score += score;
             gameUi.SetScore(gameState.score);
             gameUi.SetProgressBar(gameState.score);
+            if (PhotonNetwork.IsConnected)   
+            {
+                _pView.RPC("PVPUpdateScore",RpcTarget.All,(int)gameState.score);
+            }
+        }
+
+        [PunRPC]
+        public void PVPUpdateScore(int score)
+        {
+            if(_hamleSirasi)   
+            {
+                Debug.Log("ISMINE CALISTI");
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerScoreText.text = score.ToString();
+            }
+            else
+            {
+                Debug.Log("RAKİP ISMINE CALISTI");
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerScoreText.text = score.ToString();
+            }
         }
 
         /// <summary>
@@ -661,6 +679,19 @@ namespace GameVanilla.Game.Common
         /// <summary>
         /// Handles the player's input.
         /// </summary>
+        ///
+        public void PVPHandleInputAktivate()
+        {
+            if (_hamleSirasi)
+            {
+                HandleInput();
+            }
+            else
+            {
+
+            }
+        }
+
         public void HandleInput()
         {
             if (inputLocked)
@@ -675,7 +706,7 @@ namespace GameVanilla.Game.Common
             {
                 return;
             }
-            if (Input.GetMouseButtonDown(0) || _hamleBasladi)
+            if ((Input.GetMouseButtonDown(0)&& _hamleSirasi) || _hamleBasladi)
             {
                 drag = true;
                 if (PhotonNetwork.IsConnected && !_hamleSirasi)
@@ -718,7 +749,7 @@ namespace GameVanilla.Game.Common
                 }
             }
 
-            if (Input.GetMouseButtonUp(0) || _hamleBitti)
+            if ((Input.GetMouseButtonUp(0) && _hamleSirasi) || _hamleBitti)
             {
                 drag = false;
                 if (selectedTile != null && selectedTile.GetComponent<Animator>() != null && selectedTile.gameObject.activeSelf)
@@ -1219,11 +1250,8 @@ namespace GameVanilla.Game.Common
                 if (_hamleAdedi == 0) // HAMLE HAKKI BİTİNCE RAKİBE SIRA GEÇMESİ İÇİN
                 {
                     _hamleAdedi = 2;
-                    _hamleSirasi = !_hamleSirasi;
-                    Invoke("SiraTextDuzenleme", 1f);
-                    _pView.RPC("RakipSiraTextDuzenleme", RpcTarget.Others, null);
+                    Invoke("SiraDüzenlemeTetikleme", 1f);
                     //ROUND OBJELERİ DUZENLEME TETIKLEYICI
-                   // GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().RoundObjeleriniDuzenle();
                 }
                 else
                 {
@@ -1281,31 +1309,43 @@ namespace GameVanilla.Game.Common
             }
         }
         */
-        [PunRPC]
-        public void RakipSiraTextDuzenleme()
+
+        public void SiraDüzenlemeTetikleme()
         {
-            _hamleSirasi = !_hamleSirasi;
-
-            Debug.Log("RAKİP TEXT DUZENLEME");
-
-            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
-            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
-            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
-            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[1].SetActive(true);
-
-            SiraDegisikligiPaneliAcma("Your Turn");
-
+            _pView.RPC("SiraTextDuzenleme", RpcTarget.All, null);
+            if (PhotonNetwork.MasterClient.NickName!=PhotonNetwork.NickName)   
+            {
+                GameObject.Find("ServerGameUIKontrol").GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle",RpcTarget.All,null);
+            }
         }
+
+        [PunRPC]
         public void SiraTextDuzenleme()
         {
-            Debug.Log("PLAYER TEXT DUZENLEME");
+            if (_pView.IsMine)   
+            {
+                Debug.Log("PLAYER TEXT DUZENLEME");
+                _hamleSirasi = !_hamleSirasi;
 
-            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
-            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
-            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
-            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[1].SetActive(true);
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[1].SetActive(true);
 
-            SiraDegisikligiPaneliAcma("Opponent's Turn");
+                SiraDegisikligiPaneliAcma("Opponent's Turn");
+            }
+            else
+            {
+                Debug.Log("RAKİP TEXT DUZENLEME");
+                _hamleSirasi = !_hamleSirasi;
+
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[1].SetActive(true);
+
+                SiraDegisikligiPaneliAcma("Your Turn");
+            }
         }
 
         [PunRPC]
