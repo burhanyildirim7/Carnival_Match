@@ -35,6 +35,9 @@ namespace GameVanilla.Game.Common
             {
 
             }
+
+            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+
             return new List<GameObject> { gameObject };
         }
 

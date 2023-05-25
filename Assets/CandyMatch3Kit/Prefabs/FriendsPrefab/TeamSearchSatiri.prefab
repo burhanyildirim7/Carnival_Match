@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2001479169441973830}
   - component: {fileID: 2001479169441973831}
   - component: {fileID: 1392285861054547918}
+  - component: {fileID: 8365982550867012460}
   m_Layer: 5
   m_Name: TeamSearchSatiri
   m_TagString: Untagged
@@ -95,6 +96,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _TeamFlag: {fileID: 3142046176605527633}
+--- !u!114 &8365982550867012460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001479169441973817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af66741212c8d42da9124bf0c98f4e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3142046176605527633
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,6 +670,7 @@ GameObject:
   - component: {fileID: 8675932602777580375}
   - component: {fileID: 2086945098679084263}
   - component: {fileID: 6372663504962157795}
+  - component: {fileID: 5142632574943071419}
   m_Layer: 5
   m_Name: ShowButton (Legacy)
   m_TagString: Untagged
@@ -778,3 +792,39 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5142632574943071419}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8365982550867012460}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5142632574943071419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7261542265237562276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

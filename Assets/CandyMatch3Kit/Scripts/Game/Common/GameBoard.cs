@@ -711,6 +711,8 @@ namespace GameVanilla.Game.Common
             }
             if ((Input.GetMouseButtonDown(0)&& _hamleSirasi) || _hamleBasladi)
             {
+                MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+
                 drag = true;
                 if (PhotonNetwork.IsConnected && !_hamleSirasi)
                 {

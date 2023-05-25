@@ -1032,6 +1032,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35846061}
   m_CullTransparentMesh: 1
+--- !u!1 &36090271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 36090273}
+  - component: {fileID: 36090272}
+  m_Layer: 0
+  m_Name: HapticKontrol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &36090272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36090271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af66741212c8d42da9124bf0c98f4e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &36090273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36090271}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 24
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &37098180
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,6 +2072,7 @@ GameObject:
   - component: {fileID: 72626216}
   - component: {fileID: 72626215}
   - component: {fileID: 72626214}
+  - component: {fileID: 72626217}
   m_Layer: 5
   m_Name: CancelButton
   m_TagString: Untagged
@@ -2111,6 +2156,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 72626217}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &72626215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2149,6 +2218,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 72626212}
   m_CullTransparentMesh: 1
+--- !u!114 &72626217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72626212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &76211889
 GameObject:
   m_ObjectHideFlags: 0
@@ -2585,6 +2666,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1833842214}
         m_TargetAssemblyTypeName: HomePageBottomButtonScript, Assembly-CSharp
         m_MethodName: TeamPage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4193,10 +4286,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 152377925}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5238,6 +5343,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &186058186
 GameObject:
   m_ObjectHideFlags: 0
@@ -5866,6 +5983,7 @@ GameObject:
   - component: {fileID: 211047098}
   - component: {fileID: 211047097}
   - component: {fileID: 211047100}
+  - component: {fileID: 211047101}
   m_Layer: 5
   m_Name: SagOk
   m_TagString: Untagged
@@ -5949,6 +6067,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 211047101}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &211047098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6002,6 +6144,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 5, y: -10}
   m_UseGraphicAlpha: 1
+--- !u!114 &211047101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211047095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &222029484
 GameObject:
   m_ObjectHideFlags: 0
@@ -8156,7 +8310,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 303213486}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &303213486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9282,6 +9448,7 @@ GameObject:
   - component: {fileID: 340513337}
   - component: {fileID: 340513336}
   - component: {fileID: 340513339}
+  - component: {fileID: 340513340}
   m_Layer: 5
   m_Name: SolOk
   m_TagString: Untagged
@@ -9365,6 +9532,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 211047101}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &340513337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9418,6 +9609,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: -5, y: -10}
   m_UseGraphicAlpha: 1
+--- !u!114 &340513340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340513334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &344741062
 GameObject:
   m_ObjectHideFlags: 0
@@ -9431,6 +9634,7 @@ GameObject:
   - component: {fileID: 344741065}
   - component: {fileID: 344741064}
   - component: {fileID: 344741067}
+  - component: {fileID: 344741068}
   m_Layer: 5
   m_Name: MinLevelLeftButton (1)
   m_TagString: Untagged
@@ -9514,6 +9718,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 344741068}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &344741065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9580,6 +9808,18 @@ MonoBehaviour:
   _minLevelButton: 1
   _teamTypeText: {fileID: 60208756}
   _minLeveltext: {fileID: 1956602571}
+--- !u!114 &344741068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344741062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &350007359
 GameObject:
   m_ObjectHideFlags: 0
@@ -10731,8 +10971,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 805112967}
   m_HandleRect: {fileID: 805112966}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.99999815
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -12355,6 +12595,7 @@ GameObject:
   - component: {fileID: 439894162}
   - component: {fileID: 439894161}
   - component: {fileID: 439894164}
+  - component: {fileID: 439894165}
   m_Layer: 5
   m_Name: TeamTypeRigthButton
   m_TagString: Untagged
@@ -12438,6 +12679,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 344741068}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &439894162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12504,6 +12769,18 @@ MonoBehaviour:
   _minLevelButton: 0
   _teamTypeText: {fileID: 60208756}
   _minLeveltext: {fileID: 1956602571}
+--- !u!114 &439894165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439894159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &441172333
 GameObject:
   m_ObjectHideFlags: 0
@@ -12814,7 +13091,7 @@ PrefabInstance:
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
@@ -12824,7 +13101,7 @@ PrefabInstance:
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
@@ -14327,6 +14604,7 @@ GameObject:
   - component: {fileID: 527875167}
   - component: {fileID: 527875166}
   - component: {fileID: 527875165}
+  - component: {fileID: 527875168}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -14398,7 +14676,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 527875166}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090271}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 527875168}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &527875166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14437,6 +14739,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 527875163}
   m_CullTransparentMesh: 1
+--- !u!114 &527875168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527875163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &528236750
 GameObject:
   m_ObjectHideFlags: 0
@@ -16734,6 +17048,7 @@ GameObject:
   - component: {fileID: 624017012}
   - component: {fileID: 624017011}
   - component: {fileID: 624017010}
+  - component: {fileID: 624017013}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -16805,7 +17120,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 624017011}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090271}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 624017013}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &624017011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16844,6 +17183,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 624017008}
   m_CullTransparentMesh: 1
+--- !u!114 &624017013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624017008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &624704368
 GameObject:
   m_ObjectHideFlags: 0
@@ -22647,6 +22998,7 @@ GameObject:
   - component: {fileID: 670045313}
   - component: {fileID: 670045312}
   - component: {fileID: 670045315}
+  - component: {fileID: 670045316}
   m_Layer: 5
   m_Name: TeamTypeLeftButton
   m_TagString: Untagged
@@ -22730,6 +23082,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 344741068}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &670045313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22796,6 +23172,18 @@ MonoBehaviour:
   _minLevelButton: 0
   _teamTypeText: {fileID: 60208756}
   _minLeveltext: {fileID: 1956602571}
+--- !u!114 &670045316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670045310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &677424806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22827,7 +23215,7 @@ PrefabInstance:
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
@@ -22837,7 +23225,7 @@ PrefabInstance:
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
@@ -23637,6 +24025,7 @@ GameObject:
   - component: {fileID: 698439884}
   - component: {fileID: 698439883}
   - component: {fileID: 698439882}
+  - component: {fileID: 698439886}
   m_Layer: 5
   m_Name: JoinPanelButton (Legacy)
   m_TagString: Untagged
@@ -23700,6 +24089,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 698439886}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &698439883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23758,6 +24171,18 @@ RectTransform:
   m_AnchoredPosition: {x: -421, y: -75}
   m_SizeDelta: {x: 401, y: 217}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &698439886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698439881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &698977791
 GameObject:
   m_ObjectHideFlags: 0
@@ -23771,6 +24196,7 @@ GameObject:
   - component: {fileID: 698977794}
   - component: {fileID: 698977793}
   - component: {fileID: 698977796}
+  - component: {fileID: 698977797}
   m_Layer: 5
   m_Name: MinLevelRigthButton (1)
   m_TagString: Untagged
@@ -23854,6 +24280,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 344741068}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &698977794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23920,6 +24370,18 @@ MonoBehaviour:
   _minLevelButton: 1
   _teamTypeText: {fileID: 60208756}
   _minLeveltext: {fileID: 1956602571}
+--- !u!114 &698977797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698977791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &702520439
 GameObject:
   m_ObjectHideFlags: 0
@@ -24050,6 +24512,7 @@ GameObject:
   - component: {fileID: 714048832}
   - component: {fileID: 714048831}
   - component: {fileID: 714048830}
+  - component: {fileID: 714048833}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -24121,7 +24584,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 714048831}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090271}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 714048833}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &714048831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24160,6 +24647,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 714048828}
   m_CullTransparentMesh: 1
+--- !u!114 &714048833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714048828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &723092672
 GameObject:
   m_ObjectHideFlags: 0
@@ -25370,6 +25869,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &775571467
 GameObject:
   m_ObjectHideFlags: 0
@@ -25702,6 +26213,7 @@ GameObject:
   - component: {fileID: 784841695}
   - component: {fileID: 784841694}
   - component: {fileID: 784841693}
+  - component: {fileID: 784841696}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -25774,6 +26286,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 36090271}
+        m_TargetAssemblyTypeName: ServerKontrol, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 784841696}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1183269954}
         m_TargetAssemblyTypeName: ServerKontrol, Assembly-CSharp
         m_MethodName: MatchButton
@@ -25824,6 +26360,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784841691}
   m_CullTransparentMesh: 1
+--- !u!114 &784841696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784841691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &798926451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25981,7 +26529,7 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 0.99999815}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -28677,6 +29225,7 @@ GameObject:
   - component: {fileID: 851976091}
   - component: {fileID: 851976090}
   - component: {fileID: 851976089}
+  - component: {fileID: 851976092}
   m_Layer: 0
   m_Name: Button_Add (1)
   m_TagString: Untagged
@@ -28748,6 +29297,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 851976092}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 945483375}
         m_TargetAssemblyTypeName: GameVanilla.Game.Scenes.SatinAlmaScript, Assembly-CSharp
         m_MethodName: OnBuyCoinButtonPressed
@@ -28798,6 +29371,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851976087}
   m_CullTransparentMesh: 0
+--- !u!114 &851976092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851976087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &852138602
 GameObject:
   m_ObjectHideFlags: 0
@@ -29443,6 +30028,7 @@ GameObject:
   - component: {fileID: 877572185}
   - component: {fileID: 877572184}
   - component: {fileID: 877572183}
+  - component: {fileID: 877572186}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -29514,7 +30100,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 877572184}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090271}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 877572186}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &877572184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29553,6 +30163,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877572181}
   m_CullTransparentMesh: 1
+--- !u!114 &877572186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877572181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &877889311
 GameObject:
   m_ObjectHideFlags: 0
@@ -30056,6 +30678,7 @@ GameObject:
   - component: {fileID: 899745185}
   - component: {fileID: 899745184}
   - component: {fileID: 899745183}
+  - component: {fileID: 899745186}
   m_Layer: 5
   m_Name: FriendsButton (Legacy) (2)
   m_TagString: Untagged
@@ -30128,6 +30751,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 899745186}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 420736303}
         m_TargetAssemblyTypeName: FriendsPanelScript, Assembly-CSharp
         m_MethodName: FriendsPanelButton
@@ -30178,6 +30825,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 899745181}
   m_CullTransparentMesh: 1
+--- !u!114 &899745186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899745181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &910828525
 GameObject:
   m_ObjectHideFlags: 0
@@ -30636,9 +31295,49 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4467061377208852745, guid: 0966c29329b5f4809b20efdfe333184b,
         type: 3}
+      propertyPath: m_onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467061377208852745, guid: 0966c29329b5f4809b20efdfe333184b,
+        type: 3}
+      propertyPath: m_onClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467061377208852745, guid: 0966c29329b5f4809b20efdfe333184b,
+        type: 3}
       propertyPath: m_onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 945483375}
+    - target: {fileID: 4467061377208852745, guid: 0966c29329b5f4809b20efdfe333184b,
+        type: 3}
+      propertyPath: m_onClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 36090272}
+    - target: {fileID: 4467061377208852745, guid: 0966c29329b5f4809b20efdfe333184b,
+        type: 3}
+      propertyPath: m_onClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467061377208852745, guid: 0966c29329b5f4809b20efdfe333184b,
+        type: 3}
+      propertyPath: m_onClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ButtonPressHapticActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467061377208852745, guid: 0966c29329b5f4809b20efdfe333184b,
+        type: 3}
+      propertyPath: m_onClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: ButtonlarHaptic, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467061377208852745, guid: 0966c29329b5f4809b20efdfe333184b,
+        type: 3}
+      propertyPath: m_onClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467061377208852745, guid: 0966c29329b5f4809b20efdfe333184b,
+        type: 3}
+      propertyPath: m_onClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4467061377208852748, guid: 0966c29329b5f4809b20efdfe333184b,
         type: 3}
       propertyPath: m_Name
@@ -30772,6 +31471,7 @@ GameObject:
   - component: {fileID: 928421269}
   - component: {fileID: 928421268}
   - component: {fileID: 928421267}
+  - component: {fileID: 928421270}
   m_Layer: 5
   m_Name: CreateButton
   m_TagString: Untagged
@@ -30857,6 +31557,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 344741068}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &928421268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30895,6 +31619,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 928421265}
   m_CullTransparentMesh: 1
+--- !u!114 &928421270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928421265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &935443993
 GameObject:
   m_ObjectHideFlags: 0
@@ -31739,6 +32475,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &967139409
 GameObject:
   m_ObjectHideFlags: 0
@@ -31975,7 +32723,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1634294625}
   m_HandleRect: {fileID: 1634294624}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -32523,6 +33271,7 @@ GameObject:
   - component: {fileID: 984480237}
   - component: {fileID: 984480236}
   - component: {fileID: 984480235}
+  - component: {fileID: 984480238}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -32594,7 +33343,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 984480236}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090271}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 984480238}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &984480236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32633,6 +33406,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 984480233}
   m_CullTransparentMesh: 1
+--- !u!114 &984480238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984480233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &985366876
 GameObject:
   m_ObjectHideFlags: 0
@@ -32773,6 +33558,7 @@ GameObject:
   - component: {fileID: 1002965407}
   - component: {fileID: 1002965406}
   - component: {fileID: 1002965405}
+  - component: {fileID: 1002965408}
   m_Layer: 5
   m_Name: CreatePanelButton (Legacy) (2)
   m_TagString: Untagged
@@ -32856,6 +33642,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 698439886}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1002965406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32894,6 +33704,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1002965403}
   m_CullTransparentMesh: 1
+--- !u!114 &1002965408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002965403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1003045982
 GameObject:
   m_ObjectHideFlags: 0
@@ -33223,7 +34045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1029660968
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33670,6 +34492,7 @@ GameObject:
   - component: {fileID: 1036290428}
   - component: {fileID: 1036290427}
   - component: {fileID: 1036290426}
+  - component: {fileID: 1036290430}
   m_Layer: 5
   m_Name: SearchPanelButton (Legacy) (1)
   m_TagString: Untagged
@@ -33733,6 +34556,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 698439886}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1036290427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33791,6 +34638,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -75}
   m_SizeDelta: {x: 401, y: 217}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1036290430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036290425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1039727857
 GameObject:
   m_ObjectHideFlags: 0
@@ -34927,7 +35786,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1301589522}
   m_HandleRect: {fileID: 1301589521}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -34983,6 +35842,7 @@ GameObject:
   - component: {fileID: 1086839172}
   - component: {fileID: 1086839171}
   - component: {fileID: 1086839170}
+  - component: {fileID: 1086839173}
   m_Layer: 5
   m_Name: BrowseButton
   m_TagString: Untagged
@@ -35066,6 +35926,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 344741068}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1086839171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35104,6 +35988,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086839168}
   m_CullTransparentMesh: 1
+--- !u!114 &1086839173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086839168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1092384682
 GameObject:
   m_ObjectHideFlags: 0
@@ -35727,6 +36623,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1833842214}
         m_TargetAssemblyTypeName: HomePageBottomButtonScript, Assembly-CSharp
         m_MethodName: CollectionPage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -37621,6 +38529,7 @@ GameObject:
   - component: {fileID: 1221462214}
   - component: {fileID: 1221462213}
   - component: {fileID: 1221462212}
+  - component: {fileID: 1221462215}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -37692,7 +38601,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1221462213}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090271}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1221462215}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1221462213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37731,6 +38664,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1221462210}
   m_CullTransparentMesh: 1
+--- !u!114 &1221462215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221462210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1226456338
 GameObject:
   m_ObjectHideFlags: 0
@@ -38164,6 +39109,7 @@ GameObject:
   - component: {fileID: 1236789076}
   - component: {fileID: 1236789075}
   - component: {fileID: 1236789074}
+  - component: {fileID: 1236789077}
   m_Layer: 0
   m_Name: Button_Add (1)
   m_TagString: Untagged
@@ -38234,7 +39180,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1236789075}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 851976092}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1236789075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38273,6 +39243,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236789072}
   m_CullTransparentMesh: 0
+--- !u!114 &1236789077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236789072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1238490026
 GameObject:
   m_ObjectHideFlags: 0
@@ -42493,6 +43475,7 @@ GameObject:
   - component: {fileID: 1359283650}
   - component: {fileID: 1359283649}
   - component: {fileID: 1359283648}
+  - component: {fileID: 1359283651}
   m_Layer: 5
   m_Name: ChatButton
   m_TagString: Untagged
@@ -42563,7 +43546,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1359283649}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1359283651}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1359283649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42602,6 +43609,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359283646}
   m_CullTransparentMesh: 1
+--- !u!114 &1359283651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359283646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1359953221
 GameObject:
   m_ObjectHideFlags: 0
@@ -44832,6 +45851,7 @@ GameObject:
   - component: {fileID: 1449276618}
   - component: {fileID: 1449276617}
   - component: {fileID: 1449276616}
+  - component: {fileID: 1449276619}
   m_Layer: 5
   m_Name: CountryButton
   m_TagString: Untagged
@@ -44903,7 +45923,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1449276617}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1449276619}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1449276617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44942,6 +45986,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449276614}
   m_CullTransparentMesh: 1
+--- !u!114 &1449276619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449276614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1452747645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45767,10 +46823,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1461807628}
         m_TargetAssemblyTypeName: 
         m_MethodName: Play
         m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -45943,6 +47011,7 @@ GameObject:
   - component: {fileID: 1471561327}
   - component: {fileID: 1471561326}
   - component: {fileID: 1471561325}
+  - component: {fileID: 1471561328}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -46014,7 +47083,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1471561326}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090271}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1471561328}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1471561326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46053,6 +47146,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471561323}
   m_CullTransparentMesh: 1
+--- !u!114 &1471561328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471561323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1473566686
 GameObject:
   m_ObjectHideFlags: 0
@@ -48131,6 +49236,7 @@ GameObject:
   - component: {fileID: 1551603287}
   - component: {fileID: 1551603286}
   - component: {fileID: 1551603285}
+  - component: {fileID: 1551603288}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -48202,7 +49308,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1551603286}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090271}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1551603288}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1551603286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48241,6 +49371,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1551603283}
   m_CullTransparentMesh: 1
+--- !u!114 &1551603288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551603283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1559034327
 GameObject:
   m_ObjectHideFlags: 0
@@ -48493,6 +49635,7 @@ GameObject:
   - component: {fileID: 1572545206}
   - component: {fileID: 1572545205}
   - component: {fileID: 1572545204}
+  - component: {fileID: 1572545207}
   m_Layer: 5
   m_Name: PlayersButton (Legacy)
   m_TagString: Untagged
@@ -48565,6 +49708,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1572545207}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 420736303}
         m_TargetAssemblyTypeName: FriendsPanelScript, Assembly-CSharp
         m_MethodName: PlayerPanelButton
@@ -48615,6 +49782,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572545202}
   m_CullTransparentMesh: 1
+--- !u!114 &1572545207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572545202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1577005865
 GameObject:
   m_ObjectHideFlags: 0
@@ -52770,6 +53949,7 @@ GameObject:
   - component: {fileID: 1730210365}
   - component: {fileID: 1730210364}
   - component: {fileID: 1730210363}
+  - component: {fileID: 1730210367}
   m_Layer: 5
   m_Name: yazilaniSilmeButtonu
   m_TagString: Untagged
@@ -52868,6 +54048,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1730210367}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Buttom
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1730210365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52906,6 +54110,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730210361}
   m_CullTransparentMesh: 1
+--- !u!114 &1730210367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730210361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1734379794
 GameObject:
   m_ObjectHideFlags: 0
@@ -53369,6 +54585,7 @@ GameObject:
   - component: {fileID: 1748974632}
   - component: {fileID: 1748974631}
   - component: {fileID: 1748974630}
+  - component: {fileID: 1748974633}
   m_Layer: 5
   m_Name: WorldButton
   m_TagString: Untagged
@@ -53440,7 +54657,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1748974631}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1748974633}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1748974631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53479,6 +54720,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748974628}
   m_CullTransparentMesh: 1
+--- !u!114 &1748974633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748974628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1751094478
 GameObject:
   m_ObjectHideFlags: 0
@@ -53724,6 +54977,7 @@ GameObject:
   - component: {fileID: 1759048726}
   - component: {fileID: 1759048725}
   - component: {fileID: 1759048724}
+  - component: {fileID: 1759048727}
   m_Layer: 5
   m_Name: TakeLiveButton
   m_TagString: Untagged
@@ -53794,7 +55048,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1759048725}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1359283651}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1759048725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53833,6 +55111,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759048722}
   m_CullTransparentMesh: 1
+--- !u!114 &1759048727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759048722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1760292712
 GameObject:
   m_ObjectHideFlags: 0
@@ -53845,6 +55135,7 @@ GameObject:
   - component: {fileID: 1760292716}
   - component: {fileID: 1760292715}
   - component: {fileID: 1760292714}
+  - component: {fileID: 1760292717}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -53916,7 +55207,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1760292715}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090271}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1760292717}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1760292715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53955,6 +55270,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1760292712}
   m_CullTransparentMesh: 1
+--- !u!114 &1760292717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760292712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1761971562
 GameObject:
   m_ObjectHideFlags: 0
@@ -56543,6 +57870,7 @@ GameObject:
   - component: {fileID: 1888177401}
   - component: {fileID: 1888177400}
   - component: {fileID: 1888177399}
+  - component: {fileID: 1888177402}
   m_Layer: 5
   m_Name: Button (Legacy)
   m_TagString: Untagged
@@ -56614,7 +57942,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1888177400}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 36090271}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1888177402}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1888177400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56653,6 +58005,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888177397}
   m_CullTransparentMesh: 1
+--- !u!114 &1888177402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888177397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1893405815
 GameObject:
   m_ObjectHideFlags: 0
@@ -58603,6 +59967,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 945483375}
         m_TargetAssemblyTypeName: GameVanilla.Game.Scenes.SatinAlmaScript, Assembly-CSharp
         m_MethodName: OnBuyCoinButtonPressed
@@ -59339,7 +60715,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000563267}
+  m_AnchoredPosition: {x: 0, y: 0.0028547018}
   m_SizeDelta: {x: 0, y: 709}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1981917048
@@ -59622,10 +60998,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1993877716}
         m_TargetAssemblyTypeName: 
         m_MethodName: Play
         m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -59782,6 +61170,7 @@ GameObject:
   - component: {fileID: 1998783809}
   - component: {fileID: 1998783808}
   - component: {fileID: 1998783807}
+  - component: {fileID: 1998783810}
   m_Layer: 5
   m_Name: SearchButtonu
   m_TagString: Untagged
@@ -59865,6 +61254,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1730210367}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Buttom
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1998783808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59903,6 +61316,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1998783804}
   m_CullTransparentMesh: 1
+--- !u!114 &1998783810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998783804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2001055191
 GameObject:
   m_ObjectHideFlags: 0
@@ -60994,10 +62419,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 2030071647}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -61480,7 +62917,7 @@ PrefabInstance:
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
@@ -61490,7 +62927,7 @@ PrefabInstance:
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2001479169441973816, guid: e333b403aff374c84b69f2f81a36dba3,
         type: 3}
@@ -62346,6 +63783,7 @@ GameObject:
   - component: {fileID: 2055221639}
   - component: {fileID: 2055221638}
   - component: {fileID: 2055221637}
+  - component: {fileID: 2055221640}
   m_Layer: 5
   m_Name: TeamsButton (Legacy) (1)
   m_TagString: Untagged
@@ -62418,6 +63856,30 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2055221640}
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 420736303}
         m_TargetAssemblyTypeName: FriendsPanelScript, Assembly-CSharp
         m_MethodName: TeamPanelButton
@@ -62468,6 +63930,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2055221635}
   m_CullTransparentMesh: 1
+--- !u!114 &2055221640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055221635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2056510280
 GameObject:
   m_ObjectHideFlags: 0
@@ -70089,6 +71563,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 36090272}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 945483375}
         m_TargetAssemblyTypeName: GameVanilla.Game.Scenes.SatinAlmaScript, Assembly-CSharp
         m_MethodName: OnBuyLivesButtonPressed

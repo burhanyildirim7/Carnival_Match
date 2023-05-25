@@ -36,6 +36,7 @@ namespace GameVanilla.Core
         protected virtual void Start()
         {
             onOpen.Invoke();
+            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
         }
 
         /// <summary>

@@ -15,6 +15,7 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnCloseButtonPressed()
         {
+            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
             Close();
         }
 
@@ -23,6 +24,7 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnExitButtonPressed()
         {
+            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
             if (PhotonNetwork.IsConnected)
             {
                 PhotonNetwork.LeaveRoom();
@@ -39,6 +41,7 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnResumeButtonPressed()
         {
+            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
             Close();
         }
     }

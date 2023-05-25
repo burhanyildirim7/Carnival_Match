@@ -63,6 +63,7 @@ public class LoadingSceenManager : MonoBehaviour
     IEnumerator startLoading(int level)
     {
         yield return new WaitForSeconds(2.5f);
+        MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
         AsyncOperation async = SceneManager.LoadSceneAsync(level);
 
         while (!async.isDone)
@@ -78,7 +79,7 @@ public class LoadingSceenManager : MonoBehaviour
     IEnumerator gameLoading(int level)
     {
         yield return new WaitForSeconds(2f);
-
+        MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
         AsyncOperation async = SceneManager.LoadSceneAsync(level);
 
         while (!async.isDone)
