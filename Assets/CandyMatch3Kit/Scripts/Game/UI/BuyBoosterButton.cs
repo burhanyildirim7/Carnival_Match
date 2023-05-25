@@ -10,6 +10,8 @@ using GameVanilla.Game.Common;
 using GameVanilla.Game.Popups;
 using GameVanilla.Game.Scenes;
 
+using Photon.Pun;
+
 namespace GameVanilla.Game.UI
 {
 	/// <summary>
@@ -31,18 +33,26 @@ namespace GameVanilla.Game.UI
 
 		[SerializeField]
 		private Text amountText;
+
 #pragma warning restore 649
 
-		/// <summary>
-		/// Unity's Awake method.
-		/// </summary>
-		private void Awake()
+        /// <summary>
+        /// Unity's Awake method.
+        /// </summary>
+        private void Awake()
 		{
-			Assert.IsNotNull(gameScene);
-			Assert.IsNotNull(amountGroup);
-			Assert.IsNotNull(moreGroup);
-			Assert.IsNotNull(amountText);
-		}
+            Assert.IsNotNull(gameScene);
+            if (PhotonNetwork.IsConnected)
+			{
+
+			}
+			else
+			{
+                Assert.IsNotNull(amountGroup);
+                Assert.IsNotNull(moreGroup);
+                Assert.IsNotNull(amountText);
+            }
+        }
 
 		/// <summary>
 		/// Called when the button is pressed.
@@ -59,18 +69,24 @@ namespace GameVanilla.Game.UI
 			if (numBoosters == 0)
 			{
 				gameScene.OpenPopup<BuyBoostersPopup>("Popups/BuyBoostersPopup", popup => { popup.SetBooster(this); });
-			}
-			else
+
+            }
+            else
 			{
 				gameScene.EnableBoosterMode(this);
-			}
-		}
+            }
+        }
 
-		/// <summary>
-		/// Updates the amount of boosters of the button.
-		/// </summary>
-		/// <param name="amount">The amount of boosters.</param>
-		public void UpdateAmount(int amount)
+		public void PVPSkillButtonPressed()
+		{
+            gameScene.EnableBoosterMode(this);
+        }
+
+        /// <summary>
+        /// Updates the amount of boosters of the button.
+        /// </summary>
+        /// <param name="amount">The amount of boosters.</param>
+        public void UpdateAmount(int amount)
 		{
 			if (amount == 0)
 			{

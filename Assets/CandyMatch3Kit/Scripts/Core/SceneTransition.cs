@@ -1,11 +1,12 @@
 using GameVanilla.Game.Popups;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 using GameVanilla.Core;
 using GameVanilla.Game.Scenes;
 using GameVanilla.Game.Common;
-
+using Photon.Pun;
 using FullSerializer;
 
 namespace GameVanilla.Core
@@ -52,12 +53,22 @@ namespace GameVanilla.Core
         }
         public void _nextButtonInGameScene()
         {
-            PlayerPrefs.SetInt("HomeSceneToplamYildiz", PlayerPrefs.GetInt("HomeSceneToplamYildiz") + 1);
-            Transition.LoadLevel(scene, duration, color);
-            //10-11    650  6
-            _bolumSonucu = ((PlayerPrefs.GetInt("KalanLimit") * 50)) / 100;
-            _kazanilacakCoinMiktari = (100 + (_bolumSonucu * 100));
-            PuzzleMatchManager.instance.coinsSystem.LevelCoinEkle(_kazanilacakCoinMiktari);
+            if (SceneManager.GetActiveScene().name == "PVPGameScene")   
+            {
+                Transition.LoadLevel(scene, duration, color);
+                _kazanilacakCoinMiktari = 250;
+                PuzzleMatchManager.instance.coinsSystem.LevelCoinEkle(_kazanilacakCoinMiktari);
+                PhotonNetwork.LeaveRoom();
+            }
+            else
+            {
+                PlayerPrefs.SetInt("HomeSceneToplamYildiz", PlayerPrefs.GetInt("HomeSceneToplamYildiz") + 1);
+                Transition.LoadLevel(scene, duration, color);
+                //10-11    650  6
+                _bolumSonucu = ((PlayerPrefs.GetInt("KalanLimit") * 50)) / 100;
+                _kazanilacakCoinMiktari = (100 + (_bolumSonucu * 100));
+                PuzzleMatchManager.instance.coinsSystem.LevelCoinEkle(_kazanilacakCoinMiktari);
+            }
         }
 
         #region //PVP ALANI

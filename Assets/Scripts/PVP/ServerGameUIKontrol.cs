@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using GameVanilla.Game.Common;
 using GameVanilla.Game.Popups;
@@ -10,25 +11,27 @@ using UnityEngine.UI;
 public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 {
     [Header("ORTAK OBJELERI")]
-    [SerializeField] List<GameObject> _roundObjects=new List<GameObject>();
+    [SerializeField] GameObject _baslangicPaneli;
+    [SerializeField] List<GameObject> _roundObjects = new List<GameObject>();
     [SerializeField] Slider _timeSlider;
     [SerializeField] GameObject _oyuncuSirasiGorseli;
 
 
-    [Header("PLAYER OBJELERI")] 
+    [Header("PLAYER OBJELERI")]
     [SerializeField] public List<GameObject> _playerMoves = new List<GameObject>();
-    [SerializeField] List<Sprite> _playerSkillSprites = new List<Sprite>(), _playerGoalSprites = new List<Sprite>(),_playerPictureSprites = new List<Sprite>();
+    [SerializeField] List<Sprite> _playerSkillSprites = new List<Sprite>(), _playerGoalSprites = new List<Sprite>(), _playerPictureSprites = new List<Sprite>();
     [SerializeField] public Text _playerNameText, _playerSkillText, _playerScoreText;
-    [SerializeField] GameObject _playerPic,_playerGoalPic, _playerSkill,_playerBoosterHammer,_playerBoosterShuffle;
-    [SerializeField] Slider _playerMovesSlider;
-
+    [SerializeField] GameObject _playerPic, _playerGoalPic, _playerSkillButton, _playerBoosterHammer, _playerBoosterShuffle;
+    [SerializeField] Slider _playerSkillSlider;
+    private int _playerSkillSayac = 0;
 
     [Header("RAKİP PLAYER OBJELERI")]
     [SerializeField] public List<GameObject> _rakipPlayerMoves = new List<GameObject>();
     [SerializeField] List<Sprite> _rakipPlayerSkillSprites = new List<Sprite>(), _rakipplayerGoalSprites = new List<Sprite>(), _rakipPlayerPictureSprites = new List<Sprite>();
     [SerializeField] public Text _rakipPlayerNameText, _rakipPlayerSkillText, _rakipPlayerScoreText;
-    [SerializeField] GameObject _rakipPlayerPic,_rakipPlayerGoalPic, _rakipPlayerSkill,_rakipPlayerBoosterHammer,_rakipPlayerBoosterShuffle;
-    [SerializeField] Slider _rakipPlayerMovesSlider;
+    [SerializeField] GameObject _rakipPlayerPic, _rakipPlayerGoalPic, _rakipPlayerSkill, _rakipPlayerBoosterHammer, _rakipPlayerBoosterShuffle;
+    [SerializeField] Slider _rakipPlayerSkillSlider;
+    private int _rakipPlayerSkillSayac = 0;
 
     [Header("SUPPORTS")]
 
@@ -39,11 +42,42 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
     #region //private degiskenler
     private int _roundNo;
     private float _timerDeger;
+    private int _playerGoalSecim, _rakipGoalSecim;
+    private List<int> _candyColorListesi = new List<int>(){0,1,2,3,4,5};
     #endregion
 
     [SerializeField] GameScene gameScene;
-    
-    void Start()
+    private void Awake()
+    {
+        if (PhotonNetwork.MasterClient.NickName==PhotonNetwork.NickName)    
+        {
+            _playerGoalSecim = Random.Range(0, _candyColorListesi.Count);
+            _candyColorListesi.RemoveAt(_playerGoalSecim);
+            _rakipGoalSecim = Random.Range(0, _candyColorListesi.Count);
+            _rakipGoalSecim = _candyColorListesi[_rakipGoalSecim];
+            _playerSkillButton.GetComponent<Button>().interactable = false;
+            _playerBoosterHammer.GetComponent<Button>().interactable = false;
+            _playerBoosterShuffle.GetComponent<Button>().interactable = true;
+            _rakipPlayerBoosterHammer.GetComponent<Button>().interactable = false;
+            _rakipPlayerBoosterShuffle.GetComponent<Button>().interactable = false;
+
+        }
+        _playerSkillText.text = "0/6";
+        _rakipPlayerSkillText.text = "0/6";
+
+        _playerSkillSlider.maxValue = 6;
+        _rakipPlayerSkillSlider.maxValue = 6;
+        _playerSkillSlider.value = 0;
+        _rakipPlayerSkillSlider.value = 0;
+         StartCoroutine(PVPBaslangic());
+    }
+
+    private IEnumerator PVPBaslangic()
+    {
+        yield return new WaitForSeconds(2.0f);
+        _baslangicPaneli.SetActive(false);
+    }
+        void Start()
     {
         _timerDeger = 45f;
         _timeSlider.maxValue = 45f;
@@ -75,19 +109,22 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
             }
         }
         #endregion
+        if (PhotonNetwork.MasterClient.NickName == PhotonNetwork.NickName)
+        {
+            _playerGoalPic.GetComponent<Image>().sprite = _playerGoalSprites[_playerGoalSecim];
+            _rakipPlayerGoalPic.GetComponent<Image>().sprite = _rakipplayerGoalSprites[_rakipGoalSecim];
+            photonView.RPC("GoalAyarlama", RpcTarget.Others, (int)_playerGoalSecim, (int)_rakipGoalSecim);
+        }
 
-        if (PhotonNetwork.MasterClient.NickName==PhotonNetwork.NickName)   
-        {
-            _playerGoalPic.GetComponent<Image>().sprite = _playerGoalSprites[0];
-            _rakipPlayerGoalPic.GetComponent<Image>().sprite = _playerGoalSprites[4];
-        }
-        else
-        {
-            _playerGoalPic.GetComponent<Image>().sprite = _playerGoalSprites[4];
-            _rakipPlayerGoalPic.GetComponent<Image>().sprite = _playerGoalSprites[0];
-        }
     }
-
+    [PunRPC]
+    public void GoalAyarlama(int a, int b)
+    {
+        _playerGoalPic.GetComponent<Image>().sprite = _playerGoalSprites[b];
+        _rakipPlayerGoalPic.GetComponent<Image>().sprite = _rakipplayerGoalSprites[a];
+        _playerGoalSecim = b;
+        _rakipGoalSecim = a;
+    }
     void FixedUpdate()
     {
         //HAMLE HAKKI DIGER KULLANICIYA GECINCE TIMER SIFIRLANMIYOR-RAKIP ve MASTER olarak iki sayac denenecek.
@@ -133,6 +170,14 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 
     }
 
+    public void MoveTimerSifirlama()
+    {
+        _timeSlider.value = 45f;
+    }
+
+
+    #region // RPC kodlar
+
     [PunRPC]
     public void TimerGeriSayım(float _deger)
     {
@@ -175,15 +220,6 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         }
     }
 
-
-    #region // RPC kodlar
-
-    public void MoveTimerSifirlama()
-    {
-        _timeSlider.value = 45f;
-    }
-
-
     [PunRPC]
     public void RoundObjeleriniDuzenle()
     {
@@ -205,8 +241,96 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
             }
 
         }
+
+        if (_roundNo==2) 
+        {
+            _playerBoosterHammer.GetComponent<Button>().interactable = true;
+            _playerBoosterShuffle.GetComponent<Button>().interactable = true;
+            _rakipPlayerBoosterHammer.GetComponent<Button>().interactable = true;
+            _rakipPlayerBoosterShuffle.GetComponent<Button>().interactable = true;
+        }
     }
+
+    [PunRPC]
+    public void RakipGoalDuzenleme()
+    {
+        _rakipPlayerSkillSlider.value++;
+        _rakipPlayerSkillSayac++;
+        if (_rakipPlayerSkillSayac >= 6)
+        {
+            _rakipPlayerSkillSayac = 6;
+        }
+
+        _rakipPlayerSkillText.text = _rakipPlayerSkillSayac.ToString() + "/6";
+
+    }
+
     #endregion
 
-    
+    public void GoalKontrol(int _colorGelen)
+    {
+
+        if (_playerGoalSecim==_colorGelen)
+        {
+            _playerSkillSayac++;
+            if (_playerSkillSayac>=6)   
+            {
+                _playerSkillSayac = 6;
+                _playerSkillButton.GetComponent<Button>().interactable = true;
+            }
+            _playerSkillText.text = _playerSkillSayac.ToString() + "/6";
+            _playerSkillSlider.value++;
+            GetComponent<PhotonView>().RPC("RakipGoalDuzenleme", RpcTarget.Others,null);
+        }
+        else
+        {
+
+        }
+
+    }
+
+    public void PlayerSkillSayacSifirlama()
+    {
+        _playerSkillSayac = 0;
+        _playerSkillSlider.value = 0;
+        _playerSkillText.text = "0/6";
+        _playerSkillButton.GetComponent<Button>().interactable = false;
+        photonView.RPC("RakipSkillSifirlama",RpcTarget.Others,null);
+    }
+
+    [PunRPC]
+    public void RakipSkillSifirlama()
+    {
+        _rakipGoalSecim = 0;
+        _rakipPlayerSkillSlider.value = 0;
+        _rakipPlayerSkillText.text = "0/6";
+    }
+
+    public void PlayerHammerKapatma()
+    {
+        _playerBoosterHammer.GetComponent<Button>().interactable = false;
+        photonView.RPC("RakipHammerKapatma", RpcTarget.Others, null);
+    }
+
+    [PunRPC]
+    public void RakipHammerKapatma()
+    {
+        _rakipPlayerBoosterHammer.GetComponent<Button>().interactable = false;
+    }
+
+    public void PlayerShuffleButton()
+    {
+        _rakipPlayerBoosterShuffle.GetComponent<Button>().interactable = false;
+        GameObject.Find("GameBoard").GetComponent<GameBoard>().RegerateLevelCalistirma();
+        photonView.RPC("RakipShuffleKapatma", RpcTarget.Others, null);
+    }
+
+    [PunRPC]
+    public void RakipShuffleKapatma()
+    {
+        _rakipPlayerBoosterShuffle.GetComponent<Button>().interactable = false;
+    }
+
+
+
 }

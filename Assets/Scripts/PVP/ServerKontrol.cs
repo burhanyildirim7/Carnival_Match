@@ -34,7 +34,17 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
     [SerializeField] List<Sprite> _rakipPlayerPicSprites=new List<Sprite>();
     [SerializeField] Text _rakipAraniyorText,_playerNameText,_playerTeamNameText,_playerRozetAmountText,_rakipPlayerNameText, _rakipPlayerTeamNameText, _rakipPlayerRozetAmountText;
 
+    private void Awake()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.Disconnect();
+        }
+        else
+        {
 
+        }
+    }
     void Start()
     {
         for (int i = 0; i < _pvpLevelsContentObject.transform.childCount; i++)
@@ -244,7 +254,6 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
             CancelInvoke("RakipSorgula");
             CancelInvoke("SearchinTextAnimasyon");
             _rakipPlayerNameText.text = PhotonNetwork.PlayerListOthers[0].NickName;
-            _playerNameText.text = PhotonNetwork.NickName;
             _rakipPlayerTeamNameText.text = "No Team";
             _playerTeamNameText.text ="No Team";
             /*

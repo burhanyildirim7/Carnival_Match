@@ -135,6 +135,8 @@ namespace GameVanilla.Game.Common
         public bool _colorBombAktif;
 
         public List<int> _rakipTileListem = new List<int>();
+        public List<int> _rakipRegenTileListem = new List<int>();
+
 
         [Header("PVP Objeleri")]
 
@@ -290,12 +292,10 @@ namespace GameVanilla.Game.Common
         {
             if(_hamleSirasi)   
             {
-                Debug.Log("ISMINE CALISTI");
                 GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerScoreText.text = score.ToString();
             }
             else
             {
-                Debug.Log("RAKİP ISMINE CALISTI");
                 GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerScoreText.text = score.ToString();
             }
         }
@@ -607,12 +607,15 @@ namespace GameVanilla.Game.Common
         /// </summary>
         public void StartGame()
         {
-            if (level.limitType == LimitType.Time)
+            if (!PhotonNetwork.IsConnected)
             {
-                countdownCoroutine = StartCoroutine(StartCountdown());
-            }
+                if (level.limitType == LimitType.Time)
+                {
+                    countdownCoroutine = StartCoroutine(StartCountdown());
+                }
 
-            suggestedMatchCoroutine = StartCoroutine(HighlightRandomMatchAsync());
+                suggestedMatchCoroutine = StartCoroutine(HighlightRandomMatchAsync());
+            }
         }
 
         /// <summary>
@@ -778,7 +781,6 @@ namespace GameVanilla.Game.Common
 
             if (drag && selectedTile != null)
             {
-                Debug.Log("DRAG OKUNDU");
                 var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
                 if (hit.collider != null && hit.collider.gameObject != selectedTile)
                 {
@@ -1128,7 +1130,7 @@ namespace GameVanilla.Game.Common
         /// <summary>
         /// Handles the player's input when the game is in booster mode and the booster used is the switch.
         /// </summary>
-        public void HandleSwitchBoosterInput(BuyBoosterButton button)
+        public void HandleSwitchBoosterInput(BuyBoosterButton button) //bu herhangi bir yerde kullanılmıyor-yazan kuntay----> inceleyebilir misin -->burhan
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -1312,7 +1314,17 @@ namespace GameVanilla.Game.Common
 
         public void SiraDüzenlemeTetikleme()
         {
-            _pView.RPC("SiraTextDuzenleme", RpcTarget.All, null);
+            _hamleSirasi = !_hamleSirasi;
+
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[1].SetActive(true);
+
+            SiraDegisikligiPaneliAcma("Opponent's Turn");
+
+            _pView.RPC("RakipSiraTextDuzenleme", RpcTarget.Others, null);
+
             if (PhotonNetwork.MasterClient.NickName!=PhotonNetwork.NickName)   
             {
                 GameObject.Find("ServerGameUIKontrol").GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle",RpcTarget.All,null);
@@ -1320,32 +1332,16 @@ namespace GameVanilla.Game.Common
         }
 
         [PunRPC]
-        public void SiraTextDuzenleme()
+        public void RakipSiraTextDuzenleme()
         {
-            if (_pView.IsMine)   
-            {
-                Debug.Log("PLAYER TEXT DUZENLEME");
-                _hamleSirasi = !_hamleSirasi;
+            _hamleSirasi = !_hamleSirasi;
 
-                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
-                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
-                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
-                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[1].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
+            GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[1].SetActive(true);
 
-                SiraDegisikligiPaneliAcma("Opponent's Turn");
-            }
-            else
-            {
-                Debug.Log("RAKİP TEXT DUZENLEME");
-                _hamleSirasi = !_hamleSirasi;
-
-                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
-                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
-                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
-                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[1].SetActive(true);
-
-                SiraDegisikligiPaneliAcma("Your Turn");
-            }
+            SiraDegisikligiPaneliAcma("Your Turn");
         }
 
         [PunRPC]
@@ -1832,6 +1828,15 @@ namespace GameVanilla.Game.Common
                 tiles[x + (y * level.width)] = tile;
             }
         }
+
+        private void RakipSetTile(GameObject tile, int x, int y)
+        {
+            if (x >= 0 && x < level.width && y >= 0 && y < level.height)
+            {
+                tiles[x + (y * level.width)] = tile;
+            }
+        }
+
 
         /// <summary>
         /// Explodes the specified tile.
@@ -2729,7 +2734,10 @@ namespace GameVanilla.Game.Common
                     ExpandChocolate();
                     inputLocked = false;
                     explodedChocolate = false;
-                    suggestedMatchCoroutine = StartCoroutine(HighlightRandomMatchAsync());
+                    if (!PhotonNetwork.IsConnected)
+                    {
+                        suggestedMatchCoroutine = StartCoroutine(HighlightRandomMatchAsync());
+                    }
                 }
             }
 
@@ -3120,6 +3128,12 @@ namespace GameVanilla.Game.Common
             }
         }
 
+        public void RegerateLevelCalistirma() // PVP İÇİN
+        {
+            gameScene.OpenPopup<RegenLevelPopup>("Popups/RegenLevelPopup");
+            StartCoroutine(RegenerateLevel());
+        }
+
         private GameObject ColorBombCevreKontrol(GameObject patlayanColorBomb)
         {
             var hasPlayableColorBomb = false;
@@ -3202,6 +3216,8 @@ namespace GameVanilla.Game.Common
         /// <returns>The coroutine.</returns>
         private IEnumerator RegenerateLevel()
         {
+            _pView.RPC("RakipRegenListesiSifirla", RpcTarget.Others, null);
+
             yield return new WaitForSeconds(2.0f);
             for (var i = 0; i < level.width; i++)
             {
@@ -3216,14 +3232,50 @@ namespace GameVanilla.Game.Common
                     {
                         var newTile = CreateTile(i, j, false);
                         newTile.transform.position = tile.transform.position;
+                        _pView.RPC("RakipRegen", RpcTarget.Others,(int)newTile.GetComponent<Candy>().color,(int)i,(int)j);
                         tile.GetComponent<PooledObject>().pool.ReturnObject(tile);
                         SetTile(newTile, i, j);
                     }
                 }
             }
+            if (PhotonNetwork.IsConnected)
+            {
 
+            }
+            else
+            {
+                suggestedMatchCoroutine = StartCoroutine(HighlightRandomMatchAsync());
+            }
             possibleSwaps = DetectPossibleSwaps();
-            suggestedMatchCoroutine = StartCoroutine(HighlightRandomMatchAsync());
+
+        }
+
+        [PunRPC]
+        public void RakipRegenListesiSifirla()
+        {
+            gameScene.OpenPopup<RegenLevelPopup>("Popups/RegenLevelPopup");
+            _rakipRegenTileListem.Clear();
+            _tileListeSiram = 0;
+        }
+
+        [PunRPC]
+        public void RakipRegen(int _colorType, int x, int y)
+        {
+            _rakipRegenTileListem.Add(_colorType);
+            var idx = x + (y * level.width);
+            var tile = tiles[idx];
+
+            if (tile != null &&
+                tile.GetComponent<Candy>() != null &&
+                !tile.GetComponent<StripedCandy>() &&
+                !tile.GetComponent<WrappedCandy>())
+            {
+                var regenTile = tilePool.GetCandyPool((CandyColor)(_rakipRegenTileListem[_tileListeSiram])).GetObject();
+                regenTile.transform.position = tile.transform.position;
+                tile.GetComponent<PooledObject>().pool.ReturnObject(tile);
+                RakipSetTile(regenTile, x, y);
+            }
+            _tileListeSiram++;
         }
 
         /// <summary>
@@ -3449,11 +3501,26 @@ namespace GameVanilla.Game.Common
         /// <param name="button">The used booster button.</param>
         private void ConsumeBooster(BuyBoosterButton button)
         {
-            var playerPrefsKey = string.Format("num_boosters_{0}", (int)button.boosterType);
-            var numBoosters = PlayerPrefs.GetInt(playerPrefsKey);
-            numBoosters -= 1;
-            PlayerPrefs.SetInt(playerPrefsKey, numBoosters);
-            button.UpdateAmount(numBoosters);
+            if (PhotonNetwork.IsConnected)
+            {
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().PlayerSkillSayacSifirlama();
+                if ((int)button.boosterType==0)
+                {
+                    GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().PlayerHammerKapatma();
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                var playerPrefsKey = string.Format("num_boosters_{0}", (int)button.boosterType);
+                var numBoosters = PlayerPrefs.GetInt(playerPrefsKey);
+                numBoosters -= 1;
+                PlayerPrefs.SetInt(playerPrefsKey, numBoosters);
+                button.UpdateAmount(numBoosters);
+            }
         }
     }
 }

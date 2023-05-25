@@ -10,15 +10,6 @@ public class PVPPanelUI : MonoBehaviour
     [SerializeField] List<GameObject> _pvpLevelsContentChildren = new List<GameObject>();
 
     private int _pvpContentSira;
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-        
-    }
 
     public void PVPPanelSagOk()
     {

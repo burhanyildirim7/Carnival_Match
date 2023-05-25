@@ -9,9 +9,9 @@ namespace GameVanilla.Game.Common
     /// </summary>
     public enum BoosterType
     {
-        Lollipop,
-        Bomb,
-        Switch,
-        ColorBomb
+        Lollipop,   //HAMMER
+        Bomb,       //ARROW
+        Switch,     //BOMB
+        ColorBomb   //COLORBOMB
     }
 }
