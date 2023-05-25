@@ -23,11 +23,9 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnExitButtonPressed()
         {
-            PhotonNetwork.LeaveRoom();
-            PhotonNetwork.Disconnect();
             if (PhotonNetwork.IsConnected)
             {
-
+                PhotonNetwork.LeaveRoom();
             }
             else
             {

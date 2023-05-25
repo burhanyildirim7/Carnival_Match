@@ -1,13 +1,9 @@
-﻿// Copyright (C) 2017-2022 gamevanilla. All rights reserved.
-// This code can only be used under the standard Unity Asset Store End User License Agreement,
-// a copy of which is available at http://unity3d.com/company/legal/as_terms.
-
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 using UnityEngine;
-
 using GameVanilla.Core;
 using GameVanilla.Game.Common;
+
+using Photon.Pun;
 
 namespace GameVanilla.Game.Common
 {
@@ -31,6 +27,14 @@ namespace GameVanilla.Game.Common
                 GetComponent<Animator>().SetTrigger("Kill");
             }
 
+            if (PhotonNetwork.IsConnected)
+            {
+                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().GoalKontrol((int)color);
+            }
+            else
+            {
+
+            }
             return new List<GameObject> { gameObject };
         }
 
