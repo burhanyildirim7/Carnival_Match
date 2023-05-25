@@ -58,8 +58,9 @@ namespace GameVanilla.Game.UI
 		/// Called when the button is pressed.
 		/// </summary>
 		public void OnButtonPressed()
-		{
-			if (gameScene.gameBoard.CurrentlyAwarding)
+        {
+            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+            if (gameScene.gameBoard.CurrentlyAwarding)
 			{
 				return;
 			}

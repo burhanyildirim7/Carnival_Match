@@ -273,8 +273,9 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         if (_playerGoalSecim==_colorGelen)
         {
             _playerSkillSayac++;
-            if (_playerSkillSayac>=6)   
+            if (_playerSkillSayac>=6)
             {
+                MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
                 _playerSkillSayac = 6;
                 _playerSkillButton.GetComponent<Button>().interactable = true;
             }
