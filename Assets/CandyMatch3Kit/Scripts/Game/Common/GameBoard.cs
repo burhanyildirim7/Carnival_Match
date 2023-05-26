@@ -144,10 +144,11 @@ namespace GameVanilla.Game.Common
         [SerializeField] GameObject _siraDegisikligiPaneli;
         [SerializeField] GameObject _siraDegisikligiPanelBG;
 
-        private int _tileListeSiram;
+        private int _tileListeSiram,_rakipGravityTileSiram;
         private bool _tekSefer;
         private bool _hamleBasladi, _hamleBitti;
         private int _hamleAdedi,_birinciTileIdx, _ikinciTileIdx;
+        private List<int> _rakipGravityTiles = new List<int>();
 
         public bool _hamleSirasi;
 
@@ -200,6 +201,7 @@ namespace GameVanilla.Game.Common
         private void Start()
         {
             _tileListeSiram = 0;
+            _rakipGravityTileSiram =0;
             SoundManager.instance.AddSounds(gameSounds);
         }
 
@@ -234,7 +236,6 @@ namespace GameVanilla.Game.Common
         public void ListeleriEsitle(int _colorType)
         {
             _rakipTileListem.Add(_colorType);
-            Debug.Log("RAKİPLISTESi" + _rakipTileListem.Count + " = " + _rakipTileListem[_rakipTileListem.Count - 1]);
         }
 
         public void RakipTahtaDizebilir()
@@ -399,7 +400,7 @@ namespace GameVanilla.Game.Common
 
                                 }
                             }
-                            GetComponent<PhotonView>().RPC("ListeleriEsitle", RpcTarget.Others, (int)tile.GetComponent<Candy>().color);
+                            GetComponent<PhotonView>().RPC("ListeleriEsitle", RpcTarget.OthersBuffered, (int)tile.GetComponent<Candy>().color);
                             tiles.Add(tile);
                         }
                     }
@@ -469,7 +470,6 @@ namespace GameVanilla.Game.Common
 
                             }
                         }
-                        //Debug.Log("CANDY"+i+j+" = "+(int)tile.GetComponent<Candy>().color);
                         tiles.Add(tile);
                     }
                 }
@@ -729,9 +729,6 @@ namespace GameVanilla.Game.Common
                     selectedTile = hit.collider.gameObject;
                     birinciTile = selectedTile;
                     _birinciTileIdx = idx;
-
-                    Debug.Log("BIRINCI TILE=_qqqeeeww__" + _birinciTileIdx);
-
                     selectedTile.GetComponent<Animator>().SetTrigger("Pressed");
                 }
             }
@@ -920,7 +917,6 @@ namespace GameVanilla.Game.Common
                     else if (selectedTile.GetComponent<StripedCandy>() != null || selectedTile.GetComponent<WrappedCandy>() != null || ikinciTile.GetComponent<StripedCandy>() != null || ikinciTile.GetComponent<WrappedCandy>() != null)
                     {
                         Debug.Log("COMBO OKUNDU_3");
-                        //Debug.Log("2. IF");
                         var selectedTileCopy = selectedTile;
                         selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
                         currentlySwapping = true;
@@ -1037,7 +1033,6 @@ namespace GameVanilla.Game.Common
         [PunRPC]
         public void RakipTasHareket()
         {
-            Debug.Log("HANDLE___5");
             selectedTile = tiles[_birinciTileIdx];
             birinciTile = selectedTile;
             ikinciTile= tiles[_ikinciTileIdx];
@@ -1061,7 +1056,7 @@ namespace GameVanilla.Game.Common
                     selectedTile.GetComponent<Tile>());
                 if (combo != null)
                 {
-                    Debug.Log("COMBO OKUNDU_1");
+                    Debug.Log("RAKIP_COMBO OKUNDU_1");
                     var selectedTileCopy = selectedTile;
                     selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
                     currentlySwapping = true;
@@ -1103,7 +1098,7 @@ namespace GameVanilla.Game.Common
                          possibleSwaps.Find(x => x.tileB == ikinciTile && x.tileA == selectedTile) !=
                          null)
                 {
-                    Debug.Log("COMBO OKUNDU_2");
+                    Debug.Log("RAKIP_COMBO OKUNDU_2");
 
                     var selectedTileCopy = selectedTile;
                     selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
@@ -1176,8 +1171,7 @@ namespace GameVanilla.Game.Common
                 }
                 else if (selectedTile.GetComponent<StripedCandy>() != null || selectedTile.GetComponent<WrappedCandy>() != null || ikinciTile.GetComponent<StripedCandy>() != null || ikinciTile.GetComponent<WrappedCandy>() != null)
                 {
-                    Debug.Log("COMBO OKUNDU_3");
-                    //Debug.Log("2. IF");
+                    Debug.Log("RAKIP_COMBO OKUNDU_3");
                     var selectedTileCopy = selectedTile;
                     selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
                     currentlySwapping = true;
@@ -1251,7 +1245,7 @@ namespace GameVanilla.Game.Common
                 }
                 else
                 {
-                    Debug.Log("COMBO OKUNDU_4");
+                    Debug.Log("RAKIP_COMBO OKUNDU_4");
                     var selectedTileCopy = selectedTile;
                     var hitTileCopy = ikinciTile;
                     selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
@@ -1327,7 +1321,6 @@ namespace GameVanilla.Game.Common
 
                     if (booster != null)
                     {
-                        //Debug.Log(booster);
                         booster.Resolve(this, tile.gameObject);
                         ConsumeBooster(button);
                     }
@@ -1504,11 +1497,8 @@ namespace GameVanilla.Game.Common
                  
                 float _xDeger1 = birinciTile.transform.localPosition.x;
                 float _yDeger1 = birinciTile.transform.localPosition.y;
-                //Debug.LogError("BIRINCITILEPOSITION---- X ="+_xDeger1+" -- Y = "+_yDeger1);
                 float _xDeger2 = ikinciTile.transform.localPosition.x;
                 float _yDeger2 = ikinciTile.transform.localPosition.y;
-                //Debug.LogError("IKINCITILEPOSITION---- X =" + _xDeger2 + " -- Y = " + _yDeger2);
-                Debug.Log("BIRINCITILE___asdasdasd___="+ _birinciTileIdx);
                 _pView.RPC("HandObjeCalistir",RpcTarget.Others,(float)_xDeger1, (float)_yDeger1, (float)_xDeger2, (float)_yDeger2);
                 _pView.RPC("BirinciTileAyarlama", RpcTarget.Others,(int)_birinciTileIdx,(int)_ikinciTileIdx);
 
@@ -1876,7 +1866,7 @@ namespace GameVanilla.Game.Common
             }
 
             GameObject tile;
-            if (runtime && eligibleCollectables.Count > 0)
+            if (runtime && eligibleCollectables.Count > 0)//COLLECTABLE OBJE GELME IHTIMALINE GORE OBJENIN GELMESİ
             {
                 var tileChance = UnityEngine.Random.Range(0, 100);
                 if (tileChance <= level.collectableChance)
@@ -2085,7 +2075,6 @@ namespace GameVanilla.Game.Common
         {
 
 
-            //Debug.Log("Tiles ---- " + explodedTiles);
             if (tile.GetComponent<StripedCandy>() != null)
             {
                 //var explodedTiles = new List<GameObject>();
@@ -2953,7 +2942,23 @@ namespace GameVanilla.Game.Common
 
             inputLocked = true;
             yield return new WaitForSeconds(delay);
-            ApplyGravityInternal();
+            if (PhotonNetwork.IsConnected)   
+            {
+                if (_hamleSirasi)   
+                {
+                    Debug.Log("ODA SAHIBI GRAVITYSI");
+                    ApplyGravityInternal();
+                }
+                else
+                {
+                    Debug.Log("RAKIP GRAVITYSI");
+                    RakipApplyGravityInternal();
+                }
+            }
+            else
+            {
+                ApplyGravityInternal();
+            }
             possibleSwaps = DetectPossibleSwaps();
             yield return new WaitForSeconds(0.4f);
             if (currentlyAwarding)
@@ -3056,7 +3061,7 @@ namespace GameVanilla.Game.Common
         private void ApplyGravityInternal()
         {
             var fallingSoundPlayed = false;
-            for (var i = 0; i < level.width; i++)
+            for (var i = 0; i < level.width; i++) //MEVCUT TASLAR ASAGI KAYMASI ICIN
             {
                 for (var j = level.height - 1; j >= 0; j--)
                 {
@@ -3147,6 +3152,7 @@ namespace GameVanilla.Game.Common
                         if (tiles[tileIndex] == null && !isHole)
                         {
                             var tile = CreateTile(i, j, true);
+                            _pView.RPC("RakipGravityEsleme", RpcTarget.OthersBuffered,(int)tile.GetComponent<Candy>().color);
                             var sourcePos = tilePositions[i];
                             var targetPos = tilePositions[tileIndex];
                             var pos = sourcePos;
@@ -3170,6 +3176,134 @@ namespace GameVanilla.Game.Common
                 }
             }
         }
+
+        [PunRPC]
+        public void RakipGravityEsleme(int _tileColor)
+        {
+            _rakipGravityTiles.Add(_tileColor);
+            Debug.Log("GRAVITY GELEN TILES_____"+ _tileColor);
+        }
+
+        private void RakipApplyGravityInternal()
+        {
+            var fallingSoundPlayed = false;
+            for (var i = 0; i < level.width; i++) //MEVCUT TASLAR ASAGI KAYMASI ICIN ve MEVCUT TILES LISTESINDEN CIKARILMASI ICIN
+            {
+                for (var j = level.height - 1; j >= 0; j--)
+                {
+                    var tileIndex = i + (j * level.width);
+                    if (GetTile(i, j) == null ||
+                        GetTile(i, j).GetComponent<SpecialBlock>() != null)
+                    {
+                        continue;
+                    }
+
+                    // Find bottom.
+                    var bottom = -1;
+                    for (var k = j; k < level.height; k++)
+                    {
+                        var idx = i + (k * level.width);
+                        if (tiles[idx] == null && !(level.tiles[idx] is HoleTile))
+                        {
+                            bottom = k;
+                        }
+                        else if (tiles[idx] != null && tiles[idx].GetComponent<SpecialBlock>() != null)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (bottom != -1)
+                    {
+                        var tile = GetTile(i, j);
+                        if (tile != null)
+                        {
+                            var numTilesToFall = bottom - j;
+                            tiles[tileIndex + (numTilesToFall * level.width)] = tiles[tileIndex];
+                            var tween = LeanTween.move(tile,
+                                tilePositions[tileIndex + level.width * numTilesToFall],
+                                0.3f);
+                            tween.setEase(LeanTweenType.easeInQuad);
+                            tween.setOnComplete(() =>
+                            {
+                                if (tile.GetComponent<Tile>() != null)
+                                {
+                                    tile.GetComponent<Tile>().y += numTilesToFall;
+                                    if (tile.activeSelf && tile.GetComponent<Animator>() != null)
+                                    {
+                                        tile.GetComponent<Animator>().SetTrigger("Falling");
+                                        if (!fallingSoundPlayed)
+                                        {
+                                            fallingSoundPlayed = true;
+                                            SoundManager.instance.PlaySound("CandyFalling");
+                                        }
+                                    }
+                                }
+                            });
+                            tiles[tileIndex] = null;
+                        }
+                    }
+                }
+            }
+
+            for (var i = 0; i < level.width; i++)
+            {
+                var numEmpties = 0;
+                for (var j = 0; j < level.height; j++) //BOSALAN YERLERİN TOPLAM SAYISINI TESPİT EDİYOR
+                {
+                    var idx = i + (j * level.width);
+                    if (tiles[idx] == null && !(level.tiles[idx] is HoleTile))
+                    {
+                        numEmpties += 1;
+                    }
+                    else if (tiles[idx] != null && tiles[idx].GetComponent<SpecialBlock>() != null)
+                    {
+                        break;
+                    }
+                }
+
+                if (numEmpties > 0)
+                {
+                    for (var j = 0; j < level.height; j++)
+                    {
+                        var tileIndex = i + (j * level.width);
+                        var isHole = level.tiles[tileIndex] is HoleTile;
+                        var isBiscuit = tiles[tileIndex] != null &&
+                                        tiles[tileIndex].GetComponent<SpecialBlock>() != null;
+                        if (isBiscuit)
+                        {
+                            break;
+                        }
+
+                        if (tiles[tileIndex] == null && !isHole)
+                        {
+                            var tile = tilePool.GetCandyPool((CandyColor)(_rakipGravityTiles[_rakipGravityTileSiram])).GetObject();
+                            _rakipGravityTileSiram++;
+                            var sourcePos = tilePositions[i];
+                            var targetPos = tilePositions[tileIndex];
+                            var pos = sourcePos;
+                            pos.y = tilePositions[i].y + (numEmpties * (tileH));
+                            --numEmpties;
+                            tile.transform.position = pos;
+                            var tween = LeanTween.move(tile,
+                                targetPos,
+                                0.3f);
+                            tween.setEase(LeanTweenType.easeInQuad);
+                            tween.setOnComplete(() =>
+                            {
+                                if (tile.activeSelf && tile.GetComponent<Animator>() != null)
+                                {
+                                    tile.GetComponent<Animator>().SetTrigger("Falling");
+                                }
+                            });
+                            tiles[tileIndex] = tile;
+                        }
+                    }
+                }
+            }
+            _rakipGravityTileSiram = 0;
+        }
+
 
         /// <summary>
         /// Expands the chocolate in the current level.
@@ -3383,7 +3517,6 @@ namespace GameVanilla.Game.Common
                 {
                     var idx = i + (j * level.width);
                     var tile = tiles[idx];
-                    //Debug.Log(tile);
                     if (tile != null &&
                         tile.GetComponent<ColorBomb>() != null &&
                         tile.gameObject == patlayanColorBomb)
@@ -3425,11 +3558,7 @@ namespace GameVanilla.Game.Common
                     break;
                 }
             }
-
-            Debug.Log(playableNeighbour);
-
             return playableNeighbour;
-
         }
 
         public void ColorBombPatlat(GameObject secilenTile)

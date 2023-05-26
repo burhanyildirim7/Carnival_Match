@@ -241,6 +241,17 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
             }
 
         }
+        if (_roundNo==6)   
+        {   
+            if (int.Parse(_playerScoreText.text)<int.Parse(_rakipPlayerScoreText.text))
+            {
+                gameScene.OpenLosePopup();
+            }
+            else
+            {
+                gameScene.OpenWinPopup();
+            }
+        }
 
         if (_roundNo==2) 
         {
