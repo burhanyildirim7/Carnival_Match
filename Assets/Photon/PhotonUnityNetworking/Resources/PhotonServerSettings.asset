@@ -71,6 +71,8 @@ MonoBehaviour:
   - RakipTasHareket
   - BirinciTileAyarlama
   - RakipGravityEsleme
+  - RakipGravityCalistir
+  - RakipSiraDuzenlemeTetik
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

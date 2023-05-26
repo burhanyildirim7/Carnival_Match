@@ -1542,8 +1542,6 @@ namespace GameVanilla.Game.Common
 
         public void SiraDüzenlemeTetikleme()
         {
-            _hamleSirasi = !_hamleSirasi;
-
             GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
             GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
             GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
@@ -1562,8 +1560,6 @@ namespace GameVanilla.Game.Common
         [PunRPC]
         public void RakipSiraTextDuzenleme()
         {
-            _hamleSirasi = !_hamleSirasi;
-
             GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[0].SetActive(true);
             GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._playerMoves[1].SetActive(true);
             GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>()._rakipPlayerMoves[0].SetActive(true);
@@ -1616,6 +1612,9 @@ namespace GameVanilla.Game.Common
             GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().MoveTimerSifirlama();
             _siraDegisikligiPanelBG.SetActive(false);
             _siraDegisikligiPaneli.SetActive(false);
+
+            _hamleSirasi = !_hamleSirasi;
+            
         }
         #endregion
 
@@ -3175,6 +3174,7 @@ namespace GameVanilla.Game.Common
                     }
                 }
             }
+            //_pView.RPC("RakipGravityCalistir", RpcTarget.OthersBuffered,null);
         }
 
         [PunRPC]
@@ -3302,6 +3302,7 @@ namespace GameVanilla.Game.Common
                 }
             }
             _rakipGravityTileSiram = 0;
+            _rakipGravityTiles.Clear();
         }
 
 
