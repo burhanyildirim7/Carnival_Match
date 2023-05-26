@@ -3151,7 +3151,14 @@ namespace GameVanilla.Game.Common
                         if (tiles[tileIndex] == null && !isHole)
                         {
                             var tile = CreateTile(i, j, true);
-                            _pView.RPC("RakipGravityEsleme", RpcTarget.OthersBuffered,(int)tile.GetComponent<Candy>().color);
+                            if (PhotonNetwork.IsConnected)
+                            {
+                                _pView.RPC("RakipGravityEsleme", RpcTarget.OthersBuffered, (int)tile.GetComponent<Candy>().color);
+                            }
+                            else
+                            {
+
+                            }
                             var sourcePos = tilePositions[i];
                             var targetPos = tilePositions[tileIndex];
                             var pos = sourcePos;
