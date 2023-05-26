@@ -27,7 +27,7 @@ namespace GameVanilla.Game.Common
                 GetComponent<Animator>().SetTrigger("Kill");
             }
 
-            if (PhotonNetwork.IsConnected)
+            if (PhotonNetwork.IsConnected && GameObject.Find("GameBoard").GetComponent<GameBoard>()._hamleSirasi)
             {
                 GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().GoalKontrol((int)color);
             }

@@ -147,7 +147,7 @@ namespace GameVanilla.Game.Common
         private int _tileListeSiram;
         private bool _tekSefer;
         private bool _hamleBasladi, _hamleBitti;
-        private int _hamleAdedi;
+        private int _hamleAdedi,_birinciTileIdx, _ikinciTileIdx;
 
         public bool _hamleSirasi;
 
@@ -281,7 +281,7 @@ namespace GameVanilla.Game.Common
             gameState.score += score;
             gameUi.SetScore(gameState.score);
             gameUi.SetProgressBar(gameState.score);
-            if (PhotonNetwork.IsConnected)   
+            if (PhotonNetwork.IsConnected && _hamleSirasi)   
             {
                 _pView.RPC("PVPUpdateScore",RpcTarget.All,(int)gameState.score);
             }
@@ -714,43 +714,25 @@ namespace GameVanilla.Game.Common
                 MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
 
                 drag = true;
-                if (PhotonNetwork.IsConnected && !_hamleSirasi)
+                var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                if (hit.collider != null && hit.collider.gameObject.CompareTag("Tile"))
                 {
-                    var hit = Physics2D.Raycast(_handObject.transform.position, Vector2.zero);
-                    if (hit.collider != null && hit.collider.gameObject.CompareTag("Tile"))
+                    var idx = tiles.FindIndex(x => x == hit.collider.gameObject);
+                    if (level.tiles[idx] != null && level.tiles[idx].elementType == ElementType.Ice)
                     {
-                        var idx = tiles.FindIndex(x => x == hit.collider.gameObject);
-                        if (level.tiles[idx] != null && level.tiles[idx].elementType == ElementType.Ice)
-                        {
-                            return;
-                        }
-                        if (hit.collider.GetComponent<SpecialBlock>() != null)
-                        {
-                            return;
-                        }
-                        selectedTile = hit.collider.gameObject;
-                        birinciTile = selectedTile;
-                        selectedTile.GetComponent<Animator>().SetTrigger("Pressed");
+                        return;
                     }
-                }
-                else
-                {
-                    var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                    if (hit.collider != null && hit.collider.gameObject.CompareTag("Tile"))
+                    if (hit.collider.GetComponent<SpecialBlock>() != null)
                     {
-                        var idx = tiles.FindIndex(x => x == hit.collider.gameObject);
-                        if (level.tiles[idx] != null && level.tiles[idx].elementType == ElementType.Ice)
-                        {
-                            return;
-                        }
-                        if (hit.collider.GetComponent<SpecialBlock>() != null)
-                        {
-                            return;
-                        }
-                        selectedTile = hit.collider.gameObject;
-                        birinciTile = selectedTile;
-                        selectedTile.GetComponent<Animator>().SetTrigger("Pressed");
+                        return;
                     }
+                    selectedTile = hit.collider.gameObject;
+                    birinciTile = selectedTile;
+                    _birinciTileIdx = idx;
+
+                    Debug.Log("BIRINCI TILE=_qqqeeeww__" + _birinciTileIdx);
+
+                    selectedTile.GetComponent<Animator>().SetTrigger("Pressed");
                 }
             }
 
@@ -799,6 +781,7 @@ namespace GameVanilla.Game.Common
                     {
                         return;
                     }
+                    _ikinciTileIdx = idx;
                     ikinciTile = hit.collider.gameObject;
 
                     var idxSelected = tiles.FindIndex(x => x == selectedTile);
@@ -1048,6 +1031,262 @@ namespace GameVanilla.Game.Common
             }
         }
 
+        ///<summary>
+        ///PVP RAKİP TAŞ HAREKETLERİ
+        ///<summary>
+        [PunRPC]
+        public void RakipTasHareket()
+        {
+            Debug.Log("HANDLE___5");
+            selectedTile = tiles[_birinciTileIdx];
+            birinciTile = selectedTile;
+            ikinciTile= tiles[_ikinciTileIdx];
+            if (selectedTile != null)
+            {
+                var idxSelected = tiles.FindIndex(x => x == selectedTile);
+                var xSelected = idxSelected % level.width;
+                var ySelected = idxSelected / level.width;
+                var idxNew = tiles.FindIndex(x => x == ikinciTile);
+                var xNew = idxNew % level.width;
+                var yNew = idxNew / level.width;
+                if (Math.Abs(xSelected - xNew) > 1 || Math.Abs(ySelected - yNew) > 1)
+                {
+                    return;
+                }
+                if (Math.Abs(xSelected - xNew) == 1 && Math.Abs(ySelected - yNew) == 1)
+                {
+                    return;
+                }
+                var combo = comboDetector.GetCombo(ikinciTile.GetComponent<Tile>(),
+                    selectedTile.GetComponent<Tile>());
+                if (combo != null)
+                {
+                    Debug.Log("COMBO OKUNDU_1");
+                    var selectedTileCopy = selectedTile;
+                    selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                    currentlySwapping = true;
+                    LeanTween.move(selectedTile, ikinciTile.transform.position, 0.2f).setOnComplete(
+                        () =>
+                        {
+                            currentlySwapping = false;
+                            selectedTileCopy.GetComponent<SpriteRenderer>().sortingOrder = 0;
+                            combo.Resolve(this, tiles, fxPool);
+                        });
+                    LeanTween.move(ikinciTile, selectedTile.transform.position, 0.2f);
+
+                    var tileA = ikinciTile;
+                    var tileB = selectedTile;
+                    var idxA = tiles.FindIndex(x => x == tileA);
+                    var idxB = tiles.FindIndex(x => x == tileB);
+                    tiles[idxA] = tileB;
+                    tiles[idxB] = tileA;
+
+                    tileA.GetComponent<Tile>().x = idxB % level.width;
+                    tileA.GetComponent<Tile>().y = idxB / level.width;
+                    tileB.GetComponent<Tile>().x = idxA % level.width;
+                    tileB.GetComponent<Tile>().y = idxA / level.width;
+
+                    lastSelectedTile = selectedTile;
+                    lastSelectedTileX = idxA % level.width;
+                    lastSelectedTileY = idxA / level.width;
+
+                    lastOtherSelectedTile = ikinciTile;
+                    lastOtherSelectedTileX = idxB % level.width;
+                    lastOtherSelectedTileY = idxB / level.width;
+
+
+                    selectedTile = null;
+
+                }
+                else if (possibleSwaps.Find(x => x.tileA == ikinciTile && x.tileB == selectedTile) !=
+                         null ||
+                         possibleSwaps.Find(x => x.tileB == ikinciTile && x.tileA == selectedTile) !=
+                         null)
+                {
+                    Debug.Log("COMBO OKUNDU_2");
+
+                    var selectedTileCopy = selectedTile;
+                    selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                    currentlySwapping = true;
+                    LeanTween.move(selectedTile, ikinciTile.transform.position, 0.2f).setOnComplete(
+                        () =>
+                        {
+                            currentlySwapping = false;
+                            selectedTileCopy.GetComponent<SpriteRenderer>().sortingOrder = 0;
+                            HandleMatches(true);
+                        });
+                    LeanTween.move(ikinciTile, selectedTile.transform.position, 0.2f);
+
+                    var tileA = ikinciTile;
+                    var tileB = selectedTile;
+                    var idxA = tiles.FindIndex(x => x == tileA);
+                    var idxB = tiles.FindIndex(x => x == tileB);
+                    tiles[idxA] = tileB;
+                    tiles[idxB] = tileA;
+
+                    if (tileA.GetComponent<Tile>().x != tileB.GetComponent<Tile>().x)
+                    {
+                        swapDirection = SwapDirection.Horizontal;
+                    }
+                    else
+                    {
+                        swapDirection = SwapDirection.Vertical;
+                    }
+
+                    tileA.GetComponent<Tile>().x = idxB % level.width;
+                    tileA.GetComponent<Tile>().y = idxB / level.width;
+                    tileB.GetComponent<Tile>().x = idxA % level.width;
+                    tileB.GetComponent<Tile>().y = idxA / level.width;
+
+                    lastSelectedTile = selectedTile;
+                    lastSelectedTileX = idxA % level.width;
+                    lastSelectedTileY = idxA / level.width;
+                    if (selectedTileCopy.GetComponent<Candy>() != null)
+                    {
+                        lastSelectedCandyColor = selectedTile.GetComponent<Candy>().color;
+                        //lastSelectedCandyColor = CandyColor.Black;
+                    }
+
+                    lastOtherSelectedTile = ikinciTile;
+                    lastOtherSelectedTileX = idxB % level.width;
+                    lastOtherSelectedTileY = idxB / level.width;
+                    if (ikinciTile.GetComponent<Candy>() != null)
+                    {
+                        lastOtherSelectedCandyColor = ikinciTile.GetComponent<Candy>().color;
+                        //lastOtherSelectedCandyColor = CandyColor.Black;
+                    }
+
+                    if (selectedTile.GetComponent<StripedCandy>() != null || selectedTile.GetComponent<WrappedCandy>() != null)
+                    {
+                        StartCoroutine(YeniPatlamaGameObject(selectedTile));
+                    }
+                    else if (ikinciTile.GetComponent<StripedCandy>() != null || ikinciTile.GetComponent<WrappedCandy>() != null)
+                    {
+                        StartCoroutine(YeniPatlamaGameObject(ikinciTile));
+                    }
+                    else
+                    {
+
+                    }
+
+                    selectedTile = null;
+
+                    possibleSwaps = DetectPossibleSwaps();
+
+                }
+                else if (selectedTile.GetComponent<StripedCandy>() != null || selectedTile.GetComponent<WrappedCandy>() != null || ikinciTile.GetComponent<StripedCandy>() != null || ikinciTile.GetComponent<WrappedCandy>() != null)
+                {
+                    Debug.Log("COMBO OKUNDU_3");
+                    //Debug.Log("2. IF");
+                    var selectedTileCopy = selectedTile;
+                    selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                    currentlySwapping = true;
+                    LeanTween.move(selectedTile, ikinciTile.transform.position, 0.2f).setOnComplete(
+                        () =>
+                        {
+                            currentlySwapping = false;
+                            selectedTileCopy.GetComponent<SpriteRenderer>().sortingOrder = 0;
+                            HandleMatches(true);
+                        });
+                    LeanTween.move(ikinciTile, selectedTile.transform.position, 0.2f);
+
+                    var tileA = ikinciTile;
+                    var tileB = selectedTile;
+                    var idxA = tiles.FindIndex(x => x == tileA);
+                    var idxB = tiles.FindIndex(x => x == tileB);
+                    tiles[idxA] = tileB;
+                    tiles[idxB] = tileA;
+
+                    if (tileA.GetComponent<Tile>().x != tileB.GetComponent<Tile>().x)
+                    {
+                        swapDirection = SwapDirection.Horizontal;
+                    }
+                    else
+                    {
+                        swapDirection = SwapDirection.Vertical;
+                    }
+
+                    tileA.GetComponent<Tile>().x = idxB % level.width;
+                    tileA.GetComponent<Tile>().y = idxB / level.width;
+                    tileB.GetComponent<Tile>().x = idxA % level.width;
+                    tileB.GetComponent<Tile>().y = idxA / level.width;
+
+                    lastSelectedTile = selectedTile;
+                    lastSelectedTileX = idxA % level.width;
+                    lastSelectedTileY = idxA / level.width;
+                    if (selectedTileCopy.GetComponent<Candy>() != null)
+                    {
+                        lastSelectedCandyColor = selectedTile.GetComponent<Candy>().color;
+                        //lastSelectedCandyColor = CandyColor.Black;
+                    }
+
+                    lastOtherSelectedTile = ikinciTile;
+                    lastOtherSelectedTileX = idxB % level.width;
+                    lastOtherSelectedTileY = idxB / level.width;
+                    if (ikinciTile.GetComponent<Candy>() != null)
+                    {
+                        lastOtherSelectedCandyColor = ikinciTile.GetComponent<Candy>().color;
+                        //lastOtherSelectedCandyColor = CandyColor.Black;
+                    }
+
+                    if (selectedTile.GetComponent<StripedCandy>() != null || selectedTile.GetComponent<WrappedCandy>() != null)
+                    {
+                        StartCoroutine(YeniPatlamaGameObject(selectedTile));
+                    }
+                    else if (ikinciTile.GetComponent<StripedCandy>() != null || ikinciTile.GetComponent<WrappedCandy>() != null)
+                    {
+                        StartCoroutine(YeniPatlamaGameObject(ikinciTile));
+                    }
+                    else
+                    {
+
+                    }
+
+                    //StartCoroutine(YeniPatlamaGameObject(selectedTile));
+
+                    selectedTile = null;
+
+                    possibleSwaps = DetectPossibleSwaps();
+
+                }
+                else
+                {
+                    Debug.Log("COMBO OKUNDU_4");
+                    var selectedTileCopy = selectedTile;
+                    var hitTileCopy = ikinciTile;
+                    selectedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+
+                    var selectedTilePos = tilePositions[tiles.FindIndex(x => x == selectedTile)];
+                    var hitTilePos = tilePositions[tiles.FindIndex(x => x == ikinciTile)];
+
+                    var tileA = ikinciTile;
+                    var tileB = selectedTile;
+                    if (!(tileA.GetComponent<Tile>().x != tileB.GetComponent<Tile>().x &&
+                          tileA.GetComponent<Tile>().y != tileB.GetComponent<Tile>().y))
+                    {
+                        currentlySwapping = true;
+                        LeanTween.move(selectedTile, hitTilePos, 0.15f);
+                        LeanTween.move(ikinciTile, selectedTilePos, 0.15f).setOnComplete(() =>
+                        {
+                            LeanTween.move(selectedTileCopy, selectedTilePos, 0.15f).setOnComplete(() =>
+                            {
+                                currentlySwapping = false;
+                                selectedTileCopy.GetComponent<SpriteRenderer>().sortingOrder = 0;
+                                selectedTileCopy.transform.rotation = Quaternion.identity;
+                                ikinciTile.transform.rotation = Quaternion.identity;
+                            });
+                            LeanTween.move(hitTileCopy, hitTilePos, 0.15f);
+                        });
+                    }
+
+                    selectedTile = null;
+
+                    SoundManager.instance.PlaySound("Error");
+                }
+
+            }
+        }
+
         /// <summary>
         /// Handles the player's input when the game is in booster mode.
         /// </summary>
@@ -1261,58 +1500,55 @@ namespace GameVanilla.Game.Common
                 {
 
                 }
-                //HAND OBJECT KONTROLÜ
-                /* 
+                //HAND OBJECT KONTROL BASLANGIC
+                 
                 float _xDeger1 = birinciTile.transform.localPosition.x;
                 float _yDeger1 = birinciTile.transform.localPosition.y;
-                Debug.LogError("BIRINCITILEPOSITION---- X ="+_xDeger1+" -- Y = "+_yDeger1);
+                //Debug.LogError("BIRINCITILEPOSITION---- X ="+_xDeger1+" -- Y = "+_yDeger1);
                 float _xDeger2 = ikinciTile.transform.localPosition.x;
                 float _yDeger2 = ikinciTile.transform.localPosition.y;
-                Debug.LogError("IKINCITILEPOSITION---- X =" + _xDeger2 + " -- Y = " + _yDeger2);
-
+                //Debug.LogError("IKINCITILEPOSITION---- X =" + _xDeger2 + " -- Y = " + _yDeger2);
+                Debug.Log("BIRINCITILE___asdasdasd___="+ _birinciTileIdx);
                 _pView.RPC("HandObjeCalistir",RpcTarget.Others,(float)_xDeger1, (float)_yDeger1, (float)_xDeger2, (float)_yDeger2);
-                */
+                _pView.RPC("BirinciTileAyarlama", RpcTarget.Others,(int)_birinciTileIdx,(int)_ikinciTileIdx);
+
             }
         }
         //HAND OBJECT KONTROLÜ FONKSİYONLAR
-        /*
+
+        [PunRPC]
+        public void BirinciTileAyarlama(int _tileIndex,int _ikinciTileIndex)
+        {
+            _birinciTileIdx = _tileIndex;
+            _ikinciTileIdx = _ikinciTileIndex;
+        }
+
         [PunRPC]
         public void HandObjeCalistir(float _x1, float _y1, float _x2, float _y2)
         {
-            Debug.Log("GELEN DEGER --- x1 ="+_x1+" --- y1 = "+_y1+" --- x2 = "+_x2+" ---y2 "+_y2);
-            _handObject.transform.localPosition = new Vector3(_x1, _y1+5f,0);
+            _handObject.transform.localPosition = new Vector3(_x1, _y1+15f,0);
             _handObject.SetActive(true);
             HandObjectHareket(_x1, _y1, _x2, _y2);
         }
 
         private void HandObjectHareket(float _x1, float _y1, float _x2, float _y2)
         {
-            Debug.Log("GELEN HAREKET DEGER --- x1 =" + _x1 + " --- y1 = " + _y1 + " --- x2 = " + _x2 + " ---y2 " + _y2);
-
-            _hamleBasladi = true;
-            _hamleBitti = false;
-            _handObject.transform.DOLocalMove(new Vector3(_x1, _y1, 0), .25f).OnComplete(() => HandObjectSonHareket( _x2, _y2));
+            _handObject.transform.DOLocalMove(new Vector3(_x1, _y1, 0), .25f).OnComplete(() => HandObjectSonHareket(_x2, _y2));
         }
+
         private void HandObjectSonHareket( float _x2, float _y2)
         {
-            _hamleBasladi = true;
-            _hamleBitti = false;
-            _handObject.transform.DOLocalMove(new Vector3(_x2, _y2, 0), .25f).OnComplete(() => HandObjectSonlandir());
+            RakipTasHareket();
+            _handObject.transform.DOLocalMove(new Vector3(_x2, _y2, 0), .25f);
+            Invoke("HandObjectSonlandir",.75f);
         }
 
         private void HandObjectSonlandir()
         {
-            Debug.Log("HandObjeCaslismasSonlandı");
-            _hamleBasladi = false;
-            _hamleBitti = true;
             _handObject.SetActive(false);
-
-            if (!drag)  
-            {
-                _hamleBitti = false;
-            }
         }
-        */
+
+        //HAND KONTROL SONU
 
         public void SiraDüzenlemeTetikleme()
         {
