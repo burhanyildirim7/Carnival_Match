@@ -34,7 +34,7 @@ namespace GameVanilla.Core
         }
         public void OpenGameSceneK()
         {
-            PlayerPrefs.SetInt("MevcutLevel", 123456);
+            //PlayerPrefs.SetInt("MevcutLevel", 123456);
             _levelNum = PlayerPrefs.GetInt("MevcutLevel");
             var scene = GameObject.Find("HomeScene").GetComponent<HomeScene>();
             if (!FileUtils.FileExists("Levels/" + _levelNum))
@@ -53,7 +53,7 @@ namespace GameVanilla.Core
         }
         public void _nextButtonInGameScene()
         {
-            if (SceneManager.GetActiveScene().name == "PVPGameScene")   
+            if (SceneManager.GetActiveScene().name == "PVPGameScene")
             {
                 Transition.LoadLevel(scene, duration, color);
                 _kazanilacakCoinMiktari = 250;

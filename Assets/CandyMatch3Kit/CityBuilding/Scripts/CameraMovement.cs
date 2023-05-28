@@ -60,6 +60,7 @@ public class CameraMovement : MonoBehaviour
             }
             else
             {
+
                 Touch touch = Input.GetTouch(0);
 
                 switch (touch.phase)
@@ -82,11 +83,12 @@ public class CameraMovement : MonoBehaviour
                             _cam.transform.position += direction;
 
 
-                            transform.position = new Vector3(Mathf.Clamp(transform.position.x, _leftLimit, _rightLimit), _yukseklikLimit, Mathf.Clamp(transform.position.z, _bottomLimit, _upperLimit));
+                            transform.position = new Vector3(Mathf.Clamp(transform.position.x, _leftLimit, _rightLimit), Mathf.Clamp(transform.position.y, _bottomLimit, _upperLimit), transform.position.z);
 
                         }
                         break;
                 }
+
             }
         }
     }
@@ -98,12 +100,12 @@ public class CameraMovement : MonoBehaviour
 
     public void Focus(Vector3 position)
     {
-        Vector3 newPos = new Vector3(position.x, transform.position.y, position.z - 86f);
+        Vector3 newPos = new Vector3(position.x, position.y, transform.position.z);
         LeanTween.move(gameObject, newPos, 0.5f);
 
         //_cam.orthographicSize = Mathf.Clamp(3, _zoomMin, _zoomMax);
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, _leftLimit, _rightLimit), _yukseklikLimit, Mathf.Clamp(transform.position.z, _bottomLimit, _upperLimit));
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, _leftLimit, _rightLimit), Mathf.Clamp(transform.position.y, _bottomLimit, _upperLimit), transform.position.z);
 
         _touchPos = transform.position;
     }
