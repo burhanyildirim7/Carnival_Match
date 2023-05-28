@@ -46,9 +46,12 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
     private List<int> _candyColorListesi = new List<int>(){0,1,2,3,4,5};
     #endregion
 
+    private bool _bitti;
+
     [SerializeField] GameScene gameScene;
     private void Awake()
     {
+        _bitti = false;
         if (PhotonNetwork.MasterClient.NickName==PhotonNetwork.NickName)    
         {
             _playerGoalSecim = Random.Range(0, _candyColorListesi.Count);
@@ -156,7 +159,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 
     private void RakipKontrol()
     {
-        if (PhotonNetwork.PlayerListOthers.Length==0)
+        if (PhotonNetwork.PlayerListOthers.Length==0 && !_bitti)
         {
             //gameScene.OpenPopup<RegenLevelPopup>("Popups/RegenLevelPopup"); // buraya "rakip karşılaşmayı terk etti" popUp'ı koyulacak.
             //Aşağıdakiler "rakip karşılaşmayı terk etti" popUp'ının içindeki "devam et" buttonuna koyulacak.
@@ -245,11 +248,13 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         {   
             if (int.Parse(_playerScoreText.text)<int.Parse(_rakipPlayerScoreText.text))
             {
-                gameScene.OpenLosePopup();
+                _bitti = true;
+                gameScene.OpenPopup<RegenLevelPopup>("Popups/PvPWinPopup");
             }
             else
             {
-                gameScene.OpenWinPopup();
+                _bitti = true;
+                gameScene.OpenPopup<RegenLevelPopup>("Popups/PvPLosePopup");
             }
         }
 

@@ -133,8 +133,7 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
         #endregion
         */
         //açık oda varsa odaya katılır yoksa RoomOptions özelliklerinde yeni bir oda oluşturur.
-        PhotonNetwork.JoinOrCreateRoom("MyGameRoom", new RoomOptions { MaxPlayers = 2, IsOpen = true, IsVisible = true }, TypedLobby.Default);
-
+        PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnConnected()
@@ -171,6 +170,7 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
+        PhotonNetwork.CreateRoom(default, new RoomOptions { MaxPlayers = 2, IsOpen = true, IsVisible = true }, TypedLobby.Default);
         Debug.Log("HATA:RASTGELE ODAYA GIRILEMEDI");
     }
 
@@ -202,6 +202,10 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)//bir kullıcı odaya çıktığında çalışır.
     {
+        if (PhotonNetwork.PlayerListOthers.Length==0)
+        {
+            //PhotonNetwork.Disconnect();
+        }
         Debug.Log("BIR KULLANICI ODADAN AYRILDI-ODADAKİ OYUNCU SAYISI: " + PhotonNetwork.PlayerList.Length);
     }
 

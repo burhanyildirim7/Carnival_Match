@@ -29,54 +29,18 @@ public class ColorBombAndStripedCandy : MonoBehaviour
         var explosion = board.fxPool.colorBombExplosion.GetObject();
         explosion.transform.position = tileB.transform.position;
 
-        //SoundManager.instance.PlaySound("ColorBomb");
-
-        //ColorBombCombo.Resolve(board, board.tiles, board.fxPool);
-
         striped = tileA.GetComponent<StripedCandy>() != null ? tileA : tileB;
 
         _sayi1 = board.tiles.Count - 1;
 
         board._colorBombAktif = true;
-        /*
-        for (var i = board.tiles.Count - 1; i >= 0; i--)
-        {
-            var tile = board.tiles[i];
-            if (tile != null && tile.GetComponent<Candy>() != null &&
-                tile.GetComponent<Candy>().color == CandyColor.Blue)
-            {
-                var x = tile.GetComponent<Tile>().x;
-                var y = tile.GetComponent<Tile>().y;
-                board.ExplodeTileNonRecursive(tile);
-                GameObject newTile;
-                if (Random.Range(0, 2) % 2 == 0)
-                {
-                    newTile = board.CreateHorizontalStripedTile(x, y, striped.GetComponent<Candy>().color);
-                }
-                else
-                {
-                    newTile = board.CreateVerticalStripedTile(x, y, striped.GetComponent<Candy>().color);
-                }
-
-                newTiles.Add(newTile);
-            }
-        }
-        */
         SoundManager.instance.PlaySound("ColorBomb");
 
-        //OlusturInvoke();
-
         StartCoroutine(Olustur());
-        //Olustur();
-        //Invoke("OlusturInvoke", 0.01f);
-        //board.ExplodeGeneratedTiles(newTiles);
     }
 
     private IEnumerator Olustur()
     {
-
-
-
         for (var i = _board.tiles.Count - 1; i >= 0; i--)
         {
             var tile = _board.tiles[i];

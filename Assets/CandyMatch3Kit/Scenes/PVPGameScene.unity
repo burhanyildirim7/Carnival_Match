@@ -450,6 +450,7 @@ MonoBehaviour:
   _siraDegisikligiPaneli: {fileID: 1366097678}
   _siraDegisikligiPanelBG: {fileID: 2142655456}
   _hamleSirasi: 0
+  _dokunmaAktif: 0
 --- !u!4 &27524763
 Transform:
   m_ObjectHideFlags: 0
@@ -7919,7 +7920,7 @@ GameObject:
   - component: {fileID: 298304559}
   - component: {fileID: 298304558}
   m_Layer: 5
-  m_Name: HammerBooster
+  m_Name: PlayerHammerBooster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30178,7 +30179,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -254.97755}
+  m_AnchoredPosition: {x: 0, y: -250}
   m_SizeDelta: {x: 1255, y: 510}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1366097680

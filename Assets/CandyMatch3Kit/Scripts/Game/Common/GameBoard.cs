@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 using Photon.Pun;
 
 using DG.Tweening;
+using Unity.VisualScripting;
 
 namespace GameVanilla.Game.Common
 {
@@ -147,18 +148,22 @@ namespace GameVanilla.Game.Common
         private int _tileListeSiram,_rakipGravityTileSiram;
         private bool _tekSefer;
         private bool _hamleBasladi, _hamleBitti;
-        private int _hamleAdedi,_birinciTileIdx, _ikinciTileIdx;
+        private int _hamleAdedi,_birinciTileIdx, _ikinciTileIdx,_comboTileIdx;
         private List<int> _rakipGravityTiles = new List<int>();
 
-        public bool _hamleSirasi;
+        public bool _hamleSirasi, _dokunmaAktif;
 
         PhotonView _pView;
+
+        int deneme,deneme2;
+
 
         /// <summary>
         /// Unity's Awake method.
         /// </summary>
         private void Awake()
         {
+            _dokunmaAktif = true;
             if (PhotonNetwork.IsConnected)
             {
                 _tekSefer = false;
@@ -613,9 +618,8 @@ namespace GameVanilla.Game.Common
                 {
                     countdownCoroutine = StartCoroutine(StartCountdown());
                 }
-
-                suggestedMatchCoroutine = StartCoroutine(HighlightRandomMatchAsync());
             }
+            suggestedMatchCoroutine = StartCoroutine(HighlightRandomMatchAsync());
         }
 
         /// <summary>
@@ -709,7 +713,7 @@ namespace GameVanilla.Game.Common
             {
                 return;
             }
-            if ((Input.GetMouseButtonDown(0)&& _hamleSirasi) || _hamleBasladi)
+            if ((Input.GetMouseButtonDown(0)&& _hamleSirasi && _dokunmaAktif))
             {
                 MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
 
@@ -729,11 +733,12 @@ namespace GameVanilla.Game.Common
                     selectedTile = hit.collider.gameObject;
                     birinciTile = selectedTile;
                     _birinciTileIdx = idx;
+                    _comboTileIdx = idx;
                     selectedTile.GetComponent<Animator>().SetTrigger("Pressed");
                 }
             }
 
-            if ((Input.GetMouseButtonUp(0) && _hamleSirasi) || _hamleBitti)
+            if ((Input.GetMouseButtonUp(0) && _hamleSirasi && _dokunmaAktif))
             {
                 drag = false;
                 if (selectedTile != null && selectedTile.GetComponent<Animator>() != null && selectedTile.gameObject.activeSelf)
@@ -743,16 +748,34 @@ namespace GameVanilla.Game.Common
                     if (selectedTile.GetComponent<StripedCandy>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
                         ExplodeTile(selectedTile);
-                        //ApplyGravity();   
+                        if (PhotonNetwork.IsConnected && _hamleSirasi)
+                        {
+                            _pView.RPC("RakipStripedCandy", RpcTarget.Others, (int)_comboTileIdx);
+                        }
+                        else
+                        {
+
+                        }
+
                     }
                     else if (selectedTile.GetComponent<WrappedCandy>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
                         ExplodeTile(selectedTile);
+                        if (PhotonNetwork.IsConnected && _hamleSirasi)
+                        {
+                            _pView.RPC("RakipWrappedCandy", RpcTarget.Others, (int)_comboTileIdx);
+                        }
+                        else
+                        {
+
+                        }
                         ApplyGravity();
+                        
                     }
                     else if (selectedTile.GetComponent<ColorBomb>() != null && gameScene._boosterAktif == false && gameScene._boosterColorBombAktif == false)
                     {
                         ColorBombPatlat(selectedTile);
+                        
                     }
                     else
                     {
@@ -989,7 +1012,7 @@ namespace GameVanilla.Game.Common
 
                         PerformMove();
                     }
-                    else
+                    else  // TAS HAREKET EDEBİLECEK BİR HAREKET YAPMADIYSA TASI ALDIGIN YERİNE GERİ KOYMAK ICIN
                     {
                         Debug.Log("COMBO OKUNDU_4");
                         var selectedTileCopy = selectedTile;
@@ -1026,6 +1049,35 @@ namespace GameVanilla.Game.Common
                 }
             }
         }
+
+
+        [PunRPC]
+        public void RakipStripedCandy(int _tileIdx)
+        {
+            ExplodeTile(tiles[_tileIdx]);
+            StartCoroutine(RakipStripedCandyAsyncGravity());
+        }
+
+        [PunRPC]
+        public void RakipWrappedCandy(int _tileIdx)
+        {
+            ExplodeTile(tiles[_tileIdx]);
+            StartCoroutine(RakipWrappedCandyAsyncGravity());
+            ApplyGravity();
+        }
+
+        private IEnumerator RakipStripedCandyAsyncGravity()
+        {
+            yield return new WaitForSeconds(.5f);
+            ApplyGravity();
+        }
+        private IEnumerator RakipWrappedCandyAsyncGravity()
+        {
+            yield return new WaitForSeconds(.5f);
+            ApplyGravity();
+        }
+
+
 
         ///<summary>
         ///PVP RAKİP TAŞ HAREKETLERİ
@@ -1304,6 +1356,10 @@ namespace GameVanilla.Game.Common
                     {
                         case BoosterType.Lollipop:
                             booster = new LollipopBooster();
+                            if (PhotonNetwork.IsConnected)
+                            {
+                                _pView.RPC("RakipHandleBoosterInput", RpcTarget.Others, (int)BoosterType.Lollipop, (int)tiles.FindIndex(x => x == tile.gameObject));
+                            }
                             break;
 
                         case BoosterType.Bomb:
@@ -1327,7 +1383,11 @@ namespace GameVanilla.Game.Common
                     else
                     {
                         if (button.boosterType == BoosterType.Bomb)
-                        {
+                        {   
+                            if (PhotonNetwork.IsConnected)
+                            {
+                                _pView.RPC("RakipHandleBoosterInput", RpcTarget.Others, (int)BoosterType.Bomb, (int)tiles.FindIndex(x => x==tile.gameObject));
+                            }
                             button.GetComponent<BombBooster>().Resolve(this, tile.gameObject);
                             ConsumeBooster(button);
                         }
@@ -1349,6 +1409,35 @@ namespace GameVanilla.Game.Common
                 }
             }
         }
+
+        [PunRPC]
+        public void RakipHandleBoosterInput(int _type,int _index) ///////RAKİP
+        {
+            BuyBoosterButton button;
+            var tile = tiles[_index];
+            if (_type == 0)
+            {
+                button = GameObject.Find("PlayerHammerBooster").GetComponent<BuyBoosterButton>();
+                button.boosterType = BoosterType.Lollipop;
+                Booster booster = null;
+                booster = new LollipopBooster();
+                booster.Resolve(this, tile.gameObject);
+                ConsumeBooster(button);
+            }
+            else if(_type == 1)
+            {
+                button = GameObject.Find("PlayerSkillButton").GetComponent<BuyBoosterButton>();
+                button.boosterType = BoosterType.Bomb;
+                button.GetComponent<BombBooster>().Resolve(this, tile.gameObject);
+                ConsumeBooster(button);
+            }
+            else
+            {
+
+            }
+
+        }
+
 
         public void BoosterModdanCik()
         {
@@ -1486,6 +1575,7 @@ namespace GameVanilla.Game.Common
                 if (_hamleAdedi == 0) // HAMLE HAKKI BİTİNCE RAKİBE SIRA GEÇMESİ İÇİN
                 {
                     _hamleAdedi = 2;
+                    _dokunmaAktif = false;
                     Invoke("SiraDüzenlemeTetikleme", 1f);
                     //ROUND OBJELERİ DUZENLEME TETIKLEYICI
                 }
@@ -1590,14 +1680,10 @@ namespace GameVanilla.Game.Common
             _siraDegisikligiPaneli.SetActive(true);
             _siraDegisikligiPanelBG.SetActive(true);
             _siraDegisikligiPaneli.transform.GetChild(0).GetComponent<Text>().text = _siraSahibi;
-            float _x1 = _siraDegisikligiPaneli.transform.localPosition.x;
-            float _y1 = _siraDegisikligiPaneli.transform.localPosition.y;
-            float _z1 = _siraDegisikligiPaneli.transform.localPosition.z;
-            _siraDegisikligiPaneli.transform.localPosition = new Vector3(_x1,_siraDegisikligiPaneli.transform.localPosition.y+500,_z1);
+            _siraDegisikligiPaneli.transform.localPosition = new Vector3(0,1000,0);
+            _siraDegisikligiPaneli.transform.DOLocalMove(new Vector3(0, -250, 0), .75f).OnComplete(() =>SRDPanelScaleAnimasyon());
 
-            _siraDegisikligiPaneli.transform.DOLocalMove(new Vector3(_x1, _y1, _z1), .5f).OnComplete(() =>SRDPanelScaleAnimasyon());
-
-            Invoke("SiraDegisikligiPanelAutoKill", 1.5f);
+           // Invoke("SiraDegisikligiPanelAutoKill", 2.5f);
         }
         private void SRDPanelScaleAnimasyon()
         {
@@ -1605,8 +1691,14 @@ namespace GameVanilla.Game.Common
         }
         private void SRDPanelScaleAnimasyonReverse()
         {
-            _siraDegisikligiPaneli.transform.DOScale(new Vector3(1, 1f, 1), 0.25f);
+            _siraDegisikligiPaneli.transform.DOScale(new Vector3(1, 1f, 1), 0.25f).OnComplete(() => SRDPanelScaleAnimasyonGidis());
         }
+        private void SRDPanelScaleAnimasyonGidis()
+        {
+            _siraDegisikligiPaneli.transform.DOScale(new Vector3(1, 1.2f, 1), 0.25f);
+            _siraDegisikligiPaneli.transform.DOLocalMove(new Vector3(0, -2250, 0), 1f).OnComplete(() => SiraDegisikligiPanelAutoKill());
+        }
+
         private void SiraDegisikligiPanelAutoKill()
         {
             GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().MoveTimerSifirlama();
@@ -1614,7 +1706,7 @@ namespace GameVanilla.Game.Common
             _siraDegisikligiPaneli.SetActive(false);
 
             _hamleSirasi = !_hamleSirasi;
-            
+            _dokunmaAktif = true;
         }
         #endregion
 
@@ -2076,11 +2168,6 @@ namespace GameVanilla.Game.Common
 
             if (tile.GetComponent<StripedCandy>() != null)
             {
-                //var explodedTiles = new List<GameObject>();
-                //ExplodeTileRecursive(tile, explodedTiles);
-                //int score = 0;
-
-                //StartCoroutine(ExplodeTileYeni(tile, didAnySpecialCandyExplode));
                 tile.GetComponent<StripedCandy>().Resolve(this, tile);
                 var explodedTiles = new List<GameObject>();
                 ExplodeTileRecursive(tile, explodedTiles);
@@ -2093,8 +2180,40 @@ namespace GameVanilla.Game.Common
                         explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
                         explodedTile.GetComponent<Tile>().UpdateGameState(gameState);
                         score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
-                        DestroyElements(explodedTile);
-                        //DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
+
+                        if (!PhotonNetwork.IsConnected)
+                        {
+                            DestroyElements(explodedTile);
+                        }
+                        
+                        explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
+                        tiles[idx] = null;
+                    }
+
+                    SoundManager.instance.PlaySound("CandyMatch");
+                }
+                UpdateScore(score);
+                gameUi.UpdateGoals(gameState);
+            }
+            else if (tile.GetComponent<WrappedCandy>() != null) 
+            {
+                var explodedTiles = new List<GameObject>();
+                ExplodeTileRecursive(tile, explodedTiles);
+                var score = 0;
+
+                foreach (var explodedTile in explodedTiles)
+                {
+                    var idx = tiles.FindIndex(x => x == explodedTile);
+                    if (idx != -1)
+                    {
+                        explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
+                        explodedTile.GetComponent<Tile>().UpdateGameState(gameState);
+                        score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
+                        if (!PhotonNetwork.IsConnected)
+                        {
+                            DestroyElements(explodedTile);
+                        }
+                        DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
                         explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
                         tiles[idx] = null;
                     }
@@ -2104,6 +2223,7 @@ namespace GameVanilla.Game.Common
 
                 UpdateScore(score);
                 gameUi.UpdateGoals(gameState);
+
             }
             else
             {
@@ -2119,7 +2239,10 @@ namespace GameVanilla.Game.Common
                         explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
                         explodedTile.GetComponent<Tile>().UpdateGameState(gameState);
                         score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
-                        DestroyElements(explodedTile);
+                        if (!PhotonNetwork.IsConnected)
+                        {
+                            DestroyElements(explodedTile);
+                        }
                         DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
                         explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
                         tiles[idx] = null;
@@ -2127,7 +2250,7 @@ namespace GameVanilla.Game.Common
 
                     SoundManager.instance.PlaySound("CandyMatch");
                 }
-
+               
                 UpdateScore(score);
                 gameUi.UpdateGoals(gameState);
             }
@@ -2151,7 +2274,10 @@ namespace GameVanilla.Game.Common
                     explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
                     explodedTile.GetComponent<Tile>().UpdateGameState(gameState);
                     score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
-                    DestroyElements(explodedTile);
+                    if (!PhotonNetwork.IsConnected)
+                    {
+                        DestroyElements(explodedTile);
+                    }
                     //DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
                     explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
                     tiles[idx] = null;
@@ -2180,7 +2306,10 @@ namespace GameVanilla.Game.Common
                 {
                     explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
                     score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
-                    DestroyElements(explodedTile);
+                    if (!PhotonNetwork.IsConnected)
+                    {
+                        DestroyElements(explodedTile);
+                    }
                     DestroySpecialBlocks(explodedTile, false);
                     explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
                     tiles[idx] = null;
@@ -2205,7 +2334,10 @@ namespace GameVanilla.Game.Common
                 {
                     explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
                     score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
-                    DestroyElements(explodedTile);
+                    if (!PhotonNetwork.IsConnected)
+                    {
+                        DestroyElements(explodedTile);
+                    }
                     //DestroySpecialBlocks(explodedTile, false);
                     explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
                     tiles[idx] = null;
@@ -2232,7 +2364,10 @@ namespace GameVanilla.Game.Common
                     explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
                     explodedTile.GetComponent<Tile>().UpdateGameState(gameState);
                     score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
-                    DestroyElements(explodedTile);
+                    if (!PhotonNetwork.IsConnected)
+                    {
+                        DestroyElements(explodedTile);
+                    }
                     //DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
                     explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
                     tiles[idx] = null;
@@ -2259,7 +2394,10 @@ namespace GameVanilla.Game.Common
                     explodedTile.GetComponent<Tile>().ShowExplosionFx(fxPool);
                     explodedTile.GetComponent<Tile>().UpdateGameState(gameState);
                     score += gameConfig.GetTileScore(explodedTile.GetComponent<Tile>());
-                    DestroyElements(explodedTile);
+                    if (!PhotonNetwork.IsConnected)
+                    {
+                        DestroyElements(explodedTile);
+                    }
                     //DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
                     explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
                     tiles[idx] = null;
@@ -2296,8 +2434,10 @@ namespace GameVanilla.Game.Common
                     tile.GetComponent<Tile>().ShowExplosionFx(fxPool);
                     tile.GetComponent<Tile>().UpdateGameState(gameState);
                     UpdateScore(gameConfig.GetTileScore(tile.GetComponent<Tile>()));
-                    DestroyElements(tile);
-
+                    if (!PhotonNetwork.IsConnected)
+                    {
+                        DestroyElements(tile);
+                    }
                     tile.GetComponent<PooledObject>().pool.ReturnObject(tile);
                     tiles[idx] = null;
 
@@ -2636,7 +2776,7 @@ namespace GameVanilla.Game.Common
         /// </summary>
         /// <param name="isPlayerMatch">True if the match was caused by a player and false otherwise.</param>
         /// <returns>True if there were any matches; false otherwise.</returns>
-        private bool HandleMatches(bool isPlayerMatch)
+        private bool HandleMatches(bool isPlayerMatch) //BENIM PARMALA MATCHLEDİKLERİM(TRUE) ve PARMAKSIZ MATCHLEDİKLERİM(FALSE)
         {
             var matches = new List<Match>();
             var tShapedMatches = tShapedMatchDetector.DetectMatches(this);
@@ -2749,6 +2889,9 @@ namespace GameVanilla.Game.Common
                 matches.AddRange(verticalMatches);
             }
 
+            ///////// YUKARISI HERHANGİ BİR ŞEKİLDE EŞLEME VAR MI KONTOROLÜ YAPIYOR ve matches'a ekliyor.
+            ///
+            //////// AŞAĞISI BULUNAN EŞLEMELERİ PATLATIYOR - BURASI KULLANICININ KONTORLÜNDE OLMADAN PATLAYAN YER
             if (matches.Count > 0)
             {
                 var didAnySpecialCandyExplode = false;
@@ -2769,7 +2912,7 @@ namespace GameVanilla.Game.Common
 
                     foreach (var tile in match.tiles)
                     {
-                        ExplodeTile(tile, didAnySpecialCandyExplode);
+                        ExplodeTile(tile, didAnySpecialCandyExplode); /// PATLATILAN YER
                     }
 
                     if (!didAnySpecialCandyExplode && numSpecialCandiesGenerated == 0)
@@ -2777,25 +2920,33 @@ namespace GameVanilla.Game.Common
                         if (match.tiles.Count >= 5 && match.type != MatchType.TShaped &&
                             match.type != MatchType.LShaped)
                         {
-                            if (isPlayerMatch)
+                            if (!PhotonNetwork.IsConnected)
                             {
-                                if (match.tiles.Contains(lastSelectedTile))
+                                if (isPlayerMatch)
                                 {
-                                    CreateColorBomb(lastSelectedTileX, lastSelectedTileY);
+                                    if (match.tiles.Contains(lastSelectedTile))
+                                    {
+                                        CreateColorBomb(lastSelectedTileX, lastSelectedTileY);
+                                    }
+                                    else if (match.tiles.Contains(lastOtherSelectedTile))
+                                    {
+                                        CreateColorBomb(lastOtherSelectedTileX, lastOtherSelectedTileY);
+                                    }
                                 }
-                                else if (match.tiles.Contains(lastOtherSelectedTile))
+                                else if (randomIdx != -1)
                                 {
-                                    CreateColorBomb(lastOtherSelectedTileX, lastOtherSelectedTileY);
+                                    var i = randomIdx % level.width;
+                                    var j = randomIdx / level.width;
+                                    CreateColorBomb(i, j);
                                 }
-                            }
-                            else if (randomIdx != -1)
-                            {
-                                var i = randomIdx % level.width;
-                                var j = randomIdx / level.width;
-                                CreateColorBomb(i, j);
-                            }
 
-                            ++numSpecialCandiesGenerated;
+                                ++numSpecialCandiesGenerated;
+
+                            }
+                            else
+                            {
+
+                            }
                         }
                         else if (match.tiles.Count >= 5)
                         {
@@ -2873,7 +3024,6 @@ namespace GameVanilla.Game.Common
                     }
                 }
 
-
                 if (isPlayerMatch)
                 {
                     consecutiveCascades = 0;
@@ -2908,14 +3058,15 @@ namespace GameVanilla.Game.Common
                     }
                     else
                     {
+                        Debug.Log("En ALTTIN BIR USTU ASYNC CASLISTI");
                         StartCoroutine(ApplyGravityAsync(didAnySpecialCandyExplode ? 0.5f : 0.0f));
                     }
                 }
                 else
                 {
+                    Debug.Log("En ALTTAKİ ASYNC CASLISTI");
                     StartCoroutine(ApplyGravityAsync(didAnySpecialCandyExplode ? 0.5f : 0.0f));
                 }
-
 
                 return true;
             }
@@ -2923,7 +3074,9 @@ namespace GameVanilla.Game.Common
             {
                 return false;
             }
+
         }
+
 
         /// <summary>
         /// The coroutine that applies the gravity to the current level.
@@ -2932,6 +3085,7 @@ namespace GameVanilla.Game.Common
         /// <returns>The coroutine.</returns>
         private IEnumerator ApplyGravityAsync(float delay = 0.0f)
         {
+            deneme++;
             ClearSuggestedMatch();
             if (suggestedMatchCoroutine != null)
             {
@@ -2956,6 +3110,8 @@ namespace GameVanilla.Game.Common
             }
             else
             {
+                Debug.Log("ANA GRAVITYSI");
+
                 ApplyGravityInternal();
             }
             possibleSwaps = DetectPossibleSwaps();
@@ -2966,8 +3122,8 @@ namespace GameVanilla.Game.Common
             }
             else
             {
-                if (!HandleMatches(false))
-                {
+                if (!HandleMatches(false)) // GRAVITY SONRASI ESLESME KONTROL YERİ-TRUE GELİRSE OTOMATIK ESLESME PATLATMIS DEMEK
+                { //HandleMatches(false) = false gelmesi kendiliğinden eşlenecek birşey yok demek/ true dönerse kendiliğinden eşleşen olmuş demektir.
                     if (suggestedMatchCoroutine != null)
                     {
                         StopCoroutine(suggestedMatchCoroutine);
@@ -2976,7 +3132,11 @@ namespace GameVanilla.Game.Common
                     ExpandChocolate();
                     inputLocked = false;
                     explodedChocolate = false;
-                    if (!PhotonNetwork.IsConnected)
+                    if (PhotonNetwork.IsConnected)
+                    {
+
+                    }
+                    else
                     {
                         suggestedMatchCoroutine = StartCoroutine(HighlightRandomMatchAsync());
                     }
@@ -3059,6 +3219,7 @@ namespace GameVanilla.Game.Common
         /// </summary>
         private void ApplyGravityInternal()
         {
+            deneme2++;
             var fallingSoundPlayed = false;
             for (var i = 0; i < level.width; i++) //MEVCUT TASLAR ASAGI KAYMASI ICIN
             {
@@ -3089,7 +3250,7 @@ namespace GameVanilla.Game.Common
                     if (bottom != -1)
                     {
                         var tile = GetTile(i, j);
-                        if (tile != null)
+                        if (tile != null) //EKRANDAKİ DÜŞEBİLECEK TAŞLARI DÜŞÜRME /AŞAĞI KAYDIRMA VE YENİ INDEX NO VERME-ESKİ INDEX NULL'A ÇEKİLİYOR / YENİ TASLAR İÇİN DEGİL MEVCUT İÇİN
                         {
                             var numTilesToFall = bottom - j;
                             tiles[tileIndex + (numTilesToFall * level.width)] = tiles[tileIndex];
@@ -3119,7 +3280,7 @@ namespace GameVanilla.Game.Common
                 }
             }
 
-            for (var i = 0; i < level.width; i++)
+            for (var i = 0; i < level.width; i++) // BOŞLUKLAR İÇİN YENİ TAS OLUSTURUP AŞAĞI YERİNE DÜŞÜREN VE INDEX NUMARASI VEREN YER
             {
                 var numEmpties = 0;
                 for (var j = 0; j < level.height; j++)
@@ -3181,7 +3342,6 @@ namespace GameVanilla.Game.Common
                     }
                 }
             }
-            //_pView.RPC("RakipGravityCalistir", RpcTarget.OthersBuffered,null);
         }
 
         [PunRPC]
@@ -3308,8 +3468,6 @@ namespace GameVanilla.Game.Common
                     }
                 }
             }
-            _rakipGravityTileSiram = 0;
-            _rakipGravityTiles.Clear();
         }
 
 
@@ -3428,7 +3586,14 @@ namespace GameVanilla.Game.Common
                 {
                     if (tile.gameObject.activeSelf && tile.GetComponent<Animator>() != null)
                     {
-                        tile.GetComponent<Animator>().SetTrigger("SuggestedMatch");
+                        if (PhotonNetwork.IsConnected)
+                        {
+
+                        }
+                        else
+                        {
+                            tile.GetComponent<Animator>().SetTrigger("SuggestedMatch");
+                        }
                     }
                 }
 
@@ -3582,7 +3747,14 @@ namespace GameVanilla.Game.Common
             {
 
             }
+            if (PhotonNetwork.IsConnected && _hamleSirasi)
+            {
+                _pView.RPC("RakipColorBomb", RpcTarget.Others, (int)_comboTileIdx);
+            }
+            else
+            {
 
+            }
         }
 
         /// <summary>

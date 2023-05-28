@@ -129,42 +129,6 @@ namespace GameVanilla.Game.Common
             _sayi1 = 0;
             Invoke("PatlatInvoke", 0.5f);
 
-            //StartCoroutine(Patlat());
-
-        }
-
-        private IEnumerator Patlat()
-        {
-
-            yield return new WaitForSeconds(0.5f);
-
-            for (var i = 0; i < tiles.Count; i++)
-            {
-                if (tiles[i] != null)
-                {
-                    if (tiles[i].GetComponent<ColorBomb>() != null)
-                    {
-                        _board.ColorBombPatlat(tiles[i]);
-                        //_board.BoosterIlePatlat(tiles[i]);
-                    }
-                    else
-                    {
-                        _board.BoosterIlePatlat(tiles[i]);
-
-                    }
-
-                    yield return new WaitForSeconds(0.1f);
-                }
-            }
-
-            //yield return new WaitForSeconds(0.1f);
-
-            _board.ApplyGravity();
-
-            _board.BoosterModdanCik();
-
-            //Debug.Log("BITTI");
-
         }
 
         private void PatlatInvoke()

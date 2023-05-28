@@ -73,6 +73,11 @@ MonoBehaviour:
   - RakipGravityEsleme
   - RakipGravityCalistir
   - RakipSiraDuzenlemeTetik
+  - RakipColorBomb
+  - RakipStripedCandy
+  - RakipWrappedCandy
+  - RakipAutoEsleme
+  - RakipHandleBoosterInput
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

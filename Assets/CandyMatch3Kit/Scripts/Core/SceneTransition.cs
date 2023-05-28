@@ -34,7 +34,7 @@ namespace GameVanilla.Core
         }
         public void OpenGameSceneK()
         {
-            PlayerPrefs.SetInt("MevcutLevel", 16);
+            PlayerPrefs.SetInt("MevcutLevel", 123456);
             _levelNum = PlayerPrefs.GetInt("MevcutLevel");
             var scene = GameObject.Find("HomeScene").GetComponent<HomeScene>();
             if (!FileUtils.FileExists("Levels/" + _levelNum))
