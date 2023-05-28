@@ -60,7 +60,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
             _rakipGoalSecim = _candyColorListesi[_rakipGoalSecim];
             _playerSkillButton.GetComponent<Button>().interactable = false;
             _playerBoosterHammer.GetComponent<Button>().interactable = false;
-            _playerBoosterShuffle.GetComponent<Button>().interactable = true;
+            _playerBoosterShuffle.GetComponent<Button>().interactable = false;
             _rakipPlayerBoosterHammer.GetComponent<Button>().interactable = false;
             _rakipPlayerBoosterShuffle.GetComponent<Button>().interactable = false;
 
@@ -80,7 +80,8 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(2.0f);
         _baslangicPaneli.SetActive(false);
     }
-        void Start()
+
+    void Start()
     {
         _timerDeger = 45f;
         _timeSlider.maxValue = 45f;
@@ -120,6 +121,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         }
 
     }
+
     [PunRPC]
     public void GoalAyarlama(int a, int b)
     {
@@ -128,34 +130,25 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         _playerGoalSecim = b;
         _rakipGoalSecim = a;
     }
-    void FixedUpdate()
-    {
-        //HAMLE HAKKI DIGER KULLANICIYA GECINCE TIMER SIFIRLANMIYOR-RAKIP ve MASTER olarak iki sayac denenecek.
-        //HAMLE HAKKI SORGUSU İLE SAYAC 45 E CEKILEBILIR-TEK KULLANICI UZERINDEN IKI KULLANICIYI YONETMEYE CALISMA
-        //HAMLE HAKKI KIMDEYSE SAYAC SIFIRLANDIGIN O ROUNDU DEGISTIRSIN-ROUND DEGISINCE SAYACLAR 45E CEKILEBILIR
-        /*
-        if (PhotonNetwork.IsConnected)
-        {
-            _timerDeger -= Time.deltaTime;
-            TimerGeriSayım(_timerDeger);
-        }
-        */
-    }
 
-    #region // photon metodlar
+    void Update()
+    {     
+        _timerDeger -= Time.deltaTime;
+        TimerGeriSayım(_timerDeger);       
+    }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)//bir kullıcı odaya çıktığında çalışır.
     {
         Debug.Log("BIR KULLANICI ODADAN AYRILDI-ODADAKİ OYUNCU SAYISI: " + PhotonNetwork.PlayerList.Length);
         InvokeRepeating("RakipKontrol",.01f,.1f);
     }
+
     public override void OnLeftRoom()
     {
         Debug.Log("ODADAN CIKILDI");
         PhotonNetwork.Disconnect();
         CancelInvoke("RakipKontrol");
     }
-    #endregion
 
     private void RakipKontrol()
     {
@@ -170,55 +163,26 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         {
 
         }
-
     }
 
     public void MoveTimerSifirlama()
     {
+        _timerDeger = 45f;
         _timeSlider.value = 45f;
     }
 
-
-    #region // RPC kodlar
-
-    [PunRPC]
     public void TimerGeriSayım(float _deger)
     {
-        if (PhotonNetwork.IsConnected)
+        if (_timeSlider.value > 0)
         {
-            if (PhotonNetwork.MasterClient.NickName == PhotonNetwork.NickName)
+            _timeSlider.value = _deger;
+        }
+        else
+        {
+            if (GameObject.Find("GameBoard").GetComponent<GameBoard>()._hamleSirasi)    
             {
-                if (GameObject.Find("GameBoard").GetComponent<GameBoard>()._hamleSirasi)
-                {
-                    if (_timeSlider.value >= 1)
-                    {
-                        _timeSlider.value = _deger;
-                        //GetComponent<PhotonView>().RPC("TimerGeriSayım", RpcTarget.Others, (float)_deger);
-                    }
-                    else
-                    {
-                        GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle", RpcTarget.All, null);
-
-                        GameObject.Find("GameBoard").GetComponent<GameBoard>().SiraDüzenlemeTetikleme();
-                    }
-                }
-            }
-            else
-            {
-                if (!GameObject.Find("GameBoard").GetComponent<GameBoard>()._hamleSirasi)
-                {
-                    if (_timeSlider.value >= 1)
-                    {
-                        _timeSlider.value = _deger;
-                        //GetComponent<PhotonView>().RPC("TimerGeriSayım", RpcTarget.Others, (float)_deger);
-                    }
-                    else
-                    {
-                        GetComponent<PhotonView>().RPC("RoundObjeleriniDuzenle", RpcTarget.All, null);
-
-                        GameObject.Find("GameBoard").GetComponent<GameBoard>().SiraDüzenlemeTetikleme();
-                    }
-                }
+                GameObject.Find("GameBoard").GetComponent<GameBoard>().SiraDüzenlemeTetikleme();
+                MoveTimerSifirlama();
             }
         }
     }
@@ -278,14 +242,10 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         }
 
         _rakipPlayerSkillText.text = _rakipPlayerSkillSayac.ToString() + "/6";
-
     }
-
-    #endregion
 
     public void GoalKontrol(int _colorGelen)
     {
-
         if (_playerGoalSecim==_colorGelen)
         {
             _playerSkillSayac++;
@@ -303,7 +263,6 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         {
 
         }
-
     }
 
     public void PlayerSkillSayacSifirlama()

@@ -139,7 +139,8 @@ public class ServerKontrol : MonoBehaviourPunCallbacks
     public override void OnConnected()
     {
         Debug.Log("SERVERA BAĞLANILDI");
-        PhotonNetwork.NickName = _kullaniciAdi.text;
+        PhotonNetwork.NickName = default;
+        //PhotonNetwork.NickName = _kullaniciAdi.text;
     }
 
     public override void OnJoinedLobby()
