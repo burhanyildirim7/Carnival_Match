@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 using GameVanilla.Game.UI;
-
+using Photon.Pun;
 namespace GameVanilla.Game.Common
 {
     /// <summary>
@@ -137,7 +137,10 @@ namespace GameVanilla.Game.Common
         /// <param name="score">The score.</param>
         public void SetProgressBar(int score)
         {
-            progressBar.UpdateProgressBar(score);
+            if (!PhotonNetwork.IsConnected)
+            {
+                progressBar.UpdateProgressBar(score);
+            }
         }
 
         /// <summary>
