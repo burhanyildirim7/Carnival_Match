@@ -36,8 +36,14 @@ namespace GameVanilla.Game.Common
 
             }
 
-            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+            if (PlayerPrefs.GetInt("vibration_enabled") == 0)
+            {
+                MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+            }
+            else
+            {
 
+            }
             return new List<GameObject> { gameObject };
         }
 

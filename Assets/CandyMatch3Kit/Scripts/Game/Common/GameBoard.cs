@@ -715,8 +715,14 @@ namespace GameVanilla.Game.Common
             }
             if ((Input.GetMouseButtonDown(0)&& _hamleSirasi && _dokunmaAktif))
             {
-                MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+                if (PlayerPrefs.GetInt("vibration_enabled") == 0)
+                {
+                    MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+                }
+                else
+                {
 
+                }
                 drag = true;
                 var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
                 if (hit.collider != null && hit.collider.gameObject.CompareTag("Tile"))
@@ -2187,7 +2193,7 @@ namespace GameVanilla.Game.Common
                         {
                             DestroyElements(explodedTile);
                         }
-                        
+                        DestroySpecialBlocks(explodedTile, didAnySpecialCandyExplode);
                         explodedTile.GetComponent<PooledObject>().pool.ReturnObject(explodedTile);
                         tiles[idx] = null;
                     }
@@ -2621,7 +2627,7 @@ namespace GameVanilla.Game.Common
         /// Destroys the special blocks at the cell occupied by the specified tile.
         /// </summary>
         /// <param name="tile">The tile.</param>
-        private void DestroySpecialBlocksInternal(GameObject tile)
+        private void DestroySpecialBlocksInternal(GameObject tile) //Special blocklar burada patlıyor
         {
             if (tile != null && tile.GetComponent<SpecialBlock>() != null &&
                 tile.GetComponent<SpecialBlock>().destructable)
@@ -2982,28 +2988,6 @@ namespace GameVanilla.Game.Common
                                 {
                                     if (match.tiles.Contains(lastSelectedTile))
                                     {
-                                        CreateHorizontalStripedTile(lastSelectedTileX, lastSelectedTileY,
-                                            CandyColor.Blue);
-                                    }
-                                    else if (match.tiles.Contains(lastOtherSelectedTile))
-                                    {
-                                        CreateHorizontalStripedTile(lastOtherSelectedTileX, lastOtherSelectedTileY,
-                                            CandyColor.Blue);
-                                    }
-                                }
-                                else if (randomIdx != -1)
-                                {
-                                    var i = randomIdx % level.width;
-                                    var j = randomIdx / level.width;
-                                    CreateHorizontalStripedTile(i, j, randomColor);
-                                }
-                            }
-                            else
-                            {
-                                if (isPlayerMatch)
-                                {
-                                    if (match.tiles.Contains(lastSelectedTile))
-                                    {
                                         CreateVerticalStripedTile(lastSelectedTileX, lastSelectedTileY,
                                             CandyColor.Blue);
                                     }
@@ -3018,6 +3002,28 @@ namespace GameVanilla.Game.Common
                                     var i = randomIdx % level.width;
                                     var j = randomIdx / level.width;
                                     CreateVerticalStripedTile(i, j, randomColor);
+                                }
+                            }
+                            else
+                            {
+                                if (isPlayerMatch)
+                                {
+                                    if (match.tiles.Contains(lastSelectedTile))
+                                    {
+                                        CreateHorizontalStripedTile(lastSelectedTileX, lastSelectedTileY,
+                                            CandyColor.Blue);
+                                    }
+                                    else if (match.tiles.Contains(lastOtherSelectedTile))
+                                    {
+                                        CreateHorizontalStripedTile(lastOtherSelectedTileX, lastOtherSelectedTileY,
+                                            CandyColor.Blue);
+                                    }
+                                }
+                                else if (randomIdx != -1)
+                                {
+                                    var i = randomIdx % level.width;
+                                    var j = randomIdx / level.width;
+                                    CreateHorizontalStripedTile(i, j, randomColor);
                                 }
                             }
 
@@ -4052,15 +4058,29 @@ namespace GameVanilla.Game.Common
         {
             if (PhotonNetwork.IsConnected)
             {
-                GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().PlayerSkillSayacSifirlama();
-                if ((int)button.boosterType==0)
+                if (_hamleSirasi)
                 {
-                    GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().PlayerHammerKapatma();
+                    if ((int)button.boosterType == 0)//hammer
+                    {
+                        GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().PlayerHammerKapatma();
+                    }
+                    else if ((int)button.boosterType == 0)//ok
+                    {
+                        GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().PlayerSkillSayacSifirlama();
+                    }
                 }
                 else
                 {
-
+                    if ((int)button.boosterType == 0)//hammer
+                    {
+                        GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().RakipHammerKapatma();
+                    }
+                    else if ((int)button.boosterType == 0)//ok
+                    {
+                        GameObject.Find("ServerGameUIKontrol").GetComponent<ServerGameUIKontrol>().RakipSkillSifirlama();
+                    }
                 }
+
             }
             else
             {

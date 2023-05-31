@@ -208,9 +208,9 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
             }
 
         }
-        if (_roundNo==6)   
+        if (_roundNo==5)   
         {   
-            if (int.Parse(_playerScoreText.text)<int.Parse(_rakipPlayerScoreText.text))
+            if (int.Parse(_playerScoreText.text)>int.Parse(_rakipPlayerScoreText.text))
             {
                 _bitti = true;
                 gameScene.OpenPopup<RegenLevelPopup>("Popups/PvPWinPopup");
@@ -251,7 +251,14 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
             _playerSkillSayac++;
             if (_playerSkillSayac>=6)
             {
-                MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+                if (PlayerPrefs.GetInt("vibration_enabled") == 0)
+                {
+                    MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+                }
+                else
+                {
+
+                }
                 _playerSkillSayac = 6;
                 _playerSkillButton.GetComponent<Button>().interactable = true;
             }
@@ -271,7 +278,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
         _playerSkillSlider.value = 0;
         _playerSkillText.text = "0/6";
         _playerSkillButton.GetComponent<Button>().interactable = false;
-        photonView.RPC("RakipSkillSifirlama",RpcTarget.Others,null);
+        //photonView.RPC("RakipSkillSifirlama",RpcTarget.Others,null);
     }
 
     [PunRPC]
@@ -285,7 +292,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
     public void PlayerHammerKapatma()
     {
         _playerBoosterHammer.GetComponent<Button>().interactable = false;
-        photonView.RPC("RakipHammerKapatma", RpcTarget.Others, null);
+        //photonView.RPC("RakipHammerKapatma", RpcTarget.Others, null);
     }
 
     [PunRPC]
@@ -296,7 +303,7 @@ public class ServerGameUIKontrol : MonoBehaviourPunCallbacks
 
     public void PlayerShuffleButton()
     {
-        _rakipPlayerBoosterShuffle.GetComponent<Button>().interactable = false;
+        _playerBoosterShuffle.GetComponent<Button>().interactable = false;
         GameObject.Find("GameBoard").GetComponent<GameBoard>().RegerateLevelCalistirma();
         photonView.RPC("RakipShuffleKapatma", RpcTarget.Others, null);
     }

@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using GameVanilla.Core;
 using GameVanilla.Game.Common;
 using GameVanilla.Game.Scenes;
+using MoreMountains.NiceVibrations;
 
 namespace GameVanilla.Game.Popups
 {

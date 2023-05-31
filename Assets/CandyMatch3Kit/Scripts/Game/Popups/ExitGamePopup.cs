@@ -2,6 +2,7 @@ using GameVanilla.Core;
 using GameVanilla.Game.Common;
 
 using Photon.Pun;
+using UnityEngine;
 
 namespace GameVanilla.Game.Popups
 {
@@ -15,7 +16,14 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnCloseButtonPressed()
         {
-            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+            if (PlayerPrefs.GetInt("vibration_enabled") == 0)
+            {
+                MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+            }
+            else
+            {
+
+            }
             Close();
         }
 
@@ -24,7 +32,14 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnExitButtonPressed()
         {
-            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+            if (PlayerPrefs.GetInt("vibration_enabled") == 0)
+            {
+                MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+            }
+            else
+            {
+
+            }
             if (PhotonNetwork.IsConnected)
             {
                 PhotonNetwork.LeaveRoom();
@@ -41,7 +56,14 @@ namespace GameVanilla.Game.Popups
         /// </summary>
         public void OnResumeButtonPressed()
         {
-            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+            if (PlayerPrefs.GetInt("vibration_enabled") == 0)
+            {
+                MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+            }
+            else
+            {
+
+            }
             Close();
         }
     }

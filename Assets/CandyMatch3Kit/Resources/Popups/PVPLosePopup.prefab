@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 95342739358382910}
   - component: {fileID: 114907319955366578}
   - component: {fileID: 114697814335171104}
+  - component: {fileID: 4134051887969147594}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -169,8 +170,20 @@ MonoBehaviour:
   m_onClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 114603074932168652}
+        m_TargetAssemblyTypeName: GameVanilla.Core.SceneTransition, Assembly-CSharp
+        m_MethodName: PerformTransition
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PopupCloseButton
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 114697814335171104}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 5
         m_Arguments:
@@ -178,7 +191,19 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: PopupCloseButton
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4134051887969147594}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!95 &95342739358382910
@@ -242,6 +267,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4134051887969147594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376084910715884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af66741212c8d42da9124bf0c98f4e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1714047290970014
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +293,7 @@ GameObject:
   - component: {fileID: 114752965398148008}
   - component: {fileID: 95377193156958224}
   - component: {fileID: 114452108548718286}
+  - component: {fileID: 736168551394105609}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -361,6 +399,18 @@ MonoBehaviour:
           m_StringArgument: PopupCloseButton
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 736168551394105609}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PopupCloseButton
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &95377193156958224
 Animator:
   serializedVersion: 5
@@ -392,6 +442,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &736168551394105609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714047290970014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af66741212c8d42da9124bf0c98f4e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1766137885755772

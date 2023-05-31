@@ -113,7 +113,14 @@ public class BuyButtonScript : MonoBehaviour
 
     public void BuyButtonActive()
     {
-        MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+        if (PlayerPrefs.GetInt("vibration_enabled") == 0)
+        {
+            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+        }
+        else
+        {
+
+        }
         if (PlayerPrefs.GetInt("OnboardingDone") == 0)
         {
             GameObject.Find("OnboardingCotrol").GetComponent<OnboardingControl>()._devam1 = true;

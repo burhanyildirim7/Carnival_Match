@@ -19,7 +19,14 @@ public class CloseTap : MonoBehaviour
 
     public void CloseTapButton()
     {
-        MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+        if (PlayerPrefs.GetInt("vibration_enabled") == 0)
+        {
+            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+        }
+        else
+        {
+
+        }
         _panel.SetActive(false);
 
         PlayerPrefs.SetInt("OnboardingDone", 1);

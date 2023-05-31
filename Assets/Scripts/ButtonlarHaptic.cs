@@ -7,7 +7,14 @@ public class ButtonlarHaptic : MonoBehaviour
 
     public void ButtonPressHapticActive()
     {
-        MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+        if (PlayerPrefs.GetInt("vibration_enabled")==0)
+        {
+            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+        }
+        else
+        {
+
+        }
     }
 
 }

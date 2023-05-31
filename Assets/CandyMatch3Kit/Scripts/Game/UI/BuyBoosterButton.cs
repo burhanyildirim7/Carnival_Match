@@ -55,7 +55,15 @@ namespace GameVanilla.Game.UI
 		/// </summary>
 		public void OnButtonPressed()
         {
-            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+            if (PlayerPrefs.GetInt("vibration_enabled") == 0)
+            {
+                MoreMountains.NiceVibrations.MMVibrationManager.Haptic(MoreMountains.NiceVibrations.HapticTypes.MediumImpact);
+            }
+            else
+            {
+
+            }
+
             if (gameScene.gameBoard.CurrentlyAwarding)
 			{
 				return;

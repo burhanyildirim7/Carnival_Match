@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 95361660316875902}
   - component: {fileID: 114082111053431788}
   - component: {fileID: 114131793086143934}
+  - component: {fileID: 7988428186884026978}
   m_Layer: 5
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -213,6 +214,18 @@ MonoBehaviour:
           m_StringArgument: Button
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7988428186884026978}
+        m_TargetAssemblyTypeName: ButtonlarHaptic, Assembly-CSharp
+        m_MethodName: ButtonPressHapticActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Button
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &114131793086143934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +236,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1523f40c7c2247549bc26209de949879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7988428186884026978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376084910715884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af66741212c8d42da9124bf0c98f4e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1766137885755772
@@ -236,7 +261,6 @@ GameObject:
   - component: {fileID: 224968632706431344}
   - component: {fileID: 95489732296903676}
   - component: {fileID: 3321505029407233556}
-  - component: {fileID: 114813471332421420}
   - component: {fileID: 114714273734127910}
   - component: {fileID: 114024393621840476}
   m_Layer: 5
@@ -303,30 +327,9 @@ MonoBehaviour:
   parentScene: {fileID: 0}
   onOpen:
     m_PersistentCalls:
-      m_Calls: []
-  onClose:
-    m_PersistentCalls:
-      m_Calls: []
-  gameBoard: {fileID: 0}
-  disabledStarSprite: {fileID: 0}
---- !u!114 &114813471332421420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1766137885755772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cd861a264f5f2e4dab0eb0550878388, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentScene: {fileID: 0}
-  onOpen:
-    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114024393621840476}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 5
         m_Arguments:
@@ -338,7 +341,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114024393621840476}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 5
         m_Arguments:
@@ -353,7 +356,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114024393621840476}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: GameVanilla.Core.PlaySound, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 5
         m_Arguments:
@@ -364,10 +367,7 @@ MonoBehaviour:
           m_StringArgument: PopupClose
           m_BoolArgument: 0
         m_CallState: 2
-  levelText: {fileID: 114968259617776476}
-  goalGroup: {fileID: 0}
   gameBoard: {fileID: 0}
-  disabledStarSprite: {fileID: 21300000, guid: 3bea475eb68ff42128c995986d8105da, type: 3}
 --- !u!114 &114714273734127910
 MonoBehaviour:
   m_ObjectHideFlags: 0

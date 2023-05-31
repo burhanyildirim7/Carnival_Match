@@ -11,10 +11,17 @@ public class PVPPanelUI : MonoBehaviour
 
     private int _pvpContentSira;
 
+    private float _xDeger;
+
+    private void Start()
+    {
+        _xDeger = _pvpLevelsContentObject.transform.localPosition.x;
+    }
     public void PVPPanelSagOk()
     {
+        _xDeger = _xDeger - 670;
         //_pvpLevelsContentObject.transform.localPosition = new Vector3(_pvpLevelsContentObject.transform.localPosition.x-670,0,0);
-        _pvpLevelsContentObject.transform.DOLocalMove(new Vector3(_pvpLevelsContentObject.transform.localPosition.x - 670, 0, 0),.25f);
+        _pvpLevelsContentObject.transform.DOLocalMove(new Vector3(_xDeger, 0, 0),.25f);
         _pvpContentSira++;
         _pvpLevelsContentChildren[_pvpContentSira - 1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(600, 1000),.25f);
         _pvpLevelsContentChildren[_pvpContentSira].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 1500), .25f);
@@ -32,8 +39,9 @@ public class PVPPanelUI : MonoBehaviour
     }
     public void PVPPanelSolOk()
     {
+        _xDeger = _xDeger + 670;
         //_pvpLevelsContentObject.transform.localPosition = new Vector3(_pvpLevelsContentObject.transform.localPosition.x + 670, 0, 0);
-        _pvpLevelsContentObject.transform.DOLocalMove(new Vector3(_pvpLevelsContentObject.transform.localPosition.x + 670, 0, 0), .25f);
+        _pvpLevelsContentObject.transform.DOLocalMove(new Vector3(_xDeger, 0, 0), .25f);
         _pvpContentSira--;
         _pvpLevelsContentChildren[_pvpContentSira + 1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(600, 1000), .25f);
         _pvpLevelsContentChildren[_pvpContentSira].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 1500), .25f);
