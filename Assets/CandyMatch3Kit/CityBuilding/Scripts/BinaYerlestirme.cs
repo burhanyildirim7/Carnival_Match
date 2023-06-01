@@ -20,11 +20,26 @@ public class BinaYerlestirme : MonoBehaviour
 
     public bool _cameraHareketEtti;
 
-    private Vector3 _mousePos;
-
     [SerializeField] private Tilemap _tileMap;
 
     private BoundsInt bounds;
+
+    [SerializeField] private List<TileData> _tileDatas;
+
+    private Dictionary<TileBase, TileData> _dataFromTiles;
+
+    private void Awake()
+    {
+        _dataFromTiles = new Dictionary<TileBase, TileData>();
+
+        foreach (var tileData in _tileDatas)
+        {
+            foreach (var tile in tileData._mapTiles)
+            {
+                _dataFromTiles.Add(tile, tileData);
+            }
+        }
+    }
 
     void Start()
     {
@@ -55,26 +70,9 @@ public class BinaYerlestirme : MonoBehaviour
 
         }
 
-        //Tilemap _tilemap;
-
-
         if (Input.GetMouseButtonUp(0))
         {
-
-            var obje = _tileMap.GetTile(new Vector3Int(1, 0, 0));
-
-            //obje.GetTileData()
-            //RaycastHit2D hit;
-            //Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-
-            //_mousePos = _camera.ScreenToWorldPoint(Input.mousePosition);
-
             RaycastHit2D hit = Physics2D.GetRayIntersection(_camera.ScreenPointToRay(Input.mousePosition));
-
-            //Debug.Log("amına koyam tilemap ----" + obje);
-            //Debug.DrawLine(Input.mousePosition, Vector2.up, Color.red);
-
-
 
             if (!_cameraHareketEtti)
             {
@@ -91,31 +89,18 @@ public class BinaYerlestirme : MonoBehaviour
                             Vector3Int _gridPosition = new Vector3Int(_oldGridPosition.x, _oldGridPosition.y, 0);
                             Debug.Log("Grid Position ----" + _gridPosition);
 
-                            TileBase tile = _tileMap.GetTile(_gridPosition);
+                            TileBase clickedTile = _tileMap.GetTile(_gridPosition);
 
-                            if (tile != null)
+                            _tileMap.SetTile(_gridPosition, _dataFromTiles[clickedTile]._mapTileObjects[0]);
+
+
+                            if (clickedTile != null)
                             {
 
                                 var tileobje = _tileMap.GetTile(_gridPosition);
                                 Debug.Log("amına koyam tilemap ----" + tileobje);
                                 _tileMap.RefreshTile(_gridPosition);
                             }
-
-                            /*
-                            foreach (Vector3Int pos in bounds.allPositionsWithin)
-                            {
-                                TileBase tile = _tileMap.GetTile(pos);
-                                if (tile != null)
-                                {
-
-                                    var tileobje = _tileMap.GetTile(pos);
-                                    Debug.Log("amına koyam tilemap ----" + tileobje);
-                                    _tileMap.RefreshTile(pos);
-                                }
-
-
-                            }
-                            */
                         }
                         else
                         {

@@ -4783,7 +4783,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.0047527878, y: 0.30200002}
   m_AnchorMax: {x: 0.99300003, y: 0.97400004}
-  m_AnchoredPosition: {x: 1.5, y: -69}
+  m_AnchoredPosition: {x: 1.5, y: -69.000015}
   m_SizeDelta: {x: 753, y: 139.29999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &176002290
@@ -29470,6 +29470,9 @@ MonoBehaviour:
     m_Bits: 0
   _cameraHareketEtti: 0
   _tileMap: {fileID: 892299421}
+  _tileDatas:
+  - {fileID: 11400000, guid: ce08c2917942a40df9014c1845b834c4, type: 2}
+  - {fileID: 11400000, guid: 2fdb1a7fd03ae4f32b7cbbcf5a02eb73, type: 2}
 --- !u!4 &775571469
 Transform:
   m_ObjectHideFlags: 0
@@ -34436,6 +34439,16 @@ Tilemap:
   m_GameObject: {fileID: 892299418}
   m_Enabled: 1
   m_Tiles:
+  - first: {x: 2, y: -1, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 0
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 1
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 1, y: 2, z: 0}
     second:
       serializedVersion: 2
@@ -34448,14 +34461,14 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 3d76d02fc41f64fc09ddcf3e6b9014d0, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 6ac42649d829f4d81955bf915a851d58, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 35e1e30c0c65b4e4c9a1b5035d459bad, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 0
@@ -34476,7 +34489,7 @@ Tilemap:
       e31: 0
       e32: 0
       e33: 1
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data:
       e00: 0.8
       e01: 0
@@ -34495,7 +34508,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -74148,7 +74161,7 @@ PrefabInstance:
     - target: {fileID: 8202860336842802972, guid: 284ed0ff6e2ce48cbb05df43c6485c47,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1690.9998
+      value: 1691
       objectReference: {fileID: 0}
     - target: {fileID: 8202860336842802972, guid: 284ed0ff6e2ce48cbb05df43c6485c47,
         type: 3}
