@@ -14,22 +14,23 @@ public class BinaYerlestirme : MonoBehaviour
 
     [SerializeField] private CameraMovement _cameraMovement;
 
-    [SerializeField] private LayerMask _layer;
+    //[SerializeField] private LayerMask _layer;
 
     private bool _binaAlaniSecildi;
 
     public bool _cameraHareketEtti;
 
-    [SerializeField] private Tilemap _tileMap;
+    //[SerializeField] private Tilemap _tileMap;
 
-    private BoundsInt bounds;
+    //private BoundsInt bounds;
 
-    [SerializeField] private List<TileData> _tileDatas;
+    //[SerializeField] private List<TileData> _tileDatas;
 
-    private Dictionary<TileBase, TileData> _dataFromTiles;
+    //private Dictionary<TileBase, TileData> _dataFromTiles;
 
     private void Awake()
     {
+        /*
         _dataFromTiles = new Dictionary<TileBase, TileData>();
 
         foreach (var tileData in _tileDatas)
@@ -39,13 +40,14 @@ public class BinaYerlestirme : MonoBehaviour
                 _dataFromTiles.Add(tile, tileData);
             }
         }
+        */
     }
 
     void Start()
     {
         _binaAlaniSecildi = false;
-        bounds = _tileMap.cellBounds;
-        Debug.Log("bounds ----" + bounds);
+        //bounds = _tileMap.cellBounds;
+        //Debug.Log("bounds ----" + bounds);
     }
 
 
@@ -85,15 +87,20 @@ public class BinaYerlestirme : MonoBehaviour
                             Debug.Log("BINA  == " + hit.collider.gameObject.name);
                             _cameraMovement.Focus(hit.collider.gameObject.transform.position);
                             _binaAlaniSecildi = true;
-                            Vector3Int _oldGridPosition = _tileMap.WorldToCell(_camera.ScreenToWorldPoint(Input.mousePosition));
-                            Vector3Int _gridPosition = new Vector3Int(_oldGridPosition.x, _oldGridPosition.y, 0);
-                            Debug.Log("Grid Position ----" + _gridPosition);
-
-                            TileBase clickedTile = _tileMap.GetTile(_gridPosition);
-
-                            _tileMap.SetTile(_gridPosition, _dataFromTiles[clickedTile]._mapTileObjects[0]);
 
 
+
+
+
+
+
+
+                            //Vector3Int _oldGridPosition = _tileMap.WorldToCell(_camera.ScreenToWorldPoint(Input.mousePosition));
+                            //Vector3Int _gridPosition = new Vector3Int(_oldGridPosition.x, _oldGridPosition.y, 0);
+                            //Debug.Log("Grid Position ----" + _gridPosition);
+                            //TileBase clickedTile = _tileMap.GetTile(_gridPosition);
+                            //_tileMap.SetTile(_gridPosition, _dataFromTiles[clickedTile]._mapTileObjects[0]);
+                            /*
                             if (clickedTile != null)
                             {
 
@@ -101,6 +108,7 @@ public class BinaYerlestirme : MonoBehaviour
                                 Debug.Log("amına koyam tilemap ----" + tileobje);
                                 _tileMap.RefreshTile(_gridPosition);
                             }
+                            */
                         }
                         else
                         {
